@@ -1,6 +1,6 @@
 package board;
 
-import cards.Card;
+import entity.Card;
 import com.google.common.collect.ImmutableMap;
 import java.util.HashMap;
 import java.util.Map;

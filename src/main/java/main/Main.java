@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ui;
+package main;
 
 import board.Board;
 import java.awt.Dimension;
@@ -43,15 +43,6 @@ public class Main {
         
         
         
-        
-        while(true){
-            System.out.println("Insert row column and value ");
-            int row = scanner.nextInt();
-            int col = scanner.nextInt();
-            int value = scanner.nextInt();
-            board.modifyCell(row, col, value);
-            board.removeCard(row, col);
-        }
         
         
         

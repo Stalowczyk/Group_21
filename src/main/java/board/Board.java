@@ -4,7 +4,7 @@
  */
 package board;
 
-import cards.Card;
+import entity.Card;
 import static java.lang.Math.random;
 import static java.lang.StrictMath.random;
 import java.util.Random;
