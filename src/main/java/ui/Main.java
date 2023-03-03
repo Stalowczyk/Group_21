@@ -5,7 +5,6 @@
 package ui;
 
 import board.Board;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.util.Scanner;
@@ -28,13 +27,14 @@ public class Main {
         
         JFrame window = new JFrame();
         GamePanel gamePanel = new GamePanel(board);
+        gamePanel.startGameThread();
         
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setAlwaysOnTop(true);
        
         window.setLayout(new GridBagLayout());
-        window.setMinimumSize(new Dimension(1000,1000));
+        window.setMinimumSize(new Dimension(500,500));
         
         window.add(gamePanel);   
         window.pack();
@@ -42,7 +42,6 @@ public class Main {
         window.setVisible(true);
         
         
-        gamePanel.startGameThread();
         
         
         while(true){
@@ -51,8 +50,7 @@ public class Main {
             int col = scanner.nextInt();
             int value = scanner.nextInt();
             board.modifyCell(row, col, value);
-            window.setVisible(false);
-            window.setVisible(true);
+            board.removeCard(row, col);
         }
         
         
