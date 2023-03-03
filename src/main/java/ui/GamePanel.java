@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
     
     int playerX = 0;
     int playerY = 0;
-    int playerSpeed = 4;
+    int playerSpeed = tileSize;
     
     public GamePanel(Board board){
         this.board = board;
@@ -55,24 +55,33 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
+        
         double drawInterval = 1000000000/FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
+        long timer = 0;
+        int drawCount = 0;
         while(gameThread!=null){
             
-            currentTime = System.nanoTime();
-            
+            currentTime = System.nanoTime();            
             delta += (currentTime - lastTime) / drawInterval;
+            timer += (currentTime - lastTime);
+            lastTime = currentTime;
             
             if(delta >= 1){
                 update();
                 repaint();
                 delta--;
+                drawCount++;
             }
-           
-                   
-        }        
+            if(timer >=1000000000){
+                //System.out.println("FPS:" + drawCount);
+                drawCount = 0;
+                timer = 0;
+            }
+        } 
+        
     }
     
     public void update(){
@@ -91,44 +100,46 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
-        
        
         int test[][] = board.getBoardLayout();
         for (int row = 0; row < test.length; row++) {    
             for (int col = 0; col < test[row].length; col++) {
                 
                 switch(test[row][col]){
-                    case 0:
+                    case 0 -> {
                         g2.setColor(Color.red);
                         g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                        break;
-                    case 1:
+                    }
+                    case 1 -> {
                         g2.setColor(Color.green);
                         g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                        break;
-                    case 2:
+                    }
+                    case 2 -> {
                         g2.setColor(Color.CYAN);
                         g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                        break;
-                    case 3:
+                    }
+                    case 3 -> {
                         g2.setColor(Color.BLUE);
                         g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                        break;
-                    case 4:
+                    }
+                    case 4 -> {
                         g2.setColor(Color.PINK);
                         g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                        break;
-                    case 5:
+                    }
+                    case 5 -> {
                         g2.setColor(Color.WHITE);
                         g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                        break;
-                    case 6:
+                    }
+                    case 6 -> {
                         g2.setColor(Color.YELLOW);
                         g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                        break;
+                    }
                 }
             }
         }
+        g2.setColor(Color.BLACK);
+        g2.fillRect(playerX, playerY, tileSize, tileSize);
+        g2.dispose();
     }
 }
                 
@@ -138,17 +149,7 @@ public class GamePanel extends JPanel implements Runnable {
                 
                 
             
-                /*
-                if(test[row][col]== 0){
-                    
-                    g2.setColor(Color.red);
-                    g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                }
-                else{
-                    g2.setColor(Color.green);
-                    g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                }
-                */
+               
                     
             
     

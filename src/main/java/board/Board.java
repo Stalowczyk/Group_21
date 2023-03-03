@@ -19,7 +19,7 @@ import java.util.Random;
 public class Board {
     
     
-    int[][] boardLayout;
+    private int[][] boardLayout;
     
     
     
@@ -35,24 +35,16 @@ public class Board {
         return this.boardLayout;
     }
     
-    
-    /**
-     *
-     * @return
-     */
     public int getBoardRows(){
         return this.boardLayout.length;
     }
     
-    
     public int getBoardColumns(){
-        return this.boardLayout[0].length;
-                
+        return this.boardLayout[0].length;           
     }
     
     public void modifyCell(int row, int col,int number){
-        this.boardLayout[row][col] = number;
-              
+        this.boardLayout[row][col] = number;            
     }
             
     public void randomizeBoard(){
@@ -64,14 +56,25 @@ public class Board {
                     modifyCell(row, col, randomCard);
                 }
             }
-        }
-            
+        }           
+    }
+    
+    public void removeCard(int row,int col){
+        this.boardLayout[row][col] = 0;
+        /*
+        playerBoard.getCard(Card card) ?
+        */
     }
     
     
-    public void removeCard(Card card){
-        modifyCell(card.getCardRow(), card.getCardCol(), 0);
+    
+    
+    /*
+    public void removeCard(Tile tile){
+        if(tile.isTileOccupied())
+            modifyCell(0, 0, 0)
     }
+    */
     
     /*
     public Tile getTile(final int tileCoordinate){
