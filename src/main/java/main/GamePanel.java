@@ -5,6 +5,8 @@
 package main;
 
 import board.Board;
+import entity.Bag;
+import entity.Player;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -20,30 +22,29 @@ public class GamePanel extends JPanel implements Runnable {
     
     final int orgiginalTileSize = 16;
     final int scale = 3;
-    
-    int FPS = 60;
-    
-    final int tileSize = orgiginalTileSize * scale;
+  
+    final public int tileSize = orgiginalTileSize * scale;
     final int maxScreenCol = 11;
     final int maxScreenRow = 11;
     final int screenWidth = tileSize * maxScreenCol;
     final int screenHeight = tileSize * maxScreenRow;
     
+    int FPS = 60;
+    
     Thread gameThread = new Thread();
-    Board board;
     KeyHandler keyH = new KeyHandler();
+    Player player = new Player(this,keyH);
+    Bag b = new Bag();
+    Board board = new Board(2, this,b);
     
-    int playerX = 0;
-    int playerY = 0;
-    int playerSpeed = tileSize;
     
-    public GamePanel(Board board){
-        this.board = board;
+    public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
         this.setDoubleBuffered(true);
         this.setBackground(Color.BLACK);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+        this.startGameThread();
     
     }
     public void startGameThread(){
@@ -75,7 +76,7 @@ public class GamePanel extends JPanel implements Runnable {
                 drawCount++;
             }
             if(timer >=1000000000){
-                //System.out.println("FPS:" + drawCount);
+                System.out.println("FPS:" + drawCount);
                 drawCount = 0;
                 timer = 0;
             }
@@ -84,62 +85,19 @@ public class GamePanel extends JPanel implements Runnable {
     }
     
     public void update(){
-       if(keyH.upPressed){
-           playerY -= playerSpeed;
-       }  
-       else if(keyH.downPressed)
-           playerY += playerSpeed;
-       else if(keyH.leftPressed)
-           playerX -= playerSpeed;
-       else if(keyH.rightPressed)
-           playerX += playerSpeed;
+       player.update();
     }
       
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
-       
-        int test[][] = board.getBoardLayout();
-        for (int row = 0; row < test.length; row++) {    
-            for (int col = 0; col < test[row].length; col++) {
-                
-                switch(test[row][col]){
-                    case 0 -> {
-                        g2.setColor(Color.red);
-                        g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                    }
-                    case 1 -> {
-                        g2.setColor(Color.green);
-                        g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                    }
-                    case 2 -> {
-                        g2.setColor(Color.CYAN);
-                        g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                    }
-                    case 3 -> {
-                        g2.setColor(Color.BLUE);
-                        g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                    }
-                    case 4 -> {
-                        g2.setColor(Color.PINK);
-                        g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                    }
-                    case 5 -> {
-                        g2.setColor(Color.WHITE);
-                        g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                    }
-                    case 6 -> {
-                        g2.setColor(Color.YELLOW);
-                        g2.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
-                    }
-                }
-            }
-        }
-        g2.setColor(Color.BLACK);
-        g2.fillRect(playerX, playerY, tileSize, tileSize);
+        
+        board.draw(g2);
+        player.draw(g2);
         g2.dispose();
     }
+    
 }
                 
                   

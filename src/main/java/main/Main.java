@@ -5,6 +5,8 @@
 package main;
 
 import board.Board;
+import entity.Bag;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.util.Scanner;
@@ -17,17 +19,9 @@ import javax.swing.JFrame;
 public class Main {
     public static void main(String[] args){
         
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Choose Player number");
-        int choice = scanner.nextInt();
-        
-        Board board = new Board(); 
-        board.setBoardLayout(choice);
-        board.randomizeBoard();
+        GamePanel gamePanel = new GamePanel();
         
         JFrame window = new JFrame();
-        GamePanel gamePanel = new GamePanel(board);
-        gamePanel.startGameThread();
         
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
@@ -41,8 +35,13 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         
+       
+         
         
         
+      
+        
+              
         
         
         

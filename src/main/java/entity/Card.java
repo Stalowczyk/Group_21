@@ -4,31 +4,27 @@ package entity;
         
 public class Card {
     
-    protected int cardRow;
-    protected int cardCol;
-    protected final CardType cardColor;
-    protected int[] cardPosition;
+    private final CardType cardType;
+    
+    
 
-        public Card(final int row, final int col,CardType cardColor) {
-        this.cardRow = row;
-        this.cardCol = col;
-        this.cardColor = cardColor;
-        this.cardPosition = new int[2];
+    public Card(CardType cardType) {
+        this.cardType = cardType;
     }
     
-    public void setCardPosition(final int row,final int col){
-        this.cardCol = col;
-        this.cardRow = row;        
-    }    
-        
-        
     public CardType getCardType(){
-        return this.cardColor;
+        return this.cardType;
     }
     
-    public int[] getCardPosition(){
-        return this.cardPosition;
+    @Override
+    public String toString(){
+        return "Card Type: " + this.getCardType();
     }
+        
+    
+    
+        
+        
     
     
     /* Tile getCard()
