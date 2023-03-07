@@ -134,22 +134,28 @@ public final class Board {
         
         for(int i = 0; i < currentBoardLayout.size() ;i++){
             PlacedCard x =currentBoardLayout.get(i);
+            x.getCardType();
             switch(x.getCardType()){
                 case WHITE:
                     g2.setColor(Color.white);
                     g2.fillRect(gp.tileSize*(x.getCardCol()), gp.tileSize* x.getCardRow(), gp.tileSize, gp.tileSize);
+                    break;
                 case PINK:
                     g2.setColor(Color.PINK);
                     g2.fillRect(gp.tileSize*(x.getCardCol()), gp.tileSize* x.getCardRow(), gp.tileSize, gp.tileSize);
+                    break;
                 case BLUE:
                     g2.setColor(Color.BLUE);
                     g2.fillRect(gp.tileSize*(x.getCardCol()), gp.tileSize* x.getCardRow(), gp.tileSize, gp.tileSize);
+                    break;
                 case CYAN:
                     g2.setColor(Color.CYAN);
                     g2.fillRect(gp.tileSize*(x.getCardCol()), gp.tileSize* x.getCardRow(), gp.tileSize, gp.tileSize);
+                    break;
                 case GREEN:
                     g2.setColor(Color.GREEN);
                     g2.fillRect(gp.tileSize*(x.getCardCol()), gp.tileSize* x.getCardRow(), gp.tileSize, gp.tileSize);
+                    break;
                 case YELLOW:
                     g2.setColor(Color.YELLOW);
                     g2.fillRect(gp.tileSize*(x.getCardCol()), gp.tileSize* x.getCardRow(), gp.tileSize, gp.tileSize);
