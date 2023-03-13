@@ -4,6 +4,7 @@
  */
 package entity;
 
+import board.Board;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import main.GamePanel;
@@ -21,6 +22,11 @@ public class Player {
     GamePanel gp;
     KeyHandler keyH;
     
+    /**
+     *
+     * @param gp
+     * @param keyH
+     */
     public Player(GamePanel gp, KeyHandler keyH){
         this.gp = gp;
         this.keyH = keyH;
@@ -30,7 +36,7 @@ public class Player {
     public void setDefaultValues(){
         x=0;
         y=0;
-        speed=16;
+        speed=48;
     }
     
     
@@ -54,12 +60,23 @@ public class Player {
                 pixelCounter = 0;
             }
         }
+        if(keyH.enterPressed){
+        }
     }
     
     public void draw(Graphics2D g2){
-        g2.setColor(Color.BLACK);
+        g2.setColor(Color.GREEN);
         g2.fillRect(x, y, gp.tileSize, gp.tileSize);
+        
     }
     
+    
+    public int getPlayerX(){
+        return this.x;
+    }
+    
+    public int getPlayerY(){
+        return this.y;
+    }
     
 }

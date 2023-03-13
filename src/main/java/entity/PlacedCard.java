@@ -4,7 +4,9 @@
  */
 package entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import main.GamePanel;
 
 /**
  *
@@ -14,12 +16,15 @@ public class PlacedCard extends Card{
     
     public int row;
     public int col;
+    private final GamePanel gp;
 
-    public PlacedCard(CardType cardType,int row,int col) {
+    public PlacedCard(CardType cardType,int row,int col,GamePanel gp) {
         super(cardType);
         this.row = row;
         this.col = col;
+        this.gp = gp;
     }
+    
     
     
     
@@ -31,7 +36,32 @@ public class PlacedCard extends Card{
     }
     
     public void draw(Graphics2D g2){
-        
+        switch(this.getCardType()){
+                case WHITE -> {
+                    g2.setColor(Color.white);
+                    g2.fillRect(gp.tileSize*(this.getCardCol()), gp.tileSize* this.getCardRow(), gp.tileSize, gp.tileSize);
+                }
+                case PINK -> {
+                    g2.setColor(Color.PINK);
+                    g2.fillRect(gp.tileSize*(this.getCardCol()), gp.tileSize* this.getCardRow(), gp.tileSize, gp.tileSize);
+                }
+                case BLUE -> {
+                    g2.setColor(Color.BLUE);
+                    g2.fillRect(gp.tileSize*(this.getCardCol()), gp.tileSize* this.getCardRow(), gp.tileSize, gp.tileSize);
+                }
+                case CYAN -> {
+                    g2.setColor(Color.CYAN);
+                    g2.fillRect(gp.tileSize*(this.getCardCol()), gp.tileSize* this.getCardRow(), gp.tileSize, gp.tileSize);
+                }
+                case GREEN -> {
+                    g2.setColor(Color.GREEN);
+                    g2.fillRect(gp.tileSize*(this.getCardCol()), gp.tileSize* this.getCardRow(), gp.tileSize, gp.tileSize);
+                }
+                case YELLOW -> {
+                    g2.setColor(Color.YELLOW);
+                    g2.fillRect(gp.tileSize*(this.getCardCol()), gp.tileSize* this.getCardRow(), gp.tileSize, gp.tileSize);
+                }
+            }
     }
     
 }

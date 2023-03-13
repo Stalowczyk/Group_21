@@ -58,13 +58,20 @@ public final class Bag {
     
     
     
-    
     public void printAllCardsIn(){
         System.out.println(cardsIn.toString());
 
     }
     public void printAllCardsOut(){
         System.out.println(cardsOut.toString());
+    }
+    
+    public void printCardsInSize(){
+        System.out.println(cardsIn.size());
+    }
+    
+    public void printCardsOutSize(){
+        System.out.println(cardsOut.size());
     }
     
     

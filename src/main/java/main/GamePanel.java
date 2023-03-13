@@ -29,13 +29,13 @@ public class GamePanel extends JPanel implements Runnable {
     final int screenWidth = tileSize * maxScreenCol;
     final int screenHeight = tileSize * maxScreenRow;
     
-    int FPS = 60;
+    int FPS = 10;
     
     Thread gameThread = new Thread();
     KeyHandler keyH = new KeyHandler();
-    Player player = new Player(this,keyH);
     Bag b = new Bag();
-    Board board = new Board(2, this,b);
+    Board board = new Board(4, this,b);
+    Player player = new Player(this,keyH);
     
     
     public GamePanel(){
@@ -97,6 +97,9 @@ public class GamePanel extends JPanel implements Runnable {
         player.draw(g2);
         g2.dispose();
     }
+    
+    
+    
     
 }
                 

@@ -13,6 +13,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Scanner;
 import main.GamePanel;
 
 
@@ -24,7 +25,7 @@ import main.GamePanel;
  */
 public final class Board {
     
-    private int numberOfPlayers;
+    private final int numberOfPlayers;
     private int[][] boardLayout;
     private int boardSize;
     public ArrayList<PlacedCard> currentBoardLayout;
@@ -41,6 +42,9 @@ public final class Board {
         setDefaultBoardLayout();
         setBoardSize();
         placeCardsOnBoard(b);
+        b.printCardsInSize();
+        b.printCardsOutSize();
+        
         
     }
     
@@ -95,13 +99,14 @@ public final class Board {
         for(int row = 0; row < this.boardLayout.length; row++) {
             for(int col = 0; col < this.boardLayout[row].length; col++){
                 if(this.boardLayout[row][col]==1){
-                    PlacedCard p = new PlacedCard(b.pullRandom().getCardType(),row,col);
+                    PlacedCard p = new PlacedCard(b.pullRandom().getCardType(),row,col,gp);
                     currentBoardLayout.add(p);               
                 }
                 
             }
             
         }
+                
     }
     
     public void printAllCardsOnBoard(){
@@ -121,85 +126,38 @@ public final class Board {
             for (int col = 0; col < this.boardLayout[row].length; col++) {                                     
                 switch(this.boardLayout[row][col]){                     
                    case 0 -> {
-                        g2.setColor(Color.red);
+                        g2.setColor(Color.BLACK);
                         g2.fillRect(col*gp.tileSize, row*gp.tileSize, gp.tileSize, gp.tileSize);
                     }
                     case 1 -> {
-                        g2.setColor(Color.white);
+                        g2.setColor(Color.GRAY);
                         g2.fillRect(col*gp.tileSize, row*gp.tileSize, gp.tileSize, gp.tileSize);
                     }
                 }
             }
         }
         
+        //MOVE TO PlacedCard class 
         for(int i = 0; i < currentBoardLayout.size() ;i++){
-            PlacedCard x =currentBoardLayout.get(i);
-            x.getCardType();
-            switch(x.getCardType()){
-                case WHITE:
-                    g2.setColor(Color.white);
-                    g2.fillRect(gp.tileSize*(x.getCardCol()), gp.tileSize* x.getCardRow(), gp.tileSize, gp.tileSize);
-                    break;
-                case PINK:
-                    g2.setColor(Color.PINK);
-                    g2.fillRect(gp.tileSize*(x.getCardCol()), gp.tileSize* x.getCardRow(), gp.tileSize, gp.tileSize);
-                    break;
-                case BLUE:
-                    g2.setColor(Color.BLUE);
-                    g2.fillRect(gp.tileSize*(x.getCardCol()), gp.tileSize* x.getCardRow(), gp.tileSize, gp.tileSize);
-                    break;
-                case CYAN:
-                    g2.setColor(Color.CYAN);
-                    g2.fillRect(gp.tileSize*(x.getCardCol()), gp.tileSize* x.getCardRow(), gp.tileSize, gp.tileSize);
-                    break;
-                case GREEN:
-                    g2.setColor(Color.GREEN);
-                    g2.fillRect(gp.tileSize*(x.getCardCol()), gp.tileSize* x.getCardRow(), gp.tileSize, gp.tileSize);
-                    break;
-                case YELLOW:
-                    g2.setColor(Color.YELLOW);
-                    g2.fillRect(gp.tileSize*(x.getCardCol()), gp.tileSize* x.getCardRow(), gp.tileSize, gp.tileSize);
-                    break;
-            }
-            
-           
+            currentBoardLayout.get(i).draw(g2);
         }
-  
-        
-        
-           
-        
     }
     
     
-    public void test(){
-        
+    public void removePlacedCard(int[] cords){
         for(int i = 0;i<currentBoardLayout.size();i++){
-            PlacedCard x = currentBoardLayout.get(i);
-            System.out.println(x.getCardType());
-            switch(x.getCardType()){
-                case WHITE:
-                    System.out.println("WHITE +1");
-                case PINK:
-                    System.out.println("PINK +1");
-
-                case BLUE:
-                    System.out.println("BLUE 1");
-
-                case CYAN:
-                    System.out.println("CYAN 1");
-
-                case GREEN:
-                    System.out.println("GREEN 1");
-
-                case YELLOW:
-                    System.out.println("YELLOW 1");
-
+            if(cords[0]==(currentBoardLayout.get(i).getCardRow()*gp.tileSize)&&cords[1]==(currentBoardLayout.get(i).getCardCol()*gp.tileSize)){
+                currentBoardLayout.remove(i);
             }
         }
-            
-            
     }
+    
+   
+  
+    
+        
+           
+        
 }
         
         
