@@ -35,8 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyH = new KeyHandler();
     Bag b = new Bag();
     Board board = new Board(4, this,b);
-    Player player = new Player(this,keyH);
-    
+    Player player = new Player(this, keyH,board);
     
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
@@ -76,7 +75,7 @@ public class GamePanel extends JPanel implements Runnable {
                 drawCount++;
             }
             if(timer >=1000000000){
-                System.out.println("FPS:" + drawCount);
+                //System.out.println("FPS:" + drawCount);
                 drawCount = 0;
                 timer = 0;
             }

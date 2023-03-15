@@ -42,10 +42,7 @@ public final class Board {
         setDefaultBoardLayout();
         setBoardSize();
         placeCardsOnBoard(b);
-        b.printCardsInSize();
-        b.printCardsOutSize();
-        
-        
+            
     }
     
     public void setDefaultBoardLayout(){
@@ -96,10 +93,12 @@ public final class Board {
     }
     
     public void placeCardsOnBoard(Bag b){
-        for(int row = 0; row < this.boardLayout.length; row++) {
-            for(int col = 0; col < this.boardLayout[row].length; col++){
+        for(int col = 0; col < this.boardLayout.length; col++) {
+            for(int row = 0; row < this.boardLayout[col].length; row++){
                 if(this.boardLayout[row][col]==1){
                     PlacedCard p = new PlacedCard(b.pullRandom().getCardType(),row,col,gp);
+                    System.out.println(row+" "+col);
+                    System.out.println(p.getCardX()+" "+p.getCardY());
                     currentBoardLayout.add(p);               
                 }
                 
@@ -137,22 +136,65 @@ public final class Board {
             }
         }
         
-        //MOVE TO PlacedCard class 
+        //MOVED DRAWING TO PlacedCard class 
         for(int i = 0; i < currentBoardLayout.size() ;i++){
             currentBoardLayout.get(i).draw(g2);
         }
     }
     
-    
-    public void removePlacedCard(int[] cords){
+    //Y X INVERSI DA RIFARE
+    public void removePlacedCard(int x,int y){
         for(int i = 0;i<currentBoardLayout.size();i++){
-            if(cords[0]==(currentBoardLayout.get(i).getCardRow()*gp.tileSize)&&cords[1]==(currentBoardLayout.get(i).getCardCol()*gp.tileSize)){
+            if(y==(currentBoardLayout.get(i).getCardX()*gp.tileSize)&&x==(currentBoardLayout.get(i).getCardY()*gp.tileSize)){
                 currentBoardLayout.remove(i);
             }
         }
+            
+}
+            
+        
+    
+    public boolean isCardPlaced(int x,int y){
+        for(int i = 0;i<currentBoardLayout.size();i++){
+            if(y==(currentBoardLayout.get(i).getCardX()*gp.tileSize)&&x==(currentBoardLayout.get(i).getCardY()*gp.tileSize)){
+                return true;
+            }
+        }
+        return false;
     }
     
+    
+    
+    public void determinePossibility(int x, int y){
+        if(isCardPlaced(x, y)){
+            
+        }
+    }
+    
+    public boolean hasAFreeBorder(int x,int y){
+        PlacedCard card = getCardAtCords(y, x);
+        if(isCardPlaced(card.getCardX()+1, y)){
+            if(isCardPlaced(card.getCardX()-1, y)){
+                if(isCardPlaced(x,card.getCardY()+11)){
+                    if(isCardPlaced(x,card.getCardY()-11)){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+        
    
+
+   public PlacedCard getCardAtCords(int x,int y){
+       for(int i = 0;i<currentBoardLayout.size();i++){
+            if(y==(currentBoardLayout.get(i).getCardX()*gp.tileSize)&&x==(currentBoardLayout.get(i).getCardY()*gp.tileSize)){
+                return currentBoardLayout.get(i);
+            }
+       }
+        return null;
+   }
   
     
         

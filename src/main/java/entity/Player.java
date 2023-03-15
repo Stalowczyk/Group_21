@@ -21,15 +21,17 @@ public class Player {
     int pixelCounter = 0;
     GamePanel gp;
     KeyHandler keyH;
+    Board b;
     
     /**
      *
      * @param gp
      * @param keyH
      */
-    public Player(GamePanel gp, KeyHandler keyH){
+    public Player(GamePanel gp, KeyHandler keyH,Board b){
         this.gp = gp;
         this.keyH = keyH;
+        this.b = b;
         setDefaultValues();
     }
     
@@ -50,7 +52,10 @@ public class Player {
                x -= speed;
            else if(keyH.rightPressed)
                x += speed;
-           moving = true;
+           else if(keyH.spacePressed){
+               b.removePlacedCard(getPlayerX(), getPlayerY());
+           }
+           moving = true;   
         }
         if(moving==true){
             pixelCounter+=speed;
@@ -60,13 +65,11 @@ public class Player {
                 pixelCounter = 0;
             }
         }
-        if(keyH.enterPressed){
-        }
     }
     
     public void draw(Graphics2D g2){
-        g2.setColor(Color.GREEN);
-        g2.fillRect(x, y, gp.tileSize, gp.tileSize);
+        g2.setColor(Color.RED);
+        g2.fillOval(x, y, gp.tileSize, gp.tileSize);
         
     }
     
