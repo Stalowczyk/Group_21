@@ -14,8 +14,8 @@ import main.GamePanel;
  */
 public class PlacedCard extends Card{
     
-    public int row;
-    public int col;
+    private int row;
+    private int col;
     private final GamePanel gp;
 
     public PlacedCard(CardType cardType,int row,int col,GamePanel gp) {
@@ -26,7 +26,13 @@ public class PlacedCard extends Card{
     }
     
     
+    public int getCardRow(){
+        return this.row;
+    }
     
+    public int getCardCol(){
+        return this.col;
+    }
     
     public int getCardX(){
         return this.row*gp.tileSize;
@@ -35,11 +41,13 @@ public class PlacedCard extends Card{
         return this.col*gp.tileSize;
     }
     
+    //NON SO PERCHE MA PER X VA USATO Y E PER Y X
     public void draw(Graphics2D g2){
         switch(this.getCardType()){
                 case WHITE -> {
                     g2.setColor(Color.white);
                     g2.fillRect(this.getCardY(),this.getCardX(), gp.tileSize, gp.tileSize);
+                    
                 }
                 case PINK -> {
                     g2.setColor(Color.PINK);
