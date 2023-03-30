@@ -35,7 +35,7 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         
-         System.out.println("test2");
+         System.out.println("test3");
         
         
     }
