@@ -3,7 +3,6 @@ package entity;
 public class Shelf {
 	private Card[][] shelfLayout;
 	private int maxRaw = 6;
-	private int maxColumn = 5;
 	private int chosenColumn;
 	
 	public Shelf(int cardNumber, int chosenColumn) {
