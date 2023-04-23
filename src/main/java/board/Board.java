@@ -200,12 +200,53 @@ public final class Board {
        return null;
    }
   
+   
+   
+   private int firstRaw;
+   private int firstCol;
+   private int oldRaw;
+   private int oldCol;
+   boolean first;
+   ArrayList<Card> chosenCards = new ArrayList<Card>();		            
+  
+ 	public void chosenFromBoard(int chosenRaw, int chosenCol) {		//deve ritornare l'array!!!!
+    	 
+    	 if(chosenCards.isEmpty()) {
+    		 first = true;
+    	 }else first = false;
+    	 
+    	 if(chosenCards.size() < 4) {
+        	 if(this.hasAFreeBorder(chosenRaw, chosenCol)) {
+        		 if(first) {
+        			 chosenCards.add(this.getCardAtCords(chosenRaw, chosenCol));
+        			 firstRaw = chosenRaw;
+        			 firstCol = chosenCol;
+        			 oldRaw = chosenRaw;
+        			 oldCol = chosenCol;
+        		 }
+        		 else {
+        			    if(chosenRaw == firstRaw) {
+        			    	if(chosenCol == oldCol + 1) {
+        			    		chosenCards.add(this.getCardAtCords(chosenRaw, chosenCol));
+        			    		oldRaw = chosenRaw;
+        	        			oldCol = chosenCol;
+        			    	}
+        			    }
+        			    if(chosenCol == firstCol) {
+        			    	if(chosenRaw == oldRaw + 1) {
+        			    		chosenCards.add(this.getCardAtCords(chosenRaw, chosenCol));
+        			    		oldRaw = chosenRaw;
+        	        			oldCol = chosenCol;
+        			    	}
+        			    }
+        		 }
+        	 }
+    	 }
+     }
     
-        
-           
-        
+    //alla fine remove placed card
 }
-        
+
         
         
       
