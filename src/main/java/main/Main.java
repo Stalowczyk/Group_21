@@ -6,6 +6,8 @@ package main;
 
 import board.Board;
 import entity.Bag;
+import entity.PersonalGoalsCards;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
@@ -36,8 +38,6 @@ public class Main {
         window.setVisible(true);
         
          System.out.println("ok");
-        
-        
     }
     
 }
