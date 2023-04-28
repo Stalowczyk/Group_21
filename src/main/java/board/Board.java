@@ -32,7 +32,13 @@ public final class Board {
     GamePanel gp;
     Bag b;
     
+    private int firstRaw;
+    private int firstCol;
+    private int oldRaw;
+    private int oldCol;
+    private boolean first;
     
+    ArrayList<Card> chosenCards;		     
     
     public Board(int numberOfPlayers,GamePanel gp,Bag b){
         this.numberOfPlayers = numberOfPlayers;
@@ -42,7 +48,7 @@ public final class Board {
         setDefaultBoardLayout();
         setBoardSize();
         placeCardsOnBoard(b);
-            
+        chosenCards = new ArrayList<Card>();
     }
     
     
@@ -199,19 +205,7 @@ public final class Board {
        }
        return null;
    }
-  
-   
-   
-   private int firstRaw;
-   private int firstCol;
-   private int oldRaw;
-   private int oldCol;
-   boolean first;
-   ArrayList<Card> chosenCards = new ArrayList<Card>();		            
-  
-   
-   
-   
+          
  	public void chosenFromBoard(int chosenRaw, int chosenCol) {	
     	 
     	 if(chosenCards.isEmpty()) {
