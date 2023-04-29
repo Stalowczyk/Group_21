@@ -7,7 +7,7 @@ public class CommonGoalsCards {
 
     CommonGoalsCards(Shelf shelf,GamePanel gp){ this.shelf = shelf; }
 
-    public boolean checkObjective1(){ return shelf.checkCorners(); }       // Primo obiettivo dei 12 da fare
+    public boolean checkObjective1(Shelf shelf){ return shelf.checkCorners(); }       // Primo obiettivo dei 12 da fare
 
 }
 
