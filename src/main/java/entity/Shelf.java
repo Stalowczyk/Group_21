@@ -36,7 +36,17 @@ public class Shelf {
 				//error condition
 			}
 		}
-	
+	public boolean checkCorners() {                            //Sistema di controllo angoli della shelf
+		CardType type = null;                                  //Controlla se tutti gli angoli hanno lo stesso cardType, serve per obbiettivo collettivo
+		if (this.shelfLayout[0][0] != null) {                  // Filo
+			type = this.shelfLayout[0][0].getCardType();
+		}
+		if (type != null && type == this.shelfLayout[0][4].getCardType()
+				&& type == this.shelfLayout[5][0].getCardType()
+				&& type == this.shelfLayout[5][4].getCardType()) {
+			return true;
+		}
+		return false;}
 	}
 
 
