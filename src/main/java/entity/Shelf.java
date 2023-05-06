@@ -91,7 +91,99 @@ public class Shelf {
 			}
 		} return false;
 	}
-
+	public boolean checkColumnGoal() {
+		int Linee = 0;
+		for (int i = 0; i < this.shelfLayout.length; i++) {
+			for (int j = 0; j < this.shelfLayout[i].length; j++) {
+				if (i == 5) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i-1][j];
+						Card c = this.shelfLayout[i-2][j];
+						Card d = this.shelfLayout[i-3][j];
+						Card e = this.shelfLayout[i-4][j];
+						Card f = this.shelfLayout[i-5][j];
+						if (b != null && c != null && d != null && e != null && f != null) {
+							if (b.getCardType() != type && b.getCardType() != c.getCardType() && b.getCardType() != d.getCardType() && b.getCardType() != e.getCardType() &&
+									c.getCardType() != type && c.getCardType() != d.getCardType() && c.getCardType() != e.getCardType() && b.getCardType() != f.getCardType() &&
+									f.getCardType() != type && d.getCardType() != type && d.getCardType() != e.getCardType() && d.getCardType() != f.getCardType() &&
+									e.getCardType() != type && e.getCardType() != f.getCardType() && c.getCardType() != f.getCardType()) {
+								Linee++;
+							}
+						}
+					}
+				}
+			}
+		}
+		if(Linee >=2) {
+			return true;
+		} else {
+			return false;}
+	}
+	public boolean checkRowGoal() {
+		int Linee = 0;
+		for (int i = 0; i < this.shelfLayout.length; i++) {
+			for (int j = 0; j < this.shelfLayout[i].length; j++) {
+				if (j == 4) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i][j-1];
+						Card c = this.shelfLayout[i][j-2];
+						Card d = this.shelfLayout[i][j-3];
+						Card e = this.shelfLayout[i][j-4];
+						if (b != null && c != null && d != null && e != null) {
+							if (b.getCardType() != type && b.getCardType() != c.getCardType() && b.getCardType() != d.getCardType() && b.getCardType() != e.getCardType() &&
+									c.getCardType() != type && c.getCardType() != d.getCardType() && c.getCardType() != e.getCardType() && d.getCardType() != type &&
+									d.getCardType() != e.getCardType() && e.getCardType() != type) {
+								Linee++;
+							}
+						}
+					}
+				}
+			}
+		}
+		if(Linee >=2) {
+			return true;
+		} else {
+			return false;}
+	}
+	public boolean checkColumnSecondGoal() {
+		int Linee = 0;
+		for (int i = 0; i < this.shelfLayout.length; i++) {
+			for (int j = 0; j < this.shelfLayout[i].length; j++) {
+				if (i == 5) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						Card b = this.shelfLayout[i-1][j];
+						Card c = this.shelfLayout[i-2][j];
+						Card d = this.shelfLayout[i-3][j];
+						Card e = this.shelfLayout[i-4][j];
+						Card f = this.shelfLayout[i-5][j];
+						if (b != null && c != null && d != null && e != null && f != null) {
+							int numTypes = 0;
+							boolean[] typeFound = new boolean[6];
+							Card[] cards = {a,b,c,d,e,f};
+							for (int k = 0; k < 6; k++) {
+								CardType currentType = cards[k].getCardType();
+								if (!typeFound[currentType.ordinal()]) {
+									typeFound[currentType.ordinal()] = true;
+									numTypes++;
+								}
+							}
+							if(numTypes <= 3) {
+								Linee++;}
+						}
+					}
+				}
+			}
+		}
+		if(Linee >=3) {
+			return true;
+		} else {
+			return false;}
+	}
 	}
 
 
