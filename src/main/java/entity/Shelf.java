@@ -2,6 +2,7 @@ package entity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Shelf {
@@ -116,10 +117,7 @@ public class Shelf {
 				}
 			}
 		}
-		if(Linee >=2) {
-			return true;
-		} else {
-			return false;}
+		return Linee >= 2;
 	}
 	public boolean checkRowGoal() {
 		int Linee = 0;
@@ -144,10 +142,7 @@ public class Shelf {
 				}
 			}
 		}
-		if(Linee >=2) {
-			return true;
-		} else {
-			return false;}
+		return Linee >= 2;
 	}
 	public boolean checkColumnSecondGoal() {
 		int Linee = 0;
@@ -179,11 +174,438 @@ public class Shelf {
 				}
 			}
 		}
-		if(Linee >=3) {
-			return true;
-		} else {
-			return false;}
+		return Linee >= 3;
 	}
+	public boolean checkRowSecondGoal() {
+		int Linee = 0;
+		for (int i = 0; i < this.shelfLayout.length; i++) {
+			for (int j = 0; j < this.shelfLayout[i].length; j++) {
+				if (j == 4) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						Card b = this.shelfLayout[i][j-1];
+						Card c = this.shelfLayout[i][j-2];
+						Card d = this.shelfLayout[i][j-3];
+						Card e = this.shelfLayout[i][j-4];
+						if (b != null && c != null && d != null && e != null) {
+							int numTypes = 0;
+							boolean[] typeFound = new boolean[6];
+							Card[] cards = {a,b,c,d,e};
+							for (int k = 0; k < 5; k++) {
+								CardType currentType = cards[k].getCardType();
+								if (!typeFound[currentType.ordinal()]) {
+									typeFound[currentType.ordinal()] = true;
+									numTypes++;
+								}
+							}
+							if(numTypes <= 3) {
+								Linee++;}
+						}
+					}
+				}
+			}
+		}
+		return Linee >= 4;
 	}
+
+
+	public boolean checkDiagonal() {
+		boolean Diagonal1 = false;
+		boolean Diagonal2 = false;
+		for(int i = 0; i < this.shelfLayout.length; i++) {
+			for(int j = 0; j < this.shelfLayout[i].length; j++) {
+				if (j == 0 && (i == 0 || i == 1)) {
+					Card a = this.shelfLayout[i][j];
+					if(a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i+1][j+1];
+						Card c = this.shelfLayout[i+2][j+2];
+						Card d = this.shelfLayout[i+3][j+3];
+						Card e = this.shelfLayout[i+4][j+4];
+						if (b != null && c != null && d != null && e != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type && e.getCardType() == type) {
+								Diagonal1 = true;
+							}
+						}
+					}
+				}
+				if (j == 4 && (i == 0 || i == 1)) {
+					Card a = this.shelfLayout[i][j];
+					if(a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i+1][j-1];
+						Card c = this.shelfLayout[i+2][j-2];
+						Card d = this.shelfLayout[i+3][j-3];
+						Card e = this.shelfLayout[i+4][j-4];
+						if (b != null && c != null && d != null && e != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type && e.getCardType() == type) {
+								Diagonal2 = true;
+							}
+
+						}
+					}
+				}
+			}
+		}
+		return Diagonal1 || Diagonal2;
+	}
+
+
+	public boolean checkTower() {
+		boolean Tower1 = false;
+		boolean Tower2 = false;
+		Card i = this.shelfLayout[5][4];
+		Card j = this.shelfLayout[5][0];
+		if(i != null) {
+			Card a = this.shelfLayout[5][3];Card b = this.shelfLayout[4][3];Card c = this.shelfLayout[5][2];
+			Card d = this.shelfLayout[4][2];Card e = this.shelfLayout[3][2];Card f = this.shelfLayout[5][1];
+			Card g = this.shelfLayout[4][1];Card h = this.shelfLayout[3][1];Card k = this.shelfLayout[2][1];
+			Card l = this.shelfLayout[5][0];Card m = this.shelfLayout[4][0];Card n = this.shelfLayout[3][0];
+			Card o = this.shelfLayout[2][0];Card p = this.shelfLayout[1][0];
+			if(a != null && b != null && c != null && d != null && e != null && f != null && g != null &&
+					h != null && k != null && l != null && m != null && n != null && o != null && p != null) {
+				Tower1 = true;
+			}
+		}
+		if(j != null) {
+			Card a = this.shelfLayout[5][1];Card b = this.shelfLayout[4][1];Card c = this.shelfLayout[5][2];
+			Card d = this.shelfLayout[4][2];Card e = this.shelfLayout[3][2];Card f = this.shelfLayout[5][3];
+			Card g = this.shelfLayout[4][3];Card h = this.shelfLayout[3][3];Card k = this.shelfLayout[2][3];
+			Card l = this.shelfLayout[5][4];Card m = this.shelfLayout[4][4];Card n = this.shelfLayout[3][4];
+			Card o = this.shelfLayout[2][4];Card p = this.shelfLayout[1][4];
+			if(a != null && b != null && c != null && d != null && e != null && f != null && g != null &&
+					h != null && k != null && l != null && m != null && n != null && o != null && p != null) {
+				Tower2 = true;
+			}
+		}
+		return Tower1 || Tower2;
+	}
+
+
+
+	public boolean checkCube() {
+		List<Card> blacklistedCards = new ArrayList<Card>();
+		int Cubi = 0;
+		for (int i = 0; i < this.shelfLayout.length; i++) {
+			for (int j = 0; j < this.shelfLayout[i].length; j++) {
+				if (i > 0 && j < 4) {
+					Card centro = this.shelfLayout[i][j];
+					if (centro != null) {
+						CardType type = centro.getCardType();
+						Card Angolo1 = this.shelfLayout[i][j+1];
+						Card Angolo2 = this.shelfLayout[i-1][j];
+						Card Angolo3 = this.shelfLayout[i-1][j+1];
+						if (Angolo1 != null && Angolo2 != null && Angolo3 != null) {
+							if (Angolo1.getCardType() == type && Angolo2.getCardType() == type && Angolo3.getCardType() == type) {
+								if (!blacklistedCards.contains(centro) && !blacklistedCards.contains(Angolo1) &&
+										!blacklistedCards.contains(Angolo2) && !blacklistedCards.contains(Angolo3)) {
+									blacklistedCards.add(centro);
+									blacklistedCards.add(Angolo1);
+									blacklistedCards.add(Angolo2);
+									blacklistedCards.add(Angolo3);
+									Cubi++;
+								}
+							}
+						}
+
+					}
+				}
+			}
+		}
+		return Cubi >= 2;
+	}
+
+	public boolean checkCoppie() {
+		List<Card> blacklistedCards = new ArrayList<Card>();
+		int Coppie = 0;
+		for (int i = 0; i < this.shelfLayout.length; i++) {
+			for (int j = 0; j < this.shelfLayout[i].length; j++) {
+				if (i < 5) {
+					Card centro = this.shelfLayout[i][j];
+					if (centro != null) {
+						CardType type = centro.getCardType();
+						Card Angolo1 = this.shelfLayout[i+1][j];
+						if (Angolo1 != null) {
+							if (Angolo1.getCardType() == type) {
+								if (!blacklistedCards.contains(centro) && !blacklistedCards.contains(Angolo1)) {
+									blacklistedCards.add(centro);
+									blacklistedCards.add(Angolo1);
+									Coppie++;
+								}
+							}
+						}
+
+					}
+				}
+				if (j < 4) {
+					Card centro = this.shelfLayout[i][j];
+					if (centro != null) {
+						CardType type = centro.getCardType();
+						Card Angolo1 = this.shelfLayout[i][j+1];
+						if (Angolo1 != null) {
+							if (Angolo1.getCardType() == type) {
+								if (!blacklistedCards.contains(centro) && !blacklistedCards.contains(Angolo1)) {
+									blacklistedCards.add(centro);
+									blacklistedCards.add(Angolo1);
+									Coppie++;
+								}
+							}
+						}
+
+					}
+				}
+			}
+		}
+		return Coppie >= 6;
+	}
+
+
+	public boolean checkTetris() {
+		List<Card> blacklistedCards = new ArrayList<Card>();
+		int Tetris = 0;
+		for (int i = 0; i < this.shelfLayout.length; i++) {
+			for (int j = 0; j < this.shelfLayout[i].length; j++) {
+				// 1/14
+				if (j < 2) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i][j+1];
+						Card c = this.shelfLayout[i][j+2];
+						Card d = this.shelfLayout[i][j+3];
+						if (b != null && c != null && d != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type) {
+								if (!blacklistedCards.contains(a) && !blacklistedCards.contains(b) &&
+										!blacklistedCards.contains(c) && !blacklistedCards.contains(d)) {
+									blacklistedCards.add(a);
+									blacklistedCards.add(b);
+									blacklistedCards.add(c);
+									blacklistedCards.add(d);
+									Tetris++;}}}}}
+				// 2/14
+				if (i < 3) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i+1][j];
+						Card c = this.shelfLayout[i+2][j];
+						Card d = this.shelfLayout[i+3][j];
+						if (b != null && c != null && d != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type) {
+								if (!blacklistedCards.contains(a) && !blacklistedCards.contains(b) &&
+										!blacklistedCards.contains(c) && !blacklistedCards.contains(d)) {
+									blacklistedCards.add(a);
+									blacklistedCards.add(b);
+									blacklistedCards.add(c);
+									blacklistedCards.add(d);
+									Tetris++;}}}}}
+				// 3/14
+				if (i > 0 && j > 1) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i][j-1];
+						Card c = this.shelfLayout[i][j-2];
+						Card d = this.shelfLayout[i-1][j-2];
+						if (b != null && c != null && d != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type) {
+								if (!blacklistedCards.contains(a) && !blacklistedCards.contains(b) &&
+										!blacklistedCards.contains(c) && !blacklistedCards.contains(d)) {
+									blacklistedCards.add(a);
+									blacklistedCards.add(b);
+									blacklistedCards.add(c);
+									blacklistedCards.add(d);
+									Tetris++;}}}}}
+				// 4/14
+				if (i > 1 && j < 4) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i-1][j];
+						Card c = this.shelfLayout[i-2][j];
+						Card d = this.shelfLayout[i-2][j+1];
+						if (b != null && c != null && d != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type) {
+								if (!blacklistedCards.contains(a) && !blacklistedCards.contains(b) &&
+										!blacklistedCards.contains(c) && !blacklistedCards.contains(d)) {
+									blacklistedCards.add(a);
+									blacklistedCards.add(b);
+									blacklistedCards.add(c);
+									blacklistedCards.add(d);
+									Tetris++;}}}}}
+				// 5/14
+				if (i < 5 && j < 3) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i][j+1];
+						Card c = this.shelfLayout[i][j+2];
+						Card d = this.shelfLayout[i+1][j+2];
+						if (b != null && c != null && d != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type) {
+								if (!blacklistedCards.contains(a) && !blacklistedCards.contains(b) &&
+										!blacklistedCards.contains(c) && !blacklistedCards.contains(d)) {
+									blacklistedCards.add(a);
+									blacklistedCards.add(b);
+									blacklistedCards.add(c);
+									blacklistedCards.add(d);
+									Tetris++;}}}}}
+				// 6/14
+				if (i < 4 && j > 0) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i+1][j];
+						Card c = this.shelfLayout[i+2][j];
+						Card d = this.shelfLayout[i+2][j-1];
+						if (b != null && c != null && d != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type) {
+								if (!blacklistedCards.contains(a) && !blacklistedCards.contains(b) &&
+										!blacklistedCards.contains(c) && !blacklistedCards.contains(d)) {
+									blacklistedCards.add(a);
+									blacklistedCards.add(b);
+									blacklistedCards.add(c);
+									blacklistedCards.add(d);
+									Tetris++;}}}}}
+				// 7/14
+				if (i > 1 && j > 0) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i-1][j];
+						Card c = this.shelfLayout[i-2][j];
+						Card d = this.shelfLayout[i-2][j-1];
+						if (b != null && c != null && d != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type) {
+								if (!blacklistedCards.contains(a) && !blacklistedCards.contains(b) &&
+										!blacklistedCards.contains(c) && !blacklistedCards.contains(d)) {
+									blacklistedCards.add(a);
+									blacklistedCards.add(b);
+									blacklistedCards.add(c);
+									blacklistedCards.add(d);
+									Tetris++;}}}}}
+				// 8/14
+				if (i > 0 && j < 3) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i][j+1];
+						Card c = this.shelfLayout[i][j+2];
+						Card d = this.shelfLayout[i-1][j+2];
+						if (b != null && c != null && d != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type) {
+								if (!blacklistedCards.contains(a) && !blacklistedCards.contains(b) &&
+										!blacklistedCards.contains(c) && !blacklistedCards.contains(d)) {
+									blacklistedCards.add(a);
+									blacklistedCards.add(b);
+									blacklistedCards.add(c);
+									blacklistedCards.add(d);
+									Tetris++;}}}}}
+				// 9/14
+				if (i < 4 && j < 4) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i+1][j];
+						Card c = this.shelfLayout[i+2][j];
+						Card d = this.shelfLayout[i+2][j+1];
+						if (b != null && c != null && d != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type) {
+								if (!blacklistedCards.contains(a) && !blacklistedCards.contains(b) &&
+										!blacklistedCards.contains(c) && !blacklistedCards.contains(d)) {
+									blacklistedCards.add(a);
+									blacklistedCards.add(b);
+									blacklistedCards.add(c);
+									blacklistedCards.add(d);
+									Tetris++;}}}}}
+				// 10/14
+				if (i < 5 && j > 1) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i][j-1];
+						Card c = this.shelfLayout[i][j-2];
+						Card d = this.shelfLayout[i+1][j-2];
+						if (b != null && c != null && d != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type) {
+								if (!blacklistedCards.contains(a) && !blacklistedCards.contains(b) &&
+										!blacklistedCards.contains(c) && !blacklistedCards.contains(d)) {
+									blacklistedCards.add(a);
+									blacklistedCards.add(b);
+									blacklistedCards.add(c);
+									blacklistedCards.add(d);
+									Tetris++;}}}}}
+				// 11/14
+				if (i < 4 && j > 0) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i+1][j];
+						Card c = this.shelfLayout[i+2][j];
+						Card d = this.shelfLayout[i+1][j-1];
+						if (b != null && c != null && d != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type) {
+								if (!blacklistedCards.contains(a) && !blacklistedCards.contains(b) &&
+										!blacklistedCards.contains(c) && !blacklistedCards.contains(d)) {
+									blacklistedCards.add(a);
+									blacklistedCards.add(b);
+									blacklistedCards.add(c);
+									blacklistedCards.add(d);
+									Tetris++;}}}}}
+				// 12/14
+				if (i > 1 && j < 4) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i-1][j];
+						Card c = this.shelfLayout[i-2][j];
+						Card d = this.shelfLayout[i-1][j+1];
+						if (b != null && c != null && d != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type) {
+								if (!blacklistedCards.contains(a) && !blacklistedCards.contains(b) &&
+										!blacklistedCards.contains(c) && !blacklistedCards.contains(d)) {
+									blacklistedCards.add(a);
+									blacklistedCards.add(b);
+									blacklistedCards.add(c);
+									blacklistedCards.add(d);
+									Tetris++;}}}}}
+				// 13/14
+				if (i > 0 && j > 1) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i][j-1];
+						Card c = this.shelfLayout[i][j-2];
+						Card d = this.shelfLayout[i-1][j-1];
+						if (b != null && c != null && d != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type) {
+								if (!blacklistedCards.contains(a) && !blacklistedCards.contains(b) &&
+										!blacklistedCards.contains(c) && !blacklistedCards.contains(d)) {
+									blacklistedCards.add(a);
+									blacklistedCards.add(b);
+									blacklistedCards.add(c);
+									blacklistedCards.add(d);
+									Tetris++;}}}}}
+				// 14/14
+				if (i < 5 && j < 3) {
+					Card a = this.shelfLayout[i][j];
+					if (a != null) {
+						CardType type = a.getCardType();
+						Card b = this.shelfLayout[i][j+1];
+						Card c = this.shelfLayout[i][j+2];
+						Card d = this.shelfLayout[i+1][j+1];
+						if (b != null && c != null && d != null) {
+							if (b.getCardType() == type && c.getCardType() == type && d.getCardType() == type) {
+								if (!blacklistedCards.contains(a) && !blacklistedCards.contains(b) &&
+										!blacklistedCards.contains(c) && !blacklistedCards.contains(d)) {
+									blacklistedCards.add(a);
+									blacklistedCards.add(b);
+									blacklistedCards.add(c);
+									blacklistedCards.add(d);
+									Tetris++;}}}}}}}
+		return Tetris >= 4;
+		// Lo so che è orribile ma è l'unico modo che mi è venuto in mente, se abbiamo tempo a fine progetto vediamo se abbiamo idee
+	}
+}
 
 
