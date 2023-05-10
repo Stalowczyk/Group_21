@@ -1,21 +1,25 @@
 package entity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Shelf {
 	private Card[][] shelfLayout;
 	private int maxRaw = 6;
 	private int chosenColumn;
+	private int points;
+	public static int boardsFilled = 0;
 	
 	public Shelf(int cardNumber, int chosenColumn) {
 		this.shelfLayout = new Card[6][5];
 		this.chosenColumn = chosenColumn;
+		this.points = 0;
 	}
-	
-	
+	public int getPoints() {
+		return points;
+	}
+	public void addPoints(int amount) {
+		points += amount;
+	}
 	
 	public void placeOnShelf(ArrayList<Card> chosenCards) {		
 		int startPoint = 0;
@@ -605,6 +609,75 @@ public class Shelf {
 									Tetris++;}}}}}}}
 		return Tetris >= 4;
 		// Lo so che è orribile ma è l'unico modo che mi è venuto in mente, se abbiamo tempo a fine progetto vediamo se abbiamo idee
+	}
+	public void findCardGroups() {
+		boolean[][] visited = new boolean[6][5];
+		List<Integer> groupSizes = new ArrayList<>();
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 5; j++) {
+				if (!visited[i][j]) {
+					Card card = this.shelfLayout[i][j];
+					if (card != null) {
+						int groupSize = bfs(visited, i, j, card);
+						if (groupSize > 2) {
+							groupSizes.add(groupSize);
+						}
+					}
+				}
+			}
+		}
+		for (int i = 0; i < groupSizes.size(); i++) {
+			switch (groupSizes.get(i)) {
+				case 3 -> this.addPoints(2);
+				case 4 -> this.addPoints(3);
+				case 5 -> this.addPoints(5);
+				case 6 -> this.addPoints(8);
+				default -> this.addPoints(8);
+			}
+		}
+	}
+
+	private int bfs(boolean[][] visited, int row, int col, Card card) {
+		int groupSize = 0;
+		Queue<int[]> queue = new LinkedList<>();
+		queue.offer(new int[]{row, col});
+		while (!queue.isEmpty()) {
+			int[] curr = queue.poll();
+			int r = curr[0];
+			int c = curr[1];
+			if (r < 0 || r >= 6 || c < 0 || c >= 5 || visited[r][c]) {
+				continue;
+			}
+			Card currCard = shelfLayout[r][c];
+			if (currCard == null || currCard.getCardType() != card.getCardType()) {
+				continue;
+			}
+			visited[r][c] = true;
+			groupSize++;
+			queue.offer(new int[]{r - 1, c});
+			queue.offer(new int[]{r + 1, c});
+			queue.offer(new int[]{r, c - 1});
+			queue.offer(new int[]{r, c + 1});
+		}
+		return groupSize;
+	}
+
+	public boolean isBoardFilled() {
+		boolean board = true;
+		for (int i = 0; i < this.shelfLayout.length; i++) {
+			for (int j = 0; j < this.shelfLayout[i].length; j++) {
+				if (this.shelfLayout[i][j] == null) {
+					board = false;
+				}
+			}
+		}
+		if (boardsFilled == 0 && board) {
+			this.addPoints(1);
+			boardsFilled++;
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 

@@ -3,6 +3,8 @@ import java.util.Random;
 
 
 public class CommonGoals {
+    private static int completedTimes0 = 0;
+    private static int completedTimes1 = 0;
     private Shelf shelf;
     private static final Random random = new Random();
     Goals[] choosenGoals;
@@ -58,7 +60,7 @@ public class CommonGoals {
 
 
     public boolean isFirstGoalAchieved(Shelf shelf) {
-        return switch (getFirstIndex()) {
+        boolean Result = switch (getFirstIndex()) {
             case 1 -> this.checkGoal1(shelf);
             case 2 -> this.checkGoal2(shelf);
             case 3 -> this.checkGoal3(shelf);
@@ -73,9 +75,20 @@ public class CommonGoals {
             case 12 -> this.checkGoal12(shelf);
             default -> throw new IllegalArgumentException("Goal Index invalido");
         };
+        if(Result) {
+            switch (completedTimes0) {
+                case 0 -> shelf.addPoints(8);
+                case 1 -> shelf.addPoints(6);
+                case 2 -> shelf.addPoints(4);
+                case 3 -> shelf.addPoints(2);
+                default -> throw new IllegalArgumentException("Index invalido");
+            }
+            completedTimes0++;
+        }
+        return Result;
     }
     public boolean isSecondGoalAchieved(Shelf shelf) {
-        return switch (getSecondIndex()) {
+        boolean Result = switch (getSecondIndex()) {
             case 1 -> this.checkGoal1(shelf);
             case 2 -> this.checkGoal2(shelf);
             case 3 -> this.checkGoal3(shelf);
@@ -90,6 +103,17 @@ public class CommonGoals {
             case 12 -> this.checkGoal12(shelf);
             default -> throw new IllegalArgumentException("Goal Index invalido");
         };
+        if(Result) {
+            switch (completedTimes1) {
+                case 0 -> shelf.addPoints(8);
+                case 1 -> shelf.addPoints(6);
+                case 2 -> shelf.addPoints(4);
+                case 3 -> shelf.addPoints(2);
+                default -> throw new IllegalArgumentException("Index invalido");
+            }
+            completedTimes1++;
+        }
+        return Result;
     }
 }
 
