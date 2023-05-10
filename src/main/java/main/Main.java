@@ -38,6 +38,7 @@ public class Main {
         window.setVisible(true);
         
          System.out.println("ok");
+         System.out.println("prova");
     }
     
 }
