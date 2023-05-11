@@ -65,4 +65,26 @@ public class PersonalGoalsCards {
 		}
 	}
 	
+	//questo metodo restituisce il puntegio in base a quante carte sono uguali tra carta obiettivo e shelf
+	public int score(Shelf s) {
+		int cont = 0;
+		int sc = 0;	//punteggio
+		
+		for (int i = 0; i <= 6; i++) {
+			int c = this.currentGoalCardLayout.get(i).getCardCol(); // colonna da confrontare
+			int r = this.currentGoalCardLayout.get(i).getCardRow(); // riga da confrontare
+			if (s.getCard(r, c).getCardType() == this.currentGoalCardLayout.get(i).getCardType()) cont++;
+		}
+		switch (cont) {
+		case 0 -> sc = 0;
+		case 1 -> sc = 1;
+		case 3 -> sc = 4;
+		case 4 -> sc = 6;
+		case 5 -> sc = 9;
+		case 6 -> sc = 12;
+		}
+		return sc;
+	}
+	
+
 }

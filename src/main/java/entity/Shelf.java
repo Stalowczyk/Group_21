@@ -23,6 +23,11 @@ public class Shelf {
 		points += amount;
 	}
 	
+	//forse è da mettere come PlacedCard
+	public Card getCard(int row, int column) {
+		return shelfLayout[row][column];
+	}
+	
 	public void placeOnShelf(ArrayList<Card> chosenCards) {		
 		int startPoint = 0;
 		int c = 0;

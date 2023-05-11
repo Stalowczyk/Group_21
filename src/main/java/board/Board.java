@@ -241,6 +241,30 @@ public final class Board {
     	 }
     	 System.out.println(chosenCards);
      }
+ 	
+ 	
+ 	//questo metodo restituisce true se la card ha tutti e 4 i lati liberi
+ 	public Boolean hasAllFreeBoarder(int x, int y) {
+        PlacedCard card = getCardAtCords(x, y);
+        if(!isCardPlaced(card.getCardY()+48, y) && !isCardPlaced(card.getCardY()-48, y) && !isCardPlaced(x,card.getCardX()+48) && !isCardPlaced(x,card.getCardX()-48)){
+        	return true;
+        }
+		return false;
+ 	}
+ 	
+ 	
+ 	//questo metodo restituisce true se la board va refreshata
+ 	public Boolean refreshBoard() {	
+		for(int i = 0; i < this.currentBoardLayout.size(); i++) {
+			int x = this.currentBoardLayout.get(i).getCardX();
+			int y = this.currentBoardLayout.get(i).getCardY();
+			if(!this.hasAllFreeBoarder(x, y)) {
+				return false;
+			}
+		}
+ 		return true;
+ 	}
+ 	
 }
 
         
