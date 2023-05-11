@@ -53,7 +53,9 @@ public class Player {
            else if(keyH.rightPressed)
                x += speed;
            else if(keyH.spacePressed){
-                b.removePlacedCard(getPlayerX(), getPlayerY());
+               
+               PlacedCard p = b.getCardAtCords(getPlayerX(), getPlayerY());
+               b.chosenFromBoard(p.getCardRow(), p.getCardCol());
                
            }
            moving = true;   

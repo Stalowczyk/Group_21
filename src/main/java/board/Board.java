@@ -208,30 +208,29 @@ public final class Board {
           
  	public void chosenFromBoard(int chosenRaw, int chosenCol) {	
     	 
-    	 if(chosenCards.isEmpty()) {
-    	 	 first = true;
-    	 }else first = false;
+    	 first = chosenCards.isEmpty();
     	 
-    	 if(chosenCards.size() < 4) {
-         	 if(this.hasAFreeBorder(chosenRaw, chosenCol)) {
+    	 if(chosenCards.size() < 3) {
+         	 if(this.hasAFreeBorder(chosenRaw*gp.tileSize, chosenCol*gp.tileSize)) {
          		 if(first) {
-         			 chosenCards.add(this.getCardAtCords(chosenRaw, chosenCol));
+         			 chosenCards.add(this.getCardAtCords(chosenRaw*gp.tileSize, chosenCol*gp.tileSize));
         			 firstRaw = chosenRaw;
         			 firstCol = chosenCol;
         			 oldRaw = chosenRaw;
         			 oldCol = chosenCol;
+        			 System.out.println("prima carta");
         		 }
         		 else {
         			 if(chosenRaw == firstRaw) {
         			    if(chosenCol == oldCol + 1) {
-        			    	chosenCards.add(this.getCardAtCords(chosenRaw, chosenCol));
+        			    	chosenCards.add(this.getCardAtCords(chosenRaw*gp.tileSize, chosenCol*gp.tileSize));
         			    	oldRaw = chosenRaw;
         	        		oldCol = chosenCol;
         			    }
         			 }
         			 if(chosenCol == firstCol) {
         			    if(chosenRaw == oldRaw + 1) {
-        			    	chosenCards.add(this.getCardAtCords(chosenRaw, chosenCol));
+        			    	chosenCards.add(this.getCardAtCords(chosenRaw*gp.tileSize, chosenCol*gp.tileSize));
         			    	oldRaw = chosenRaw;
         	        		oldCol = chosenCol;
         			    }

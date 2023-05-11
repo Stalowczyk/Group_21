@@ -40,8 +40,9 @@ public class Shelf {
 			for (int i = 0; i < chosenCards.size(); i++) {
 				chosenCards.remove(i);
 			}
-		} else {
-			// error condition
+		}
+		else {
+			throw new NullPointerException("non puoi inserire una tessera dove non c'è spazio");
 		}
 	}
 
@@ -72,8 +73,6 @@ public class Shelf {
 		}
 		for (int count : cardCounts.values()) {                              // Controlla se nella hashmap ci sono almeno 8 cardtype uguali
 			if (count >= 8) {                                                // Serve per secondo obbiettivo
-				
-				//***********************manca controllo per vedere se sono dello stesso colore**************************
 				return true;
 			}
 		}
@@ -374,9 +373,8 @@ public class Shelf {
 		return Coppie >= 6;
 	}
 
-	//prova
 	
-	public boolean checkTetris() {			//sono 8 possibilita, non 14- metodo che controlla l'angolo di partenza va bene e un'altro metodo che controlla se va bene il tetris
+	public boolean checkTetris() {	
 		List<Card> blacklistedCards = new ArrayList<Card>();
 		int Tetris = 0;
 		for (int i = 0; i < this.shelfLayout.length; i++) {
@@ -649,7 +647,7 @@ public class Shelf {
 		}
 	}
 
-	private int bfs(boolean[][] visited, int row, int col, Card card) {    //cosa fa la  funzione?????
+	private int bfs(boolean[][] visited, int row, int col, Card card) {    //controlla i group
 		int groupSize = 0;
 		Queue<int[]> queue = new LinkedList<>();
 		queue.offer(new int[]{row, col});
@@ -674,7 +672,7 @@ public class Shelf {
 		return groupSize;
 	}
 
-	public boolean isBoardFilled() {		//forse shelf filled????
+	public boolean isShelfFilled() {		//forse shelf filled????
 		boolean board = true;
 		for (int i = 0; i < this.shelfLayout.length; i++) {
 			for (int j = 0; j < this.shelfLayout[i].length; j++) {

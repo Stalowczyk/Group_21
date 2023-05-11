@@ -6,19 +6,16 @@ import java.util.Random;
 import main.GamePanel;
 
 public class PersonalGoalsCards {
+	
 	final int numberOfSpace = 6;
 	int number;
 	final int NumberOfRow = 6;
 	final int numberOfCol = 5;
-
 	int[] personalGoal;
 	int[][] personalGoalCardsLayout;
-	public ArrayList<Card> currentGoalCardLayout = new ArrayList<>();
-
+	public ArrayList<PlacedCard> currentGoalCardLayout = new ArrayList<>();
 	private int numberOfPlayers;
-
 	ArrayList<Card> spaceIn;
-
 	GamePanel gp;
 
 	public PersonalGoalsCards(int numberOfPlayers, GamePanel gp) { // a seconda di quanti giocatori ci sono so quante
@@ -36,7 +33,7 @@ public class PersonalGoalsCards {
 		personalGoal = new int[6];
 		Random random = new Random();
 		for (int i = 0; i <= numberOfSpace; i++) {
-			number = random.nextInt(31);
+			number = random.nextInt(30);
 			personalGoal[i] = number;
 		}
 
@@ -44,7 +41,7 @@ public class PersonalGoalsCards {
 				{ 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } };
 
 		for (int i = 0; i < numberOfSpace; i++) {
-			personalGoalCardsLayout[personalGoal[i] / 5][(personalGoal[i] % 5) - 1] = 1;		//sbagliato
+			personalGoalCardsLayout[personalGoal[i] / 5][(personalGoal[i] % 5)] = 1;	
 		}
 	}
 
@@ -67,4 +64,5 @@ public class PersonalGoalsCards {
 			}
 		}
 	}
+	
 }
