@@ -46,28 +46,28 @@ public class PlacedCard extends Card{
         switch(this.getCardType()){
                 case WHITE -> {
                     g2.setColor(Color.white);
-                    g2.fillRect(this.getCardY(),this.getCardX(), gp.tileSize, gp.tileSize);
+                    g2.fillRect(this.getCardX(),this.getCardY(), gp.tileSize, gp.tileSize);
                     
                 }
                 case PINK -> {
                     g2.setColor(Color.PINK);
-                    g2.fillRect(this.getCardY(),this.getCardX(), gp.tileSize, gp.tileSize);
+                    g2.fillRect(this.getCardX(),this.getCardY(), gp.tileSize, gp.tileSize);
                 }
                 case BLUE -> {
                     g2.setColor(Color.BLUE);
-                    g2.fillRect(this.getCardY(),this.getCardX(), gp.tileSize, gp.tileSize);
+                    g2.fillRect(this.getCardX(),this.getCardY(), gp.tileSize, gp.tileSize);
                 }
                 case CYAN -> {
                     g2.setColor(Color.CYAN);
-                    g2.fillRect(this.getCardY(),this.getCardX(), gp.tileSize, gp.tileSize);
+                    g2.fillRect(this.getCardX(),this.getCardY(), gp.tileSize, gp.tileSize);
                 }
                 case GREEN -> {
                     g2.setColor(Color.GREEN);
-                    g2.fillRect(this.getCardY(),this.getCardX(), gp.tileSize, gp.tileSize);
+                    g2.fillRect(this.getCardX(),this.getCardY(), gp.tileSize, gp.tileSize);
                 }
                 case YELLOW -> {
                     g2.setColor(Color.YELLOW);
-                    g2.fillRect(this.getCardY(),this.getCardX(), gp.tileSize, gp.tileSize);
+                    g2.fillRect(this.getCardX(),this.getCardY(), gp.tileSize, gp.tileSize);
                 }
 
 

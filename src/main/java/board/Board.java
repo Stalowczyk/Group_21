@@ -77,8 +77,8 @@ public final class Board {
     }
             
     public void randomizeBoard(){
-        for (int row = 0; row < this.boardLayout.length; row++) {    
-            for (int col = 0; col < this.boardLayout[row].length; col++) {
+        for (int col = 0; col < this.boardLayout.length; col++) {             
+            for (int row = 0; row < this.boardLayout[col].length; row++) {
                 if(this.boardLayout[row][col]==1){
                     Random rand = new Random();
                     int randomCard = rand.nextInt((6-1)+1)+1;
@@ -100,8 +100,8 @@ public final class Board {
     }
     
     public void placeCardsOnBoard(Bag b){
-        for (int row = 0; row < this.boardLayout.length; row++) {             
-            for (int col = 0; col < this.boardLayout[row].length; col++){
+        for (int col = 0; col < this.boardLayout.length; col++) {             
+            for (int row = 0; row < this.boardLayout[col].length; row++){
                 if(this.boardLayout[row][col]==1){
                     PlacedCard p = new PlacedCard(b.pullRandom().getCardType(),row,col,gp);
                     System.out.println(row+" "+col);
@@ -128,16 +128,16 @@ public final class Board {
     
     
     public void draw(Graphics2D g2){                     
-        for (int row = 0; row < this.boardLayout.length; row++) {             
-            for (int col = 0; col < this.boardLayout[row].length; col++) {                                     
+        for (int col = 0; col < this.boardLayout.length; col++) {             
+            for (int row = 0; row < this.boardLayout[col].length; row++) {                                     
                 switch(this.boardLayout[row][col]){                     
                    case 0 -> {
                         g2.setColor(Color.BLACK);
-                        g2.fillRect(col*gp.tileSize, row*gp.tileSize, gp.tileSize, gp.tileSize);
+                        g2.fillRect(row*gp.tileSize, col*gp.tileSize, gp.tileSize, gp.tileSize);
                     }
                     case 1 -> {
                         g2.setColor(Color.GRAY);
-                        g2.fillRect(col*gp.tileSize, row*gp.tileSize, gp.tileSize, gp.tileSize);
+                        g2.fillRect(row*gp.tileSize, col*gp.tileSize, gp.tileSize, gp.tileSize);
                     }
                 }
             }
@@ -164,7 +164,7 @@ public final class Board {
     
     public boolean isCardPlaced(int x,int y){
         for(int i = 0;i<currentBoardLayout.size();i++){
-            if(x==(currentBoardLayout.get(i).getCardY())&&y==(currentBoardLayout.get(i).getCardX())){
+            if(x==(currentBoardLayout.get(i).getCardX())&&y==(currentBoardLayout.get(i).getCardY())){
                 
                 return true;
             }
@@ -182,7 +182,7 @@ public final class Board {
     
     public boolean hasAFreeBorder(int x,int y){
         PlacedCard card = getCardAtCords(x, y);
-        System.out.println("Card cords "+card.getCardY()+" " + card.getCardX());
+        System.out.println("Card cords "+card.getCardX()+" " + card.getCardY());
         if(isCardPlaced(card.getCardY()+48, y)){
             if(isCardPlaced(card.getCardY()-48, y)){
                 if(isCardPlaced(x,card.getCardX()+48)){
@@ -199,7 +199,7 @@ public final class Board {
 
    public PlacedCard getCardAtCords(int x,int y){
        for(int i = 0;i<currentBoardLayout.size();i++){
-            if(x==(currentBoardLayout.get(i).getCardY())&&y==(currentBoardLayout.get(i).getCardX())){
+            if(x==(currentBoardLayout.get(i).getCardX())&&y==(currentBoardLayout.get(i).getCardY())){
                 return currentBoardLayout.get(i);
             }
        }

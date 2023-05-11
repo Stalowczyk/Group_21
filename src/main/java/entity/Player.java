@@ -53,10 +53,8 @@ public class Player {
            else if(keyH.rightPressed)
                x += speed;
            else if(keyH.spacePressed){
-                //BUG BISOGNA PASSARE Y E X per farlo funzionare
-                //b.removePlacedCard(getPlayerY(), getPlayerX());
-                PlacedCard p = b.getCardAtCords(getPlayerY(), getPlayerX());
-                b.chosenFromBoard(p.getCardCol(), p.getCardRow());
+                b.removePlacedCard(getPlayerX(), getPlayerY());
+               
            }
            moving = true;   
         }
