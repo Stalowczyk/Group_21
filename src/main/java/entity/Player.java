@@ -55,8 +55,8 @@ public class Player {
            else if(keyH.spacePressed){
                 //BUG BISOGNA PASSARE Y E X per farlo funzionare
                 //b.removePlacedCard(getPlayerY(), getPlayerX());
-                System.out.println("Player cords "+getPlayerX()+" "+getPlayerY());
-                System.out.println(b.hasAFreeBorder(getPlayerX(), getPlayerY()));
+                PlacedCard p = b.getCardAtCords(getPlayerY(), getPlayerX());
+                b.chosenFromBoard(p.getCardCol(), p.getCardRow());
            }
            moving = true;   
         }

@@ -44,7 +44,7 @@ public class PersonalGoalsCards {
 				{ 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } };
 
 		for (int i = 0; i < numberOfSpace; i++) {
-			personalGoalCardsLayout[personalGoal[i] / 5][(personalGoal[i] % 5) - 1] = 1;
+			personalGoalCardsLayout[personalGoal[i] / 5][(personalGoal[i] % 5) - 1] = 1;		//sbagliato
 		}
 	}
 

@@ -185,8 +185,8 @@ public final class Board {
         System.out.println("Card cords "+card.getCardY()+" " + card.getCardX());
         if(isCardPlaced(card.getCardY()+48, y)){
             if(isCardPlaced(card.getCardY()-48, y)){
-                if(isCardPlaced(x,card.getCardX()+528)){
-                    if(isCardPlaced(x,card.getCardX()-528)){
+                if(isCardPlaced(x,card.getCardX()+48)){
+                    if(isCardPlaced(x,card.getCardX()-48)){
                         return false;
                     }
                 }
@@ -238,7 +238,9 @@ public final class Board {
         			 }
         		 }
         	 }
+         
     	 }
+    	 System.out.println(chosenCards);
      }
 }
 

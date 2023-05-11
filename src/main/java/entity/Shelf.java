@@ -3,25 +3,19 @@ package entity;
 import java.util.*;
 
 public class Shelf {
+	//forse bisogna cambiare card con placed card*****************
 	private Card[][] shelfLayout;
 	private int maxRaw = 6;
 	private int chosenColumn;
-<<<<<<< HEAD
-
-=======
 	private int points;
 	public static int boardsFilled = 0;
 	
->>>>>>> branch 'dev' of https://github.com/Stalowczyk/Group_21.git
 	public Shelf(int cardNumber, int chosenColumn) {
 		this.shelfLayout = new Card[6][5];
 		this.chosenColumn = chosenColumn;
 		this.points = 0;
 	}
-<<<<<<< HEAD
 
-	public void placeOnShelf(ArrayList<Card> chosenCards) {
-=======
 	public int getPoints() {
 		return points;
 	}
@@ -30,7 +24,6 @@ public class Shelf {
 	}
 	
 	public void placeOnShelf(ArrayList<Card> chosenCards) {		
->>>>>>> branch 'dev' of https://github.com/Stalowczyk/Group_21.git
 		int startPoint = 0;
 		int c = 0;
 		int cardNumber = chosenCards.size();
@@ -62,8 +55,7 @@ public class Shelf {
 				&& type == this.shelfLayout[5][4].getCardType()) {
 			return true;
 		}
-<<<<<<< HEAD
-=======
+
 		return false;}
 
 	public boolean checkCardCount() {                                         // Controlla tutti gli elementi della shelf
@@ -80,16 +72,14 @@ public class Shelf {
 		}
 		for (int count : cardCounts.values()) {                              // Controlla se nella hashmap ci sono almeno 8 cardtype uguali
 			if (count >= 8) {                                                // Serve per secondo obbiettivo
+				
+				//***********************manca controllo per vedere se sono dello stesso colore**************************
 				return true;
 			}
 		}
->>>>>>> branch 'dev' of https://github.com/Stalowczyk/Group_21.git
 		return false;
 	}
-<<<<<<< HEAD
-}
-=======
-
+	
 	public boolean checkXShape() {                                              // Controlla se nella shelf si forma una X di carte dello stesso cardtype
 		for (int i = 0; i < this.shelfLayout.length; i++) {
 			for (int j = 0; j < this.shelfLayout[i].length; j++) {
@@ -111,7 +101,7 @@ public class Shelf {
 			}
 		} return false;
 	}
-	public boolean checkColumnGoal() {
+	public boolean checkColumnGoal() {		//obiettivo delle colonne di diversi tipi o righe? - 6 no 5
 		int Linee = 0;
 		for (int i = 0; i < this.shelfLayout.length; i++) {
 			for (int j = 0; j < this.shelfLayout[i].length; j++) {
@@ -119,6 +109,8 @@ public class Shelf {
 					Card a = this.shelfLayout[i][j];
 					if (a != null) {
 						CardType type = a.getCardType();
+						
+						//********************************da sistemare con vettore**********************
 						Card b = this.shelfLayout[i-1][j];
 						Card c = this.shelfLayout[i-2][j];
 						Card d = this.shelfLayout[i-3][j];
@@ -146,6 +138,8 @@ public class Shelf {
 					Card a = this.shelfLayout[i][j];
 					if (a != null) {
 						CardType type = a.getCardType();
+						
+						//*************************************mettere vettore come sopra**********************
 						Card b = this.shelfLayout[i][j-1];
 						Card c = this.shelfLayout[i][j-2];
 						Card d = this.shelfLayout[i][j-3];
@@ -163,13 +157,15 @@ public class Shelf {
 		}
 		return Linee >= 2;
 	}
-	public boolean checkColumnSecondGoal() {
+	public boolean checkColumnSecondGoal() {		//quello delle 3 colonne
 		int Linee = 0;
 		for (int i = 0; i < this.shelfLayout.length; i++) {
 			for (int j = 0; j < this.shelfLayout[i].length; j++) {
 				if (i == 5) {
 					Card a = this.shelfLayout[i][j];
 					if (a != null) {
+						
+						//***************************vettore***********************
 						Card b = this.shelfLayout[i-1][j];
 						Card c = this.shelfLayout[i-2][j];
 						Card d = this.shelfLayout[i-3][j];
@@ -181,7 +177,7 @@ public class Shelf {
 							Card[] cards = {a,b,c,d,e,f};
 							for (int k = 0; k < 6; k++) {
 								CardType currentType = cards[k].getCardType();
-								if (!typeFound[currentType.ordinal()]) {
+								if (!typeFound[currentType.ordinal()]) {			//ordinal?????
 									typeFound[currentType.ordinal()] = true;
 									numTypes++;
 								}
@@ -195,7 +191,7 @@ public class Shelf {
 		}
 		return Linee >= 3;
 	}
-	public boolean checkRowSecondGoal() {
+	public boolean checkRowSecondGoal() {			//quello delle 4 righe
 		int Linee = 0;
 		for (int i = 0; i < this.shelfLayout.length; i++) {
 			for (int j = 0; j < this.shelfLayout[i].length; j++) {
@@ -380,7 +376,7 @@ public class Shelf {
 
 	//prova
 	
-	public boolean checkTetris() {
+	public boolean checkTetris() {			//sono 8 possibilita, non 14- metodo che controlla l'angolo di partenza va bene e un'altro metodo che controlla se va bene il tetris
 		List<Card> blacklistedCards = new ArrayList<Card>();
 		int Tetris = 0;
 		for (int i = 0; i < this.shelfLayout.length; i++) {
@@ -653,7 +649,7 @@ public class Shelf {
 		}
 	}
 
-	private int bfs(boolean[][] visited, int row, int col, Card card) {
+	private int bfs(boolean[][] visited, int row, int col, Card card) {    //cosa fa la  funzione?????
 		int groupSize = 0;
 		Queue<int[]> queue = new LinkedList<>();
 		queue.offer(new int[]{row, col});
@@ -678,7 +674,7 @@ public class Shelf {
 		return groupSize;
 	}
 
-	public boolean isBoardFilled() {
+	public boolean isBoardFilled() {		//forse shelf filled????
 		boolean board = true;
 		for (int i = 0; i < this.shelfLayout.length; i++) {
 			for (int j = 0; j < this.shelfLayout[i].length; j++) {
@@ -697,5 +693,4 @@ public class Shelf {
 	}
 }
 
->>>>>>> branch 'dev' of https://github.com/Stalowczyk/Group_21.git
 
