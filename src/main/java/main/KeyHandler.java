@@ -13,7 +13,7 @@ import java.awt.event.KeyListener;
  */
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed,rightPressed, spacePressed;
+    public boolean upPressed, downPressed, leftPressed,rightPressed, spacePressed, rPressed, enterPressed;
     
     
     @Override
@@ -39,6 +39,12 @@ public class KeyHandler implements KeyListener {
                 
             case(KeyEvent.VK_SPACE):
                 spacePressed = true;
+            
+            case(KeyEvent.VK_R):
+            	rPressed = true;
+            
+            case(KeyEvent.VK_ENTER):
+            	enterPressed = true;
         }
     }
 
@@ -60,8 +66,16 @@ public class KeyHandler implements KeyListener {
             
             case(KeyEvent.VK_SPACE):
                 spacePressed = false;
+            
+            case(KeyEvent.VK_R):
+            	rPressed = false;
+            
+            case(KeyEvent.VK_ENTER):
+            	enterPressed = false;
         }
+        }
+        
       
     }
     
-}
+

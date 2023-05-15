@@ -53,10 +53,18 @@ public class Player {
            else if(keyH.rightPressed)
                x += speed;
            else if(keyH.spacePressed){
-               
-               PlacedCard p = b.getCardAtCords(getPlayerX(), getPlayerY());
-               b.chosenFromBoard(p.getCardRow(), p.getCardCol());
-               
+        	   b.chosenFromBoard(this.getPlayerX()/gp.tileSize, this.getPlayerY()/gp.tileSize);
+        	   System.out.println(b.hasAFreeBorder(getPlayerX(), getPlayerY()));
+           }
+            
+          //r canccella tutte le scelte nell'arraylist chosecards
+           else if(keyH.rPressed) {
+        	   b.deleteChosenCards();
+           }
+            
+           else if(keyH.enterPressed) {		  
+        	  b.removeChosenCardsFromBoard();
+         	  b.deleteChosenCards(); 
            }
            moving = true;   
         }

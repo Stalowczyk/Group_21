@@ -38,7 +38,7 @@ public final class Board {
     private int oldCol;
     private boolean first;
     
-    ArrayList<Card> chosenCards;		     
+    ArrayList<PlacedCard> chosenCards;		     
     
     public Board(int numberOfPlayers,GamePanel gp,Bag b){
         this.numberOfPlayers = numberOfPlayers;
@@ -48,7 +48,7 @@ public final class Board {
         setDefaultBoardLayout();
         setBoardSize();
         placeCardsOnBoard(b);
-        chosenCards = new ArrayList<Card>();
+        chosenCards = new ArrayList<PlacedCard>();
     }
     
     
@@ -115,13 +115,37 @@ public final class Board {
                 
     }
     
+    //distribuisce le carte sulla board anche se alcune sono già piazzate
+    //per adesso lascio così poi si vedrà
+    public void repeatPlaceCardsOnBoard(Bag b){
+        for (int col = 0; col < this.boardLayout.length; col++) {             
+            for (int row = 0; row < this.boardLayout[col].length; row++){
+                if(this.boardLayout[row][col]==1 && this.getCardAtCords(row*gp.tileSize, col*gp.tileSize) == null){
+                    PlacedCard p = new PlacedCard(b.pullRandom().getCardType(),row,col,gp);
+                    System.out.println(row+" "+col);
+                    currentBoardLayout.add(p);
+                    System.out.println(p.getCardRow()+" "+p.getCardCol());
+                }
+                
+            }
+            
+        }
+                
+    }
+    
+    
     public void printAllCardsOnBoard(){
         
         currentBoardLayout.forEach(x -> System.out.println(x));
     }
     
     public void update(){
- 
+    	if(this.refreshBoard()) {
+    		//System.out.println("è entrato nell'update");
+    		this.repeatPlaceCardsOnBoard(b);
+    		
+    	}
+    	//System.out.println("refresh");
     }
     
     
@@ -183,14 +207,16 @@ public final class Board {
     public boolean hasAFreeBorder(int x,int y){
         PlacedCard card = getCardAtCords(x, y);
         System.out.println("Card cords "+card.getCardX()+" " + card.getCardY());
-        if(isCardPlaced(card.getCardY()+48, y)){
-            if(isCardPlaced(card.getCardY()-48, y)){
-                if(isCardPlaced(x,card.getCardX()+48)){
-                    if(isCardPlaced(x,card.getCardX()-48)){
-                        return false;
+        if(card != null) {
+            if(isCardPlaced(card.getCardX()+48, y)){
+                if(isCardPlaced(card.getCardX()-48, y)){
+                    if(isCardPlaced(x,card.getCardY()+48)){
+                        if(isCardPlaced(x,card.getCardY()-48)){
+                            return false;
+                        }
                     }
                 }
-            }
+            }	
         }
         return true;
     }
@@ -209,46 +235,57 @@ public final class Board {
  	public void chosenFromBoard(int chosenRaw, int chosenCol) {	
     	 
     	 first = chosenCards.isEmpty();
-    	 
-    	 if(chosenCards.size() < 3) {
-         	 if(this.hasAFreeBorder(chosenRaw*gp.tileSize, chosenCol*gp.tileSize)) {
-         		 if(first) {
-         			 chosenCards.add(this.getCardAtCords(chosenRaw*gp.tileSize, chosenCol*gp.tileSize));
-        			 firstRaw = chosenRaw;
-        			 firstCol = chosenCol;
-        			 oldRaw = chosenRaw;
-        			 oldCol = chosenCol;
-        			 System.out.println("prima carta");
-        		 }
-        		 else {
-        			 if(chosenRaw == firstRaw) {
-        			    if(chosenCol == oldCol + 1) {
-        			    	chosenCards.add(this.getCardAtCords(chosenRaw*gp.tileSize, chosenCol*gp.tileSize));
-        			    	oldRaw = chosenRaw;
-        	        		oldCol = chosenCol;
-        			    }
-        			 }
-        			 if(chosenCol == firstCol) {
-        			    if(chosenRaw == oldRaw + 1) {
-        			    	chosenCards.add(this.getCardAtCords(chosenRaw*gp.tileSize, chosenCol*gp.tileSize));
-        			    	oldRaw = chosenRaw;
-        	        		oldCol = chosenCol;
-        			    }
-        			 }
-        		 }
+    	 if(this.getCardAtCords(chosenRaw*gp.tileSize, chosenCol*gp.tileSize) != null) {
+        	 if(chosenCards.size() < 3) {
+             	 if(this.hasAFreeBorder(chosenRaw*gp.tileSize, chosenCol*gp.tileSize)) {
+             		 if(first) {
+             			 chosenCards.add(this.getCardAtCords(chosenRaw*gp.tileSize, chosenCol*gp.tileSize));
+            			 firstRaw = chosenRaw;
+            			 firstCol = chosenCol;
+            			 oldRaw = chosenRaw;
+            			 oldCol = chosenCol;
+            			 System.out.println("prima carta");
+            		 }
+            		 else {
+            			 if(chosenRaw == firstRaw) {
+            			    if(chosenCol == oldCol + 1) {
+            			    	chosenCards.add(this.getCardAtCords(chosenRaw*gp.tileSize, chosenCol*gp.tileSize));
+            			    	oldRaw = chosenRaw;
+            	        		oldCol = chosenCol;
+            			    }
+            			 }
+            			 if(chosenCol == firstCol) {
+            			    if(chosenRaw == oldRaw + 1) {
+            			    	chosenCards.add(this.getCardAtCords(chosenRaw*gp.tileSize, chosenCol*gp.tileSize));
+            			    	oldRaw = chosenRaw;
+            	        		oldCol = chosenCol;
+            			    }
+            			 }
+            		 }
+            	 }
         	 }
-         
     	 }
+
     	 System.out.println(chosenCards);
      }
  	
+ 	public void deleteChosenCards() {
+ 		if(!this.chosenCards.isEmpty()) {
+ 			this.chosenCards.clear();
+ 		}
+ 	}
+ 	
  	
  	//questo metodo restituisce true se la card ha tutti e 4 i lati liberi
- 	public Boolean hasAllFreeBoarder(int x, int y) {
+ 	public Boolean hasAllFreeBorders(int x, int y) {
         PlacedCard card = getCardAtCords(x, y);
-        if(!isCardPlaced(card.getCardY()+48, y) && !isCardPlaced(card.getCardY()-48, y) && !isCardPlaced(x,card.getCardX()+48) && !isCardPlaced(x,card.getCardX()-48)){
-        	return true;
+        if(card != null) {
+        	if(!isCardPlaced(card.getCardX()+48, y) && !isCardPlaced(card.getCardX()-48, y) && !isCardPlaced(x,card.getCardY()+48) && !isCardPlaced(x,card.getCardY()-48)){
+            	//System.out.println("sono entrato nell'if");
+            	return true;
+            }
         }
+        //System.out.println("non entrato");
 		return false;
  	}
  	
@@ -258,13 +295,19 @@ public final class Board {
 		for(int i = 0; i < this.currentBoardLayout.size(); i++) {
 			int x = this.currentBoardLayout.get(i).getCardX();
 			int y = this.currentBoardLayout.get(i).getCardY();
-			if(!this.hasAllFreeBoarder(x, y)) {
+			if(!this.hasAllFreeBorders(x, y)) {
 				return false;
 			}
 		}
  		return true;
  	}
  	
+ 	//questo metodo scorre l'arraylist e rimuove le carte selezionate dall board
+ 	public void removeChosenCardsFromBoard() {
+ 		for(int i = 0; i < this.chosenCards.size(); i++) {
+ 			this.removePlacedCard(this.chosenCards.get(i).getCardX(), this.chosenCards.get(i).getCardY());
+ 		}
+ 	}
 }
 
         

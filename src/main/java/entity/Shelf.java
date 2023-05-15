@@ -5,7 +5,7 @@ import java.util.*;
 public class Shelf {
 	//forse bisogna cambiare card con placed card*****************
 	private Card[][] shelfLayout;
-	private int maxRaw = 6;
+	private int maxRow = 6;
 	private int chosenColumn;
 	private int points;
 	public static int boardsFilled = 0;
@@ -28,7 +28,7 @@ public class Shelf {
 		return shelfLayout[row][column];
 	}
 	
-	public void placeOnShelf(ArrayList<Card> chosenCards) {		
+	public void placeOnShelf(ArrayList<Card> chosenCards) {
 		int startPoint = 0;
 		int c = 0;
 		int cardNumber = chosenCards.size();
@@ -38,17 +38,14 @@ public class Shelf {
 			c++;
 		}
 
-		if ((maxRaw - startPoint) >= cardNumber) {
+		if ((maxRow - startPoint) >= cardNumber) {		//se hai abbastanza spazio nella shelf
 			for (int i = 0; i < cardNumber; i++) {
 				shelfLayout[startPoint + i][chosenColumn] = chosenCards.get(i);
 			}
 			for (int i = 0; i < chosenCards.size(); i++) {
 				chosenCards.remove(i);
 			}
-		}
-		else {
-			throw new NullPointerException("non puoi inserire una tessera dove non c'è spazio");
-		}
+		} 
 	}
 
 	public boolean checkCorners() { 			// Sistema di controllo angoli della shelf
