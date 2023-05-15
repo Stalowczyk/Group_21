@@ -232,40 +232,35 @@ public final class Board {
        return null;
    }
           
- 	public void chosenFromBoard(int chosenRaw, int chosenCol) {	
-    	 
-    	 first = chosenCards.isEmpty();
-    	 if(this.getCardAtCords(chosenRaw*gp.tileSize, chosenCol*gp.tileSize) != null) {
-        	 if(chosenCards.size() < 3) {
-             	 if(this.hasAFreeBorder(chosenRaw*gp.tileSize, chosenCol*gp.tileSize)) {
+ 	public void chosenFromBoard(int chosenRow, int chosenCol) {	
+    	 first = chosenCards.isEmpty();	 
+    	 if(this.getCardAtCords(chosenRow*gp.tileSize, chosenCol*gp.tileSize) != null && chosenCards.size() < 3) {
+             	 if(this.hasAFreeBorder(chosenRow*gp.tileSize, chosenCol*gp.tileSize)) {
              		 if(first) {
-             			 chosenCards.add(this.getCardAtCords(chosenRaw*gp.tileSize, chosenCol*gp.tileSize));
-            			 firstRaw = chosenRaw;
+             			 chosenCards.add(this.getCardAtCords(chosenRow*gp.tileSize, chosenCol*gp.tileSize));
+            			 firstRaw = chosenRow;
             			 firstCol = chosenCol;
-            			 oldRaw = chosenRaw;
+            			 oldRaw = chosenRow;
             			 oldCol = chosenCol;
-            			 System.out.println("prima carta");
             		 }
             		 else {
-            			 if(chosenRaw == firstRaw) {
-            			    if(chosenCol == oldCol + 1) {
-            			    	chosenCards.add(this.getCardAtCords(chosenRaw*gp.tileSize, chosenCol*gp.tileSize));
-            			    	oldRaw = chosenRaw;
+            			 if(chosenRow == firstRaw && chosenRow == oldRaw) {
+            			    if(chosenCol == oldCol + 1 || chosenCol == oldCol - 1) {
+            			    	chosenCards.add(this.getCardAtCords(chosenRow*gp.tileSize, chosenCol*gp.tileSize));
+            			    	oldRaw = chosenRow;
             	        		oldCol = chosenCol;
             			    }
             			 }
-            			 if(chosenCol == firstCol) {
-            			    if(chosenRaw == oldRaw + 1) {
-            			    	chosenCards.add(this.getCardAtCords(chosenRaw*gp.tileSize, chosenCol*gp.tileSize));
-            			    	oldRaw = chosenRaw;
+            			 if(chosenCol == firstCol && chosenCol == oldCol) {
+            			    if(chosenRow == oldRaw + 1 || chosenRow == oldRaw - 1) {
+            			    	chosenCards.add(this.getCardAtCords(chosenRow*gp.tileSize, chosenCol*gp.tileSize));
+            			    	oldRaw = chosenRow;
             	        		oldCol = chosenCol;
             			    }
             			 }
             		 }
             	 }
         	 }
-    	 }
-
     	 System.out.println(chosenCards);
      }
  	
