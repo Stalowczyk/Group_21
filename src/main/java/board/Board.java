@@ -38,7 +38,8 @@ public final class Board {
     private int oldCol;
     private boolean first;
     
-    ArrayList<PlacedCard> chosenCards;		     
+    ArrayList<PlacedCard> chosenCards;	
+    public ArrayList<PlacedCard> chosenCardsInOrder;		//******************
     
     public Board(int numberOfPlayers,GamePanel gp,Bag b){
         this.numberOfPlayers = numberOfPlayers;
@@ -49,6 +50,7 @@ public final class Board {
         setBoardSize();
         placeCardsOnBoard(b);
         chosenCards = new ArrayList<PlacedCard>();
+        chosenCardsInOrder = new ArrayList<PlacedCard>();		//******************
     }
     
     
@@ -303,6 +305,28 @@ public final class Board {
  			this.removePlacedCard(this.chosenCards.get(i).getCardX(), this.chosenCards.get(i).getCardY());
  		}
  	}
+ 	
+ 			
+ 	//questo metodo crea l'arrayList chosenCardsInOrder
+ 	public void changeOrder(ArrayList<Integer> order) {		//passo l'array contenente l'ordine (1, 3, 2)
+ 		for(int i = 0; i < order.size(); i++) {
+ 			int c = order.get(i);
+ 			PlacedCard pc = this.chosenCards.get(c-1);
+ 			chosenCardsInOrder.add(pc);
+ 		}
+ 		System.out.println(chosenCardsInOrder);
+ 		//questo andrebbe messo dopo che metti le carte nella shelf
+ 			chosenCardsInOrder.clear();
+ 		//*******************
+ 	}
+ 	
+ 	public void setOrder() {
+ 		 ArrayList<Integer> order = new ArrayList<>();
+ 		 order.add(2);
+ 		 order.add(1);
+ 		// System.out.println(order.size());
+ 		 this.changeOrder(order);
+ 	}
 }
 
         
@@ -354,5 +378,3 @@ public final class Board {
         return null;
     }
     */
-    
-

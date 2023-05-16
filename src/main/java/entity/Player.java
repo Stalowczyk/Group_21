@@ -7,6 +7,8 @@ package entity;
 import board.Board;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+
 import main.GamePanel;
 import main.KeyHandler;
 
@@ -62,10 +64,14 @@ public class Player {
         	   b.deleteChosenCards();
            }
             
-           else if(keyH.enterPressed) {		  
+           else if(keyH.enterPressed) {	
+        	  b.setOrder();
         	  b.removeChosenCardsFromBoard();
          	  b.deleteChosenCards(); 
+         	 
            }
+            
+            
            moving = true;   
         }
         if(moving==true){
