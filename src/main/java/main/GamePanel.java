@@ -12,7 +12,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
-
+import entity.Shelf;
 /**
  *
  * @author pawel
@@ -34,7 +34,8 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread = new Thread();
     KeyHandler keyH = new KeyHandler();
     Bag b = new Bag();
-    Board board = new Board(4, this,b);
+    Shelf s = new Shelf();
+    Board board = new Board(4, this, b, s);
     Player player = new Player(this, keyH,board);
     
     public GamePanel(){

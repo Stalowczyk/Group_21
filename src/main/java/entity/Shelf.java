@@ -4,15 +4,14 @@ import java.util.*;
 
 public class Shelf {
 	//forse bisogna cambiare card con placed card*****************
-	private Card[][] shelfLayout;
+	private PlacedCard[][] shelfLayout;
 	private int maxRow = 6;
 	private int chosenColumn;
 	private int points;
 	public static int boardsFilled = 0;
 	
-	public Shelf(int cardNumber, int chosenColumn) {
-		this.shelfLayout = new Card[6][5];
-		this.chosenColumn = chosenColumn;
+	public Shelf() {
+		this.shelfLayout = new PlacedCard[6][5];
 		this.points = 0;
 	}
 
@@ -28,7 +27,7 @@ public class Shelf {
 		return shelfLayout[row][column];
 	}
 	
-	public void placeOnShelf(ArrayList<Card> chosenCards) {
+	public void placeOnShelf(ArrayList<PlacedCard> chosenCards, int chosenColumn) {		//passi l'array delle carte gia in ordine giusto
 		int startPoint = 0;
 		int c = 0;
 		int cardNumber = chosenCards.size();
@@ -40,7 +39,7 @@ public class Shelf {
 
 		if ((maxRow - startPoint) >= cardNumber) {		//se hai abbastanza spazio nella shelf
 			for (int i = 0; i < cardNumber; i++) {
-				shelfLayout[startPoint + i][chosenColumn] = chosenCards.get(i);
+				shelfLayout[startPoint + i][chosenColumn] = (PlacedCard) chosenCards.get(i);
 			}
 			for (int i = 0; i < chosenCards.size(); i++) {
 				chosenCards.remove(i);

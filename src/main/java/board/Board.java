@@ -8,6 +8,8 @@ import entity.Bag;
 import entity.Card;
 import entity.CardType;
 import entity.PlacedCard;
+import entity.Shelf;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -37,11 +39,11 @@ public final class Board {
     private int oldRaw;
     private int oldCol;
     private boolean first;
-    
+    Shelf s;
     ArrayList<PlacedCard> chosenCards;	
     public ArrayList<PlacedCard> chosenCardsInOrder;		//******************
     
-    public Board(int numberOfPlayers,GamePanel gp,Bag b){
+    public Board(int numberOfPlayers,GamePanel gp,Bag b, Shelf s){
         this.numberOfPlayers = numberOfPlayers;
         this.gp = gp;
         this.b = b;
@@ -208,7 +210,6 @@ public final class Board {
     
     public boolean hasAFreeBorder(int x,int y){
         PlacedCard card = getCardAtCords(x, y);
-        System.out.println("Card cords "+card.getCardX()+" " + card.getCardY());
         if(card != null) {
             if(isCardPlaced(card.getCardX()+48, y)){
                 if(isCardPlaced(card.getCardX()-48, y)){
@@ -235,8 +236,14 @@ public final class Board {
    }
           
  	public void chosenFromBoard(int chosenRow, int chosenCol) {	
-    	 first = chosenCards.isEmpty();	 
-    	 if(this.getCardAtCords(chosenRow*gp.tileSize, chosenCol*gp.tileSize) != null && chosenCards.size() < 3) {
+    	 first = chosenCards.isEmpty();
+    	 PlacedCard t = this.getCardAtCords(chosenRow*gp.tileSize, chosenCol*gp.tileSize);
+    	 if(t == null) {
+    		 System.out.println("non c'è la carta");
+    	 }
+    	 else {
+    		 if(chosenCards.size() < 3) {
+
              	 if(this.hasAFreeBorder(chosenRow*gp.tileSize, chosenCol*gp.tileSize)) {
              		 if(first) {
              			 chosenCards.add(this.getCardAtCords(chosenRow*gp.tileSize, chosenCol*gp.tileSize));
@@ -262,7 +269,8 @@ public final class Board {
             			 }
             		 }
             	 }
-        	 }
+        	 }		 
+		 }
     	 System.out.println(chosenCards);
      }
  	
@@ -314,18 +322,37 @@ public final class Board {
  			PlacedCard pc = this.chosenCards.get(c-1);
  			chosenCardsInOrder.add(pc);
  		}
- 		System.out.println(chosenCardsInOrder);
+ 		
+ 		System.out.println("carte in ordine: "+chosenCardsInOrder);
  		//questo andrebbe messo dopo che metti le carte nella shelf
  			chosenCardsInOrder.clear();
+ 			System.out.println("array pulito: "+chosenCardsInOrder);
  		//*******************
  	}
  	
  	public void setOrder() {
  		 ArrayList<Integer> order = new ArrayList<>();
- 		 //order.add(2);
- 		 //order.add(1);
- 		// System.out.println(order.size());
+ 		 order.clear();
+ 		 System.out.println("Ordine iniziale: "+order);
+ 		 Scanner sc = new Scanner(System.in);
+ 		 System.out.println("inserire ordine:");
+ 		 for(int i = 0; i < this.chosenCards.size(); i++) {
+ 			if(sc.hasNextInt()) {
+ 				int ordine = sc.nextInt();
+ 	 	 		 order.add(ordine); 
+ 	 		 	
+ 			}
+ 		}
+ 		 sc.close();
+ 		 System.out.println("ordine finale: "+order);
  		 this.changeOrder(order);
+ 	}
+ 	
+ 	public void sendCardsToShelf() {
+ 		//Scanner sc = new Scanner(System.in);	
+ 		//int chosenCol = sc.nextInt();
+ 		//s.placeOnShelf(chosenCardsInOrder, chosenCol);
+ 		//sc.close();
  	}
 }
 
