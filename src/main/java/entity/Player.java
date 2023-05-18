@@ -65,7 +65,7 @@ public class Player {
            }
             
            else if(keyH.enterPressed) {	
-        	  b.setOrder();
+        	  //b.setOrder();
         	  b.removeChosenCardsFromBoard();
          	  b.deleteChosenCards(); 
          	 

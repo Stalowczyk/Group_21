@@ -322,8 +322,8 @@ public final class Board {
  	
  	public void setOrder() {
  		 ArrayList<Integer> order = new ArrayList<>();
- 		 order.add(2);
- 		 order.add(1);
+ 		 //order.add(2);
+ 		 //order.add(1);
  		// System.out.println(order.size());
  		 this.changeOrder(order);
  	}
