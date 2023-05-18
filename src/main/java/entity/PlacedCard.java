@@ -45,7 +45,7 @@ public class PlacedCard extends Card{
     public void draw(Graphics2D g2){
         switch(this.getCardType()){
                 case WHITE -> {
-                    g2.setColor(Color.white);
+                    g2.setColor(Color.WHITE);
                     g2.fillRect(this.getCardY(),this.getCardX(), gp.tileSize, gp.tileSize);
                     
                 }

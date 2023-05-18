@@ -4,6 +4,8 @@ package entity;
 //per adesso è cosi perchè vorrei un po di aiuto
 public class TurnsPlayers {
 	
+
+	
 	private int nowPlayer;
 	private int numbOfPlayer;
 	private int takenCards;

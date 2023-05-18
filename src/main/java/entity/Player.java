@@ -57,6 +57,8 @@ public class Player {
                 //b.removePlacedCard(getPlayerY(), getPlayerX());
                 System.out.println("Player cords "+getPlayerX()+" "+getPlayerY());
                 System.out.println(b.hasAFreeBorder(getPlayerX(), getPlayerY()));
+                
+                displayColor();
            }
            moving = true;   
         }
@@ -68,6 +70,14 @@ public class Player {
                 pixelCounter = 0;
             }
         }
+    }
+    
+    public void displayColor() {
+    	
+
+    	
+    	
+    	System.out.println("Color: " );
     }
     
     public void draw(Graphics2D g2){

@@ -24,6 +24,11 @@
             <version>1.3</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+        	<groupId>test</groupId>
+        	<artifactId>CorsoJava</artifactId>
+        	<version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
