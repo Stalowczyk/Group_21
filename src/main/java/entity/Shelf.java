@@ -67,6 +67,7 @@ public class Shelf {
 		for (int i = 0; i <= 5; i = i + 5) {
 			for (int j = 0; j <= 4; j = j + 4) {
 				corner.add(this.shelfLayout[i][j]);
+				System.out.println("prova");
 			}
 		}
 		return !corner.contains(null) && corner.stream().map(Card::getCardType).distinct().count() == 1;
