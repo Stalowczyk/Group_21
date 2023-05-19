@@ -1,10 +1,9 @@
+
 package entity;
 
 //non è finito visto che non ho inserito alcuni dati per poi essere collegato al programma
 //per adesso è cosi perchè vorrei un po di aiuto
 public class TurnsPlayers {
-	
-
 	
 	private int nowPlayer;
 	private int numbOfPlayer;
@@ -46,3 +45,4 @@ public class TurnsPlayers {
 		return takenCards > 0 && insertedCards > 0 && takenCards <= 3;
 	}
 }
+
