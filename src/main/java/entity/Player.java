@@ -24,17 +24,20 @@ public class Player {
     GamePanel gp;
     KeyHandler keyH;
     Board b;
-    
+    ArrayList<PlacedCard> chosenCards;
+    Shelf s;
     /**
      *
      * @param gp
      * @param keyH
      */
-    public Player(GamePanel gp, KeyHandler keyH,Board b){
+    public Player(GamePanel gp, KeyHandler keyH, Board b, Shelf s){
         this.gp = gp;
         this.keyH = keyH;
         this.b = b;
         setDefaultValues();
+        chosenCards = new ArrayList<PlacedCard>();
+        this.s = s;
     }
     
     public void setDefaultValues(){
@@ -64,12 +67,16 @@ public class Player {
         	   b.deleteChosenCards();
            }
             
-           else if(keyH.enterPressed) {	
-        	  
+           else if(keyH.enterPressed) {	     	  
+        	  //b.setOrder();
+        		  chosenCards = b.sendChosenCards();
+        		  if(!chosenCards.isEmpty()) {
+             	  s.placeOnShelf(chosenCards);  
+        	  }else System.out.println("non hai scelto delle carte da inserire");
+         	  
+         	  
         	  b.removeChosenCardsFromBoard();
-        	  b.setOrder();
          	  b.deleteChosenCards(); 
-         	 
            }
             
             

@@ -6,9 +6,11 @@ public class Shelf {
 	//forse bisogna cambiare card con placed card*****************
 	private PlacedCard[][] shelfLayout;
 	private int maxRow = 6;
-	private int chosenColumn;
+	private int chosenColumn = 1;		//provvissorio
 	private int points;
 	public static int boardsFilled = 0;
+	private int row;
+	private int col;
 	
 	public Shelf() {
 		this.shelfLayout = new PlacedCard[6][5];
@@ -22,16 +24,17 @@ public class Shelf {
 		points += amount;
 	}
 	
-	//forse è da mettere come PlacedCard
-	public Card getCard(int row, int column) {
+	public PlacedCard getCard(int row, int column) {
 		return shelfLayout[row][column];
 	}
 	
-	public void placeOnShelf(ArrayList<PlacedCard> chosenCards, int chosenColumn) {		//passi l'array delle carte gia in ordine giusto
+	
+	//passi l'array delle carte gia in ordine giusto, BISOGNA PASSARE ANCHE LA COLONNA SCELTA
+	public void placeOnShelf(ArrayList<PlacedCard> chosenCards) {		
 		int startPoint = 0;
 		int c = 0;
+		
 		int cardNumber = chosenCards.size();
-
 		while (shelfLayout[c][chosenColumn] != null) {
 			startPoint++;
 			c++;
@@ -40,12 +43,18 @@ public class Shelf {
 		if ((maxRow - startPoint) >= cardNumber) {		//se hai abbastanza spazio nella shelf
 			for (int i = 0; i < cardNumber; i++) {
 				shelfLayout[startPoint + i][chosenColumn] = (PlacedCard) chosenCards.get(i);
+				chosenCards.get(i).setRow(startPoint);
+				chosenCards.get(i).setCol(chosenColumn);
 			}
-			for (int i = 0; i < chosenCards.size(); i++) {
-				chosenCards.remove(i);
-			}
-		} 
+			//chosenCards.clear();
+			//System.out.println("array vuoto: "+chosenCards);
+		}
+		
+		for(int i = 0; i < 6; i++) {
+			System.out.println(this.shelfLayout[i][1]); 
+		}
 	}
+	
     /*
     In questi metodi fatti molto meglio utilizzo spesso la funzione .stream quindi la spiego velocemente.
     Esegue di fila tutte le azioni che ho scritto, quindi per ordine:

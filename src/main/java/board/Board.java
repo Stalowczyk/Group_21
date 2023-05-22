@@ -312,11 +312,12 @@ public final class Board {
  		for(int i = 0; i < this.chosenCards.size(); i++) {
  			this.removePlacedCard(this.chosenCards.get(i).getCardX(), this.chosenCards.get(i).getCardY());
  		}
+ 		chosenCards.clear();
  	}
  	
  			
  	//questo metodo crea l'arrayList chosenCardsInOrder
- 	public void changeOrder(ArrayList<Integer> order) {		//passo l'array contenente l'ordine (1, 3, 2)
+ 	/*public void changeOrder(ArrayList<Integer> order) {		//passo l'array contenente l'ordine (1, 3, 2)
  		for(int i = 0; i < order.size(); i++) {
  			int c = order.get(i);
  			PlacedCard pc = this.chosenCards.get(c-1);
@@ -353,6 +354,13 @@ public final class Board {
  		//int chosenCol = sc.nextInt();
  		//s.placeOnShelf(chosenCardsInOrder, chosenCol);
  		//sc.close();
+ 	}*/
+ 	
+ 	public ArrayList<PlacedCard> sendChosenCards() {
+ 		if(!this.chosenCards.isEmpty()) {
+ 			return this.chosenCards;
+ 		}
+ 		return null;		
  	}
 }
 

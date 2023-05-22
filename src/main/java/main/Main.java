@@ -26,11 +26,11 @@ public class Main {
         JFrame window = new JFrame();
         
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
-        window.setAlwaysOnTop(true);
+        window.setResizable(true);
+        window.setAlwaysOnTop(false);
        
         window.setLayout(new GridBagLayout());
-        window.setMinimumSize(new Dimension(1500,680));
+        window.setMinimumSize(new Dimension(750,500));
         
         window.add(gamePanel);   
         window.pack();
