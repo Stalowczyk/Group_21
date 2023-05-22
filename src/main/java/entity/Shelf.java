@@ -1,6 +1,9 @@
 package entity;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.*;
+import main.GamePanel;
 
 public class Shelf {
 	//forse bisogna cambiare card con placed card*****************
@@ -9,10 +12,12 @@ public class Shelf {
 	private int chosenColumn;
 	private int points;
 	public static int boardsFilled = 0;
+        GamePanel gp;
 	
 	public Shelf() {
 		this.shelfLayout = new PlacedCard[6][5];
 		this.points = 0;
+                this.gp = gp;
 	}
 
 	public int getPoints() {
@@ -380,6 +385,41 @@ public class Shelf {
 			return false;
 		}
 	}
+        
+        public void draw(Graphics2D g2){                     
+        for (int col = 0; col < this.shelfLayout.length; col++) {             
+            for (int row = 0; row < this.shelfLayout[col].length; row++) {
+                PlacedCard p = this.shelfLayout[row][col];
+                switch(this.shelfLayout[row][col].getCardType()){
+                case WHITE -> {
+                    g2.setColor(Color.white);
+                    g2.fillRect(p.getCardX(),p.getCardY(), gp.tileSize, gp.tileSize);
+                    
+                }
+                case PINK -> {
+                    g2.setColor(Color.PINK);
+                    g2.fillRect(p.getCardX(),p.getCardY(), gp.tileSize, gp.tileSize);
+                }
+                case BLUE -> {
+                    g2.setColor(Color.BLUE);
+                    g2.fillRect(p.getCardX(),p.getCardY(), gp.tileSize, gp.tileSize);
+                }
+                case CYAN -> {
+                    g2.setColor(Color.CYAN);
+                    g2.fillRect(p.getCardX(),p.getCardY(), gp.tileSize, gp.tileSize);
+                }
+                case GREEN -> {
+                    g2.setColor(Color.GREEN);
+                    g2.fillRect(p.getCardX(),p.getCardY(), gp.tileSize, gp.tileSize);
+                }
+                case YELLOW -> {
+                    g2.setColor(Color.YELLOW);
+                    g2.fillRect(p.getCardX(),p.getCardY(), gp.tileSize, gp.tileSize);
+                }
+            }
+        }
+    }
+        }
 }
 
 

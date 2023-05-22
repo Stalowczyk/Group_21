@@ -7,7 +7,14 @@ package entity;
 import board.Board;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import main.GamePanel;
 import main.KeyHandler;
@@ -24,6 +31,7 @@ public class Player {
     GamePanel gp;
     KeyHandler keyH;
     Board b;
+    private int chosenCol;
     
     /**
      *
@@ -31,6 +39,7 @@ public class Player {
      * @param keyH
      */
     public Player(GamePanel gp, KeyHandler keyH,Board b){
+        this.chosenCol = -1;
         this.gp = gp;
         this.keyH = keyH;
         this.b = b;
@@ -63,12 +72,14 @@ public class Player {
            else if(keyH.rPressed) {
         	   b.deleteChosenCards();
            }
-            
+            //if chosencards != null display 
            else if(keyH.enterPressed) {	
         	  
         	  b.removeChosenCardsFromBoard();
-        	  b.setOrder();
+        	  //b.setOrder();
          	  b.deleteChosenCards(); 
+                  
+                  
          	 
            }
             
@@ -99,5 +110,17 @@ public class Player {
     public int getPlayerY(){
         return this.y;
     }
+    
+     public int getInputFromUser(){
+         String s = JOptionPane.showInputDialog("Choose shelf column");
+         this.chosenCol = Integer.parseInt(s);
+         System.out.println("Entrato getinput");
+         
+         return this.chosenCol;
+     }
+     
+     public void resetPlayerChoice(){
+         this.chosenCol = -1;
+     }
     
 }

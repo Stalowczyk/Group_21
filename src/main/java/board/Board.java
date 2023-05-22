@@ -354,6 +354,10 @@ public final class Board {
  		//s.placeOnShelf(chosenCardsInOrder, chosenCol);
  		//sc.close();
  	}
+        
+        public void sendChosenCol(){
+            
+        }
 }
 
         

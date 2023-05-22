@@ -69,8 +69,6 @@ public class PlacedCard extends Card{
                     g2.setColor(Color.YELLOW);
                     g2.fillRect(this.getCardX(),this.getCardY(), gp.tileSize, gp.tileSize);
                 }
-
-
             }
     }
     
