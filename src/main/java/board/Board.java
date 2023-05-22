@@ -108,9 +108,7 @@ public final class Board {
             for (int row = 0; row < this.boardLayout[col].length; row++){
                 if(this.boardLayout[row][col]==1){
                     PlacedCard p = new PlacedCard(b.pullRandom().getCardType(),row,col,gp);
-                    System.out.println(row+" "+col);
                     currentBoardLayout.add(p);
-                    System.out.println(p.getCardRow()+" "+p.getCardCol());
                 }
                 
             }
@@ -126,9 +124,7 @@ public final class Board {
             for (int row = 0; row < this.boardLayout[col].length; row++){
                 if(this.boardLayout[row][col]==1 && this.getCardAtCords(row*gp.tileSize, col*gp.tileSize) == null){
                     PlacedCard p = new PlacedCard(b.pullRandom().getCardType(),row,col,gp);
-                    System.out.println(row+" "+col);
                     currentBoardLayout.add(p);
-                    System.out.println(p.getCardRow()+" "+p.getCardCol());
                 }
                 
             }
@@ -158,11 +154,13 @@ public final class Board {
     public void draw(Graphics2D g2){                     
         for (int col = 0; col < this.boardLayout.length; col++) {             
             for (int row = 0; row < this.boardLayout[col].length; row++) {                                     
-                switch(this.boardLayout[row][col]){                     
+                switch(this.boardLayout[row][col]){
+                    /*
                    case 0 -> {
-                        g2.setColor(Color.BLACK);
+                        g2.setColor(Color.MAGENTA);
                         g2.fillRect(row*gp.tileSize, col*gp.tileSize, gp.tileSize, gp.tileSize);
                     }
+                    */
                     case 1 -> {
                         g2.setColor(Color.GRAY);
                         g2.fillRect(row*gp.tileSize, col*gp.tileSize, gp.tileSize, gp.tileSize);
@@ -312,11 +310,12 @@ public final class Board {
  		for(int i = 0; i < this.chosenCards.size(); i++) {
  			this.removePlacedCard(this.chosenCards.get(i).getCardX(), this.chosenCards.get(i).getCardY());
  		}
+ 		chosenCards.clear();
  	}
  	
  			
  	//questo metodo crea l'arrayList chosenCardsInOrder
- 	public void changeOrder(ArrayList<Integer> order) {		//passo l'array contenente l'ordine (1, 3, 2)
+ 	/*public void changeOrder(ArrayList<Integer> order) {		//passo l'array contenente l'ordine (1, 3, 2)
  		for(int i = 0; i < order.size(); i++) {
  			int c = order.get(i);
  			PlacedCard pc = this.chosenCards.get(c-1);
@@ -353,6 +352,13 @@ public final class Board {
  		//int chosenCol = sc.nextInt();
  		//s.placeOnShelf(chosenCardsInOrder, chosenCol);
  		//sc.close();
+ 	}*/
+ 	
+ 	public ArrayList<PlacedCard> sendChosenCards() {
+ 		if(!this.chosenCards.isEmpty()) {
+ 			return this.chosenCards;
+ 		}
+ 		return null;		
  	}
         
         public void sendChosenCol(){

@@ -9,15 +9,18 @@ public class Shelf {
 	//forse bisogna cambiare card con placed card*****************
 	private PlacedCard[][] shelfLayout;
 	private int maxRow = 6;
-	private int chosenColumn;
+	private int chosenColumn = 1;		//provvissorio
 	private int points;
 	public static int boardsFilled = 0;
+	private int row;
+	private int col;
         GamePanel gp;
 	
 	public Shelf() {
 		this.shelfLayout = new PlacedCard[6][5];
 		this.points = 0;
                 this.gp = gp;
+                printOutShelf();
 	}
 
 	public int getPoints() {
@@ -27,16 +30,17 @@ public class Shelf {
 		points += amount;
 	}
 	
-	//forse è da mettere come PlacedCard
-	public Card getCard(int row, int column) {
+	public PlacedCard getCard(int row, int column) {
 		return shelfLayout[row][column];
 	}
 	
-	public void placeOnShelf(ArrayList<PlacedCard> chosenCards, int chosenColumn) {		//passi l'array delle carte gia in ordine giusto
+	
+	//passi l'array delle carte gia in ordine giusto, BISOGNA PASSARE ANCHE LA COLONNA SCELTA
+	public void placeOnShelf(ArrayList<PlacedCard> chosenCards) {		
 		int startPoint = 0;
 		int c = 0;
+		
 		int cardNumber = chosenCards.size();
-
 		while (shelfLayout[c][chosenColumn] != null) {
 			startPoint++;
 			c++;
@@ -45,12 +49,18 @@ public class Shelf {
 		if ((maxRow - startPoint) >= cardNumber) {		//se hai abbastanza spazio nella shelf
 			for (int i = 0; i < cardNumber; i++) {
 				shelfLayout[startPoint + i][chosenColumn] = (PlacedCard) chosenCards.get(i);
+				chosenCards.get(i).setRow(startPoint);
+				chosenCards.get(i).setCol(chosenColumn);
 			}
-			for (int i = 0; i < chosenCards.size(); i++) {
-				chosenCards.remove(i);
-			}
-		} 
+			//chosenCards.clear();
+			//System.out.println("array vuoto: "+chosenCards);
+		}
+		
+		for(int i = 0; i < 6; i++) {
+			System.out.println(this.shelfLayout[i][1]); 
+		}
 	}
+	
     /*
     In questi metodi fatti molto meglio utilizzo spesso la funzione .stream quindi la spiego velocemente.
     Esegue di fila tutte le azioni che ho scritto, quindi per ordine:
@@ -387,38 +397,67 @@ public class Shelf {
 	}
         
         public void draw(Graphics2D g2){                     
-        for (int col = 0; col < this.shelfLayout.length; col++) {             
-            for (int row = 0; row < this.shelfLayout[col].length; row++) {
+        for (int row = 0; row < this.shelfLayout.length; row++) {             
+            for (int col = 0; col < this.shelfLayout[row].length; col++) {
                 PlacedCard p = this.shelfLayout[row][col];
-                switch(this.shelfLayout[row][col].getCardType()){
-                case WHITE -> {
-                    g2.setColor(Color.white);
-                    g2.fillRect(p.getCardX(),p.getCardY(), gp.tileSize, gp.tileSize);
-                    
+                if(p!=null){
+                    switch(p.getCardType()){
+                        case WHITE -> {
+                            g2.setColor(Color.white);
+                            g2.fillRect(p.getCardX(),p.getCardY(), 48, 48);
+
+                        }
+                        case PINK -> {
+                            g2.setColor(Color.PINK);
+                            g2.fillRect(p.getCardX(),p.getCardY(), 48, 48);
+                        }
+                        case BLUE -> {
+                            g2.setColor(Color.BLUE);
+                            g2.fillRect(p.getCardX(),p.getCardY(), 48, 48);
+                        }
+                        case CYAN -> {
+                            g2.setColor(Color.CYAN);
+                            g2.fillRect(p.getCardX(),p.getCardY(), 48, 48);
+                        }
+                        case GREEN -> {
+                            g2.setColor(Color.GREEN);
+                            g2.fillRect(p.getCardX(),p.getCardY(), 48, 48);
+                        }
+                        case YELLOW -> {
+                            g2.setColor(Color.YELLOW);
+                            g2.fillRect(p.getCardX(),p.getCardY(), 48, 48);
+                        }
+
+                    }
                 }
-                case PINK -> {
-                    g2.setColor(Color.PINK);
-                    g2.fillRect(p.getCardX(),p.getCardY(), gp.tileSize, gp.tileSize);
-                }
-                case BLUE -> {
-                    g2.setColor(Color.BLUE);
-                    g2.fillRect(p.getCardX(),p.getCardY(), gp.tileSize, gp.tileSize);
-                }
-                case CYAN -> {
-                    g2.setColor(Color.CYAN);
-                    g2.fillRect(p.getCardX(),p.getCardY(), gp.tileSize, gp.tileSize);
-                }
-                case GREEN -> {
-                    g2.setColor(Color.GREEN);
-                    g2.fillRect(p.getCardX(),p.getCardY(), gp.tileSize, gp.tileSize);
-                }
-                case YELLOW -> {
-                    g2.setColor(Color.YELLOW);
-                    g2.fillRect(p.getCardX(),p.getCardY(), gp.tileSize, gp.tileSize);
-                }
-            }
+                
+                g2.setColor(Color.BLACK);
+                g2.drawRect(528+col*48, 528+row*48, 48, 48);
+
+                
+                
+               
         }
     }
+        }
+        
+        
+        public  void looptrougharray(){
+            int i = 0;
+            for (int row = 0; row < this.shelfLayout.length; row++) { 
+                
+            for (int col = 0; col < this.shelfLayout[row].length; col++) {
+                System.out.println(row+" "+col);
+                i++;
+        }
+            }
+            System.out.println(row*col);
+            System.out.println(i);
+        }
+        
+        public void printOutShelf(){
+            System.out.println(shelfLayout.length);
+            
         }
 }
 

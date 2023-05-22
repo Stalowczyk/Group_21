@@ -36,12 +36,12 @@ public class GamePanel extends JPanel implements Runnable {
     Bag b = new Bag();
     Shelf s = new Shelf();
     Board board = new Board(4, this, b, s);
-    Player player = new Player(this, keyH,board);
+    Player player = new Player(this, keyH,board,s);
     
     public GamePanel(){
-        this.setPreferredSize(new Dimension(screenWidth,screenHeight));
+        this.setPreferredSize(new Dimension(1000,1000));
         this.setDoubleBuffered(true);
-        this.setBackground(Color.BLACK);
+        //this.setBackground(Color.WHITE);
         this.addKeyListener(keyH);
         this.setFocusable(true);
         this.startGameThread();
@@ -96,6 +96,7 @@ public class GamePanel extends JPanel implements Runnable {
         
         board.draw(g2);
         player.draw(g2);
+        s.draw(g2);
         g2.dispose();
     }
     

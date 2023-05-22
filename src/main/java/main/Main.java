@@ -30,7 +30,7 @@ public class Main {
         window.setAlwaysOnTop(false);
        
         window.setLayout(new GridBagLayout());
-        window.setMinimumSize(new Dimension(1500,680));
+        window.setMinimumSize(new Dimension(1000,700));
         
         window.add(gamePanel);   
         window.pack();

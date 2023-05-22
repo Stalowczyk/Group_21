@@ -33,17 +33,21 @@ public class Player {
     Board b;
     private int chosenCol;
     
+    ArrayList<PlacedCard> chosenCards;
+    Shelf s;
     /**
      *
      * @param gp
      * @param keyH
      */
-    public Player(GamePanel gp, KeyHandler keyH,Board b){
+    public Player(GamePanel gp, KeyHandler keyH,Board b,Shelf s){
         this.chosenCol = -1;
         this.gp = gp;
         this.keyH = keyH;
         this.b = b;
         setDefaultValues();
+        chosenCards = new ArrayList<PlacedCard>();
+        this.s = s;
     }
     
     public void setDefaultValues(){
@@ -78,7 +82,7 @@ public class Player {
         	  b.removeChosenCardsFromBoard();
         	  //b.setOrder();
          	  b.deleteChosenCards(); 
-                  
+                  s.placeOnShelf(chosenCards);
                   
          	 
            }

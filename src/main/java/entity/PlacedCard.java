@@ -25,6 +25,13 @@ public class PlacedCard extends Card{
         this.gp = gp;
     }
     
+    public void setRow(int row) {
+    	this.row = row;
+    }
+    
+    public void setCol(int col) {
+    	this.col = col;
+    }
     
     public int getCardRow(){
         return this.row;

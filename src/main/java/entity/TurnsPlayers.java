@@ -1,4 +1,4 @@
-/*
+
 package entity;
 
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 //per adesso è cosi perchè vorrei un po di aiuto
 public class TurnsPlayers {
 	
-	ArrayList<PlacedCard> chosenCards;
+/*	ArrayList<PlacedCard> chosenCards;
 	public ArrayList<PlacedCard> chosenCardInOrder;
 	
 	private int nowPlayer;
@@ -47,7 +47,7 @@ public class TurnsPlayers {
 	//controlla se il turno è finito quando prende le carte e le inserisce nel sua griglia
 	public boolean turnFinish() {
 		return chosenCards.size() > 0 && chosenCardInOrder.size() > 0 && chosenCards.size() <= 3;
-	}
+	}*/
 }
 
-*/
+
