@@ -35,7 +35,7 @@ public class Shelf {
 		int c = 0;
 		
 		int cardNumber = chosenCards.size();
-		while (shelfLayout[c][chosenColumn] != null) {
+		while (c <= 5 && shelfLayout[c][chosenColumn] != null) {
 			startPoint++;
 			c++;
 		}
@@ -46,13 +46,25 @@ public class Shelf {
 				chosenCards.get(i).setRow(startPoint);
 				chosenCards.get(i).setCol(chosenColumn);
 			}
-			//chosenCards.clear();
-			//System.out.println("array vuoto: "+chosenCards);
+			for(int i = 0; i < 6; i++) {
+				System.out.println(this.shelfLayout[i][1]); 
+			}
 		}
-		
-		for(int i = 0; i < 6; i++) {
-			System.out.println(this.shelfLayout[i][1]); 
+	}
+	
+	public boolean isColumnAvailable(ArrayList<PlacedCard> chosenCards) {		//BISOGNA PASSARGLI ANCHE CHOSENCOLUMN
+		int startPoint = 0;
+		int c = 0;
+		if(chosenCards != null) {
+		while (c <= 5 && shelfLayout[c][chosenColumn] != null) {
+			startPoint++;
+			c++;
 		}
+		if ((maxRow - startPoint) >= chosenCards.size()) {		//se hai abbastanza spazio nella shelf
+			return true;
+		}
+		}
+		return false;
 	}
 	
     /*

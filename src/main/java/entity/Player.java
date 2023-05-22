@@ -68,15 +68,12 @@ public class Player {
            }
             
            else if(keyH.enterPressed) {	     	  
-        	  //b.setOrder();
         		  chosenCards = b.sendChosenCards();
-        		  if(!chosenCards.isEmpty()) {
+        		  if(chosenCards != null && s.isColumnAvailable(chosenCards)) {
              	  s.placeOnShelf(chosenCards);  
-        	  }else System.out.println("non hai scelto delle carte da inserire");
-         	  
-         	  
-        	  b.removeChosenCardsFromBoard();
-         	  b.deleteChosenCards(); 
+             	  b.removeChosenCardsFromBoard();
+        	  }else System.out.println("non hai scelto delle carte da inserire oppure non c'è abbastanza spazio nella board");
+         	  b.deleteChosenCards(); 		//cancella in automatico l'array
            }
             
             
