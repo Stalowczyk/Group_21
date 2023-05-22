@@ -31,8 +31,6 @@ public class Player {
     GamePanel gp;
     KeyHandler keyH;
     Board b;
-    private int chosenCol;
-    
     ArrayList<PlacedCard> chosenCards;
     Shelf s;
     /**
@@ -40,8 +38,7 @@ public class Player {
      * @param gp
      * @param keyH
      */
-    public Player(GamePanel gp, KeyHandler keyH,Board b,Shelf s){
-        this.chosenCol = -1;
+    public Player(GamePanel gp, KeyHandler keyH, Board b, Shelf s){
         this.gp = gp;
         this.keyH = keyH;
         this.b = b;
@@ -76,15 +73,14 @@ public class Player {
            else if(keyH.rPressed) {
         	   b.deleteChosenCards();
            }
-            //if chosencards != null display 
-           else if(keyH.enterPressed) {	
-        	  
-        	  b.removeChosenCardsFromBoard();
-        	  //b.setOrder();
-         	  b.deleteChosenCards(); 
-                  s.placeOnShelf(chosenCards);
-                  
-         	 
+            
+           else if(keyH.enterPressed) {	     	  
+        		  chosenCards = b.sendChosenCards();
+        		  if(chosenCards != null && s.isColumnAvailable(chosenCards)) {
+             	  s.placeOnShelf(chosenCards);  
+             	  b.removeChosenCardsFromBoard();
+        	  }else System.out.println("non hai scelto delle carte da inserire oppure non c'è abbastanza spazio nella board");
+         	  b.deleteChosenCards(); 		//cancella in automatico l'array
            }
             
             
@@ -114,7 +110,7 @@ public class Player {
     public int getPlayerY(){
         return this.y;
     }
-    
+    /*
      public int getInputFromUser(){
          String s = JOptionPane.showInputDialog("Choose shelf column");
          this.chosenCol = Integer.parseInt(s);
@@ -126,5 +122,6 @@ public class Player {
      public void resetPlayerChoice(){
          this.chosenCol = -1;
      }
+*/
     
 }

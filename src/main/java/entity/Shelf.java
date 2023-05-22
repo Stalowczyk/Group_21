@@ -9,7 +9,7 @@ public class Shelf {
 	//forse bisogna cambiare card con placed card*****************
 	private PlacedCard[][] shelfLayout;
 	private int maxRow = 6;
-	private int chosenColumn = 1;		//provvissorio
+	private int chosenColumn = 0;		//provvissorio
 	private int points;
 	public static int boardsFilled = 0;
 	private int row;
@@ -41,7 +41,7 @@ public class Shelf {
 		int c = 0;
 		
 		int cardNumber = chosenCards.size();
-		while (shelfLayout[c][chosenColumn] != null) {
+		while (c <= 5 && shelfLayout[c][chosenColumn] != null) {
 			startPoint++;
 			c++;
 		}
@@ -49,16 +49,29 @@ public class Shelf {
 		if ((maxRow - startPoint) >= cardNumber) {		//se hai abbastanza spazio nella shelf
 			for (int i = 0; i < cardNumber; i++) {
 				shelfLayout[startPoint + i][chosenColumn] = (PlacedCard) chosenCards.get(i);
-				chosenCards.get(i).setRow(startPoint);
-				chosenCards.get(i).setCol(chosenColumn);
+				chosenCards.get(i).setRow(chosenColumn);
+				chosenCards.get(i).setCol(startPoint+i);
 			}
-			//chosenCards.clear();
-			//System.out.println("array vuoto: "+chosenCards);
+			for(int i = 0; i < 6; i++) {
+				System.out.println(this.shelfLayout[i][0]);
+                                
+			}
 		}
-		
-		for(int i = 0; i < 6; i++) {
-			System.out.println(this.shelfLayout[i][1]); 
+	}
+	
+	public boolean isColumnAvailable(ArrayList<PlacedCard> chosenCards) {		//BISOGNA PASSARGLI ANCHE CHOSENCOLUMN
+		int startPoint = 0;
+		int c = 0;
+		if(chosenCards != null) {
+		while (c <= 5 && shelfLayout[c][chosenColumn] != null) {
+			startPoint++;
+			c++;
 		}
+		if ((maxRow - startPoint) >= chosenCards.size()) {		//se hai abbastanza spazio nella shelf
+			return true;
+		}
+		}
+		return false;
 	}
 	
     /*
@@ -404,33 +417,31 @@ public class Shelf {
                     switch(p.getCardType()){
                         case WHITE -> {
                             g2.setColor(Color.white);
-                            g2.fillRect(p.getCardX(),p.getCardY(), 48, 48);
-
+                            g2.fillRect(528+p.getCardX(),768-p.getCardY(), 48, 48);
                         }
                         case PINK -> {
                             g2.setColor(Color.PINK);
-                            g2.fillRect(p.getCardX(),p.getCardY(), 48, 48);
+                            g2.fillRect(528+p.getCardX(),768-p.getCardY(), 48, 48);
                         }
                         case BLUE -> {
                             g2.setColor(Color.BLUE);
-                            g2.fillRect(p.getCardX(),p.getCardY(), 48, 48);
+                            g2.fillRect(528+p.getCardX(),768-p.getCardY(), 48, 48);
                         }
                         case CYAN -> {
                             g2.setColor(Color.CYAN);
-                            g2.fillRect(p.getCardX(),p.getCardY(), 48, 48);
+                            g2.fillRect(528+p.getCardX(),768-p.getCardY(), 48, 48);
                         }
                         case GREEN -> {
                             g2.setColor(Color.GREEN);
-                            g2.fillRect(p.getCardX(),p.getCardY(), 48, 48);
+                            g2.fillRect(528+p.getCardX(),768-p.getCardY(), 48, 48);
                         }
                         case YELLOW -> {
                             g2.setColor(Color.YELLOW);
-                            g2.fillRect(p.getCardX(),p.getCardY(), 48, 48);
+                            g2.fillRect(528+p.getCardX(),768-p.getCardY(), 48, 48);
                         }
 
                     }
                 }
-                
                 g2.setColor(Color.BLACK);
                 g2.drawRect(528+col*48, 528+row*48, 48, 48);
 

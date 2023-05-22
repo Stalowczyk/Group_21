@@ -49,5 +49,3 @@ public class TurnsPlayers {
 		return chosenCards.size() > 0 && chosenCardInOrder.size() > 0 && chosenCards.size() <= 3;
 	}*/
 }
-
-

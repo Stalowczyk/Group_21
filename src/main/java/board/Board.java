@@ -163,7 +163,7 @@ public final class Board {
                     */
                     case 1 -> {
                         g2.setColor(Color.GRAY);
-                        g2.fillRect(row*gp.tileSize, col*gp.tileSize, gp.tileSize, gp.tileSize);
+                        g2.drawRect(row*gp.tileSize, col*gp.tileSize, gp.tileSize, gp.tileSize);
                     }
                 }
             }
