@@ -30,7 +30,7 @@ public class Main {
         window.setAlwaysOnTop(false);
        
         window.setLayout(new GridBagLayout());
-        window.setMinimumSize(new Dimension(1000,700));
+        window.setMinimumSize(new Dimension(700,700));
         
         window.add(gamePanel);   
         window.pack();
@@ -40,5 +40,4 @@ public class Main {
          System.out.println("ok");
          System.out.println("prova");
     }
-    
 }

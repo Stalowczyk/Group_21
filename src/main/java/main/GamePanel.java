@@ -39,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
     Player player = new Player(this, keyH,board,s);
     
     public GamePanel(){
-        this.setPreferredSize(new Dimension(1000,1000));
+        this.setPreferredSize(new Dimension(700,700));
         this.setDoubleBuffered(true);
         this.setBackground(Color.LIGHT_GRAY);
         this.addKeyListener(keyH);
