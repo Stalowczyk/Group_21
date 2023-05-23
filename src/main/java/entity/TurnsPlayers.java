@@ -1,4 +1,3 @@
-
 package entity;
 
 import java.util.ArrayList;
@@ -6,8 +5,8 @@ import java.util.ArrayList;
 //non è finito visto che non ho inserito alcuni dati per poi essere collegato al programma
 //per adesso è cosi perchè vorrei un po di aiuto
 public class TurnsPlayers {
-	
-/*	ArrayList<PlacedCard> chosenCards;
+
+    /*	ArrayList<PlacedCard> chosenCards;
 	public ArrayList<PlacedCard> chosenCardInOrder;
 	
 	private int nowPlayer;

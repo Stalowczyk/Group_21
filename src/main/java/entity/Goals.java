@@ -15,15 +15,16 @@ public enum Goals {
     GOAL11(11, "Goal #11", "Six groups each containing at least 2 tiles of the same type (not necessarily in the depicted shape).The tiles of one group can be different from those of another group."),
     GOAL12(12, "Goal #12", "Four groups each containing at least 4 tiles of the same type (not necessarily in the depicted shape).The tiles of one group can be different from those of another group.");
 
-
     private final int index;
     private final String name;
     private final String description;
+
     private Goals(int index, String name, String description) {
         this.index = index;
         this.name = name;
         this.description = description;
     }
+
     public int getIndex() {
         return index;
     }
@@ -36,4 +37,3 @@ public enum Goals {
         return description;
     }
 }
-
