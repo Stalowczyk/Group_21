@@ -1,32 +1,22 @@
 package entity;
 
-        
-        
 public class Card {
-    
+
     private final CardType cardType;
-    
-    
 
     public Card(CardType cardType) {
         this.cardType = cardType;
     }
-    
-    public CardType getCardType(){
+
+    public CardType getCardType() {
         return this.cardType;
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return "Card Type: " + this.getCardType();
     }
-        
-    
-    
-        
-        
-    
-    
+
     /* Tile getCard()
     public int getCardRow(){
         return this.cardRow;
@@ -34,10 +24,5 @@ public class Card {
     public int getCardCol(){
         return this.cardCol;
     }
-    */
-    
-    
-    
-    
-    
+     */
 }

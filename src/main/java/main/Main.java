@@ -19,25 +19,23 @@ import javax.swing.JFrame;
  * @author pawel
  */
 public class Main {
-    public static void main(String[] args){
-        
+
+    public static void main(String[] args) {
+        //BUG SISTEMARE DIMENSIONI IN BASE ALLA RISOLUZIONE DEL PC 
         GamePanel gamePanel = new GamePanel();
-        
+
         JFrame window = new JFrame();
-        
+
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(true);
         window.setAlwaysOnTop(false);
-       
+
         window.setLayout(new GridBagLayout());
-        window.setMinimumSize(new Dimension(700,700));
-        
-        window.add(gamePanel);   
+
+        window.add(gamePanel);
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
-        
-         System.out.println("ok");
-         System.out.println("prova");
+
     }
 }
