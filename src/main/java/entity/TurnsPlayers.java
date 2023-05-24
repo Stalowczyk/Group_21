@@ -1,4 +1,3 @@
-
 package entity;
 
 import java.util.ArrayList;
@@ -6,8 +5,8 @@ import java.util.ArrayList;
 //non è finito visto che non ho inserito alcuni dati per poi essere collegato al programma
 //per adesso è cosi perchè vorrei un po di aiuto
 public class TurnsPlayers {
-	
-	ArrayList<PlacedCard> chosenCards;
+
+    /*	ArrayList<PlacedCard> chosenCards;
 	public ArrayList<PlacedCard> chosenCardInOrder;
 	
 	private int nowPlayer;
@@ -17,6 +16,7 @@ public class TurnsPlayers {
 		
 		this.numbOfPlayer = numbOfPlayer;
 		this.nowPlayer = 0;
+		this.insertedCards = 0;
 		chosenCards = new ArrayList<PlacedCard>();
 		chosenCardInOrder = new ArrayList<PlacedCard>();
 	}
@@ -33,7 +33,6 @@ public class TurnsPlayers {
 	//passa automaticamente al prossio giocatore il turno
 	public void insertCards(ArrayList<PlacedCard> numbCards) {
 		chosenCardInOrder = numbCards;
-		System.out.println("prossimo giocatore");
 		nextPlayer();
 	}
 	
@@ -47,6 +46,5 @@ public class TurnsPlayers {
 	//controlla se il turno è finito quando prende le carte e le inserisce nel sua griglia
 	public boolean turnFinish() {
 		return chosenCards.size() > 0 && chosenCardInOrder.size() > 0 && chosenCards.size() <= 3;
-	}
+	}*/
 }
-
