@@ -7,6 +7,8 @@ package entity;
 import board.Board;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+
 import main.GamePanel;
 import main.KeyHandler;
 
@@ -53,13 +55,32 @@ public class Player {
            else if(keyH.rightPressed)
                x += speed;
            else if(keyH.spacePressed){
+
                 //BUG BISOGNA PASSARE Y E X per farlo funzionare
                 //b.removePlacedCard(getPlayerY(), getPlayerX());
                 System.out.println("Player cords "+getPlayerX()+" "+getPlayerY());
                 System.out.println(b.hasAFreeBorder(getPlayerX(), getPlayerY()));
                 
                 displayColor();
+
+        	   b.chosenFromBoard(this.getPlayerX()/gp.tileSize, this.getPlayerY()/gp.tileSize);
+        	   System.out.println(b.hasAFreeBorder(getPlayerX(), getPlayerY()));
            }
+            
+          //r canccella tutte le scelte nell'arraylist chosecards
+           else if(keyH.rPressed) {
+        	   b.deleteChosenCards();
+           }
+            
+           else if(keyH.enterPressed) {	
+        	  
+        	  b.removeChosenCardsFromBoard();
+        	  b.setOrder();
+         	  b.deleteChosenCards(); 
+         	 
+           }
+            
+            
            moving = true;   
         }
         if(moving==true){

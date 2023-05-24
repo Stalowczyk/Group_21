@@ -12,7 +12,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
-
+import entity.Shelf;
 /**
  *
  * @author pawel
@@ -23,18 +23,19 @@ public class GamePanel extends JPanel implements Runnable {
     final int orgiginalTileSize = 16;
     final int scale = 3;
   
-    final public int tileSize = orgiginalTileSize * scale;
-    final int maxScreenCol = 11;
-    final int maxScreenRow = 11;
-    final int screenWidth = tileSize * maxScreenCol;
-    final int screenHeight = tileSize * maxScreenRow;
+    public final int tileSize = orgiginalTileSize * scale;
+    public final int maxScreenCol = 11;
+    public final int maxScreenRow = 11;
+    public final int screenWidth = tileSize * maxScreenCol;
+    public final int screenHeight = tileSize * maxScreenRow;
     
     int FPS = 10;
     
     Thread gameThread = new Thread();
     KeyHandler keyH = new KeyHandler();
     Bag b = new Bag();
-    Board board = new Board(4, this,b);
+    Shelf s = new Shelf();
+    Board board = new Board(4, this, b, s);
     Player player = new Player(this, keyH,board);
     
     public GamePanel(){
@@ -85,6 +86,7 @@ public class GamePanel extends JPanel implements Runnable {
     
     public void update(){
        player.update();
+       board.update();
     }
       
     @Override
