@@ -73,8 +73,10 @@ public class Player {
             } //r canccella tutte le scelte nell'arraylist chosecards
             else if (keyH.rPressed) {
                 b.deleteChosenCards();
-            } 
-            else if (keyH.enterPressed) {
+                
+                
+                
+            } else if (keyH.enterPressed) {
                 chosenCards = b.sendChosenCards();
                 if (chosenCards != null && s.isColumnAvailable(chosenCards) && chosenCol == -1) {
                     getInputFromUser();
@@ -84,10 +86,21 @@ public class Player {
                 } else {
                     //System.out.println("non hai scelto delle carte da inserire oppure non c'è abbastanza spazio nella board");
                 }
+                
+                if (chosenCards != null) {
+                	if(s.isColumnAvailable(chosenCards, this.chosenCol)) {
+                		
+                		s.placeOnShelf(chosenCards, chosenCol);
+                        resetPlayerChoice();
+                        b.removeChosenCardsFromBoard();
+                        
+                    } else System.out.println("non c'è abbastanza spazio nella colonna");  
+                }else System.out.println("non hai scelto delle carte");		
+                
                 b.deleteChosenCards(); 		//cancella in automatico l'array
-
-            }
-
+                
+                }
+                    
             moving = true;
         }
         if (moving == true) {

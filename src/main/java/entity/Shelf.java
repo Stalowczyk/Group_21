@@ -10,7 +10,7 @@ public class Shelf {
 
     private PlacedCard[][] shelfLayout;
     private int maxRow = 6;
-    private int chosenColumn = 0;		//provvissorio
+   // private int chosenColumn;	
     private int points;
     public static int boardsFilled = 0;
     private int row;
@@ -37,36 +37,39 @@ public class Shelf {
     }
 
     //passi l'array delle carte gia in ordine giusto, BISOGNA PASSARE ANCHE LA COLONNA SCELTA
-    public void placeOnShelf(ArrayList<PlacedCard> chosenCards) {
+    public void placeOnShelf(ArrayList<PlacedCard> chosenCards, int chosenCol) {
         int startPoint = 0;
         int c = 0;
 
         int cardNumber = chosenCards.size();
-        while (c <= 5 && shelfLayout[c][chosenColumn] != null) {
+        while (c <= 5 && shelfLayout[c][chosenCol] != null) {
             startPoint++;
             c++;
         }
 
         if ((maxRow - startPoint) >= cardNumber) {		//se hai abbastanza spazio nella shelf
             for (int i = 0; i < cardNumber; i++) {
-                shelfLayout[startPoint + i][chosenColumn] = (PlacedCard) chosenCards.get(i);
-                chosenCards.get(i).setRow(chosenColumn);
+                shelfLayout[startPoint + i][chosenCol] = (PlacedCard) chosenCards.get(i);
+                chosenCards.get(i).setRow(chosenCol);
                 chosenCards.get(i).setCol(startPoint + i);
             }
             for (int i = 0; i < 6; i++) {
                 System.out.println(this.shelfLayout[i][0]);
 
             }
+            
         }
     }
 
-    public boolean isColumnAvailable(ArrayList<PlacedCard> chosenCards) {		//BISOGNA PASSARGLI ANCHE CHOSENCOLUMN
+    public boolean isColumnAvailable(ArrayList<PlacedCard> chosenCards, int chosenCol) {		//BISOGNA PASSARGLI ANCHE CHOSENCOLUMN
         int startPoint = 0;
         int c = 0;
         if (chosenCards != null) {
-            while (c <= 5 && shelfLayout[c][chosenColumn] != null) {
+            while (c <= 5 && shelfLayout[c][chosenCol] != null) {
                 startPoint++;
                 c++;
+                System.out.println(c);
+                System.out.println(chosenCol);
             }
             if ((maxRow - startPoint) >= chosenCards.size()) {		//se hai abbastanza spazio nella shelf
                 return true;

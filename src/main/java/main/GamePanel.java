@@ -36,8 +36,9 @@ public class GamePanel extends JPanel implements Runnable {
     Bag b = new Bag();
     Shelf s = new Shelf();
     Board board = new Board(4, this, b, s);
-    Player player = new Player(this, keyH, board, s);
-
+    Player player = new Player(this, keyH,board,s);
+    
+    
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setDoubleBuffered(true);

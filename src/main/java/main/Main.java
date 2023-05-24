@@ -1,5 +1,5 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ssdddd * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package main;
@@ -29,14 +29,13 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(true);
         window.setAlwaysOnTop(false);
-       
-        window.setLayout(new FlowLayout());
-        
-        window.add(gamePanel);   
+
+        window.setLayout(new GridBagLayout());
+
+        window.add(gamePanel);
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         
     }
-    
 }
