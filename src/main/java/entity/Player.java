@@ -48,6 +48,7 @@ public class Player {
         setDefaultValues();
         chosenCards = new ArrayList<PlacedCard>();
         this.s = s;
+        this.chosenCol = -1;
     }
 
     public void setDefaultValues() {
@@ -72,14 +73,16 @@ public class Player {
             } //r canccella tutte le scelte nell'arraylist chosecards
             else if (keyH.rPressed) {
                 b.deleteChosenCards();
-            } else if (keyH.enterPressed) {
+            } 
+            else if (keyH.enterPressed) {
                 chosenCards = b.sendChosenCards();
-                if (chosenCards != null && s.isColumnAvailable(chosenCards)) {
+                if (chosenCards != null && s.isColumnAvailable(chosenCards) && chosenCol == -1) {
                     getInputFromUser();
                     s.placeOnShelf(chosenCards);
                     b.removeChosenCardsFromBoard();
+                    resetPlayerChoice();
                 } else {
-                    System.out.println("non hai scelto delle carte da inserire oppure non c'è abbastanza spazio nella board");
+                    //System.out.println("non hai scelto delle carte da inserire oppure non c'è abbastanza spazio nella board");
                 }
                 b.deleteChosenCards(); 		//cancella in automatico l'array
 
@@ -115,7 +118,6 @@ public class Player {
         String s = JOptionPane.showInputDialog("Choose shelf column");
         this.chosenCol = Integer.parseInt(s);
         System.out.println("Entrato getinput");
-
         return this.chosenCol;
     }
 

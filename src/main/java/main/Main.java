@@ -10,6 +10,7 @@ import entity.PersonalGoalsCards;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.util.Scanner;
 import javax.swing.JFrame;
@@ -19,25 +20,23 @@ import javax.swing.JFrame;
  * @author pawel
  */
 public class Main {
-
-    public static void main(String[] args) {
+    public static void main(String[] args){
         //BUG SISTEMARE DIMENSIONI IN BASE ALLA RISOLUZIONE DEL PC 
         GamePanel gamePanel = new GamePanel();
-
+        
         JFrame window = new JFrame();
-
+        
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(true);
         window.setAlwaysOnTop(false);
-
-        window.setLayout(new GridBagLayout());
-        window.setMinimumSize(new Dimension(1000, 700));
-
-        window.add(gamePanel);
+       
+        window.setLayout(new FlowLayout());
+        
+        window.add(gamePanel);   
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
-
+        
     }
-
+    
 }
