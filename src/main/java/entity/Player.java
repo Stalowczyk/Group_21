@@ -78,13 +78,10 @@ public class Player {
                 
             } else if (keyH.enterPressed) {
                 chosenCards = b.sendChosenCards();
-                if (chosenCards != null && s.isColumnAvailable(chosenCards) && chosenCol == -1) {
-                    getInputFromUser();
-                    s.placeOnShelf(chosenCards);
-                    b.removeChosenCardsFromBoard();
-                    resetPlayerChoice();
-                } else {
-                    //System.out.println("non hai scelto delle carte da inserire oppure non c'è abbastanza spazio nella board");
+                
+                if(chosenCards != null && chosenCol == -1) {		
+                	resetPlayerChoice();
+                	this.chosenCol = getInputFromUser();
                 }
                 
                 if (chosenCards != null) {
