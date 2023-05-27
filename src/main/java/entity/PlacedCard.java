@@ -51,11 +51,12 @@ public class PlacedCard extends Card {
 
     //NON SO PERCHE MA PER X VA USATO Y E PER Y X
     public void draw(Graphics2D g2) {
+        g2.setColor(Color.BLACK);
+        g2.drawRect(this.getCardX(), this.getCardY(), gp.tileSize, gp.tileSize);
         switch (this.getCardType()) {
             case WHITE -> {
                 g2.setColor(Color.white);
                 g2.fillRect(this.getCardX(), this.getCardY(), gp.tileSize, gp.tileSize);
-
             }
             case PINK -> {
                 g2.setColor(Color.PINK);
@@ -78,6 +79,8 @@ public class PlacedCard extends Card {
                 g2.fillRect(this.getCardX(), this.getCardY(), gp.tileSize, gp.tileSize);
             }
         }
+        g2.setColor(Color.BLACK);
+        g2.drawRect(this.getCardX(), this.getCardY(), gp.tileSize, gp.tileSize);
     }
 
 }

@@ -35,6 +35,7 @@ public class Player {
     ArrayList<PlacedCard> chosenCards;
     Shelf s;
     int chosenCol;
+    int currentPlayer;
 
     /**
      *
@@ -49,6 +50,7 @@ public class Player {
         chosenCards = new ArrayList<PlacedCard>();
         this.s = s;
         this.chosenCol = -1;
+        this.currentPlayer = 0;
     }
 
     public void setDefaultValues() {
@@ -90,6 +92,7 @@ public class Player {
                 		s.placeOnShelf(chosenCards, chosenCol);
                         resetPlayerChoice();
                         b.removeChosenCardsFromBoard();
+                        currentPlayer++;
                         
                     } else System.out.println("non c'è abbastanza spazio nella colonna");  
                 }else System.out.println("non hai scelto delle carte");		

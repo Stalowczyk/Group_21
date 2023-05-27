@@ -154,17 +154,20 @@ public final class Board {
         for (int col = 0; col < this.boardLayout.length; col++) {
             for (int row = 0; row < this.boardLayout[col].length; row++) {
                 switch (this.boardLayout[row][col]) {
-                    //MAGENTA = DIMENSIONS OF WHOLE ARRAY 
+                    /*MAGENTA = DIMENSIONS OF WHOLE ARRAY 
                     case 0 -> {
                         g2.setColor(Color.MAGENTA);
                         g2.fillRect(row * gp.tileSize, col * gp.tileSize, gp.tileSize, gp.tileSize);
                     }
+                    */
 
                     case 1 -> {
                         g2.setColor(Color.GRAY);
                         g2.drawRect(row * gp.tileSize, col * gp.tileSize, gp.tileSize, gp.tileSize);
                     }
                 }
+                g2.setColor(Color.BLACK);
+                g2.drawRect(1,1, 528, 528);
             }
         }
 

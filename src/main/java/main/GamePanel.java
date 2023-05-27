@@ -13,6 +13,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
 import entity.Shelf;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,23 +30,28 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxScreenRow = 20;
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
-
     int FPS = 10;
-
+    
+    private ArrayList<Shelf> allShelfs;
+    
+    
+    int playerCount = getNumberOfPlayers();
     Thread gameThread = new Thread();
     KeyHandler keyH = new KeyHandler();
-    Bag b = new Bag();
+    Bag bag = new Bag();
     Shelf s = new Shelf();
-    Board board = new Board(4, this, b, s);
+    Board board = new Board(playerCount, this, bag, s);
     Player player = new Player(this, keyH,board,s);
     
-    
     public GamePanel() {
-        this.setPreferredSize(new Dimension(1000, 700));
+        this.setPreferredSize(new Dimension(1280, 720));
         this.setDoubleBuffered(true);
-        this.setBackground(Color.LIGHT_GRAY);
+        this.setBackground(new Color(249,226,182));
         this.addKeyListener(keyH);
         this.setFocusable(true);
+        this.createAllShelfs(playerCount);
+        Board board = new Board(playerCount, this, bag, s);
+        Player player = new Player(this, keyH,board,s);
         this.startGameThread();
 
     }
@@ -96,9 +103,34 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
 
         board.draw(g2);
-        s.draw(g2);
         player.draw(g2);
+        s.draw(g2);
         g2.dispose();
     }
+    
+    
+    // DA RIFARE
+    public int getNumberOfPlayers(){
+        String s = JOptionPane.showInputDialog("Choose Number of Players");
+        int playerCount = Integer.parseInt(s);
+        switch (playerCount) {
+            case 2:
+                return playerCount;
+            case 3:
+                return playerCount;
+            case 4:
+                return playerCount;
+            default:
+                getNumberOfPlayers();     
+        }
+        return -1;
+    }
+    
+    public void createAllShelfs(int playerNumber){
+        for(int i = 0;i>playerNumber;i++){
+            Shelf shelf = new Shelf();
+            allShelfs.add(shelf);
+        }
+    }
 
-}
+}   

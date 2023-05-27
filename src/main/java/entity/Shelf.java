@@ -442,36 +442,48 @@ public class Shelf {
                     switch (p.getCardType()) {
                         case WHITE -> {
                             g2.setColor(Color.white);
-                            g2.fillRect(528 + p.getCardX(), 768 - p.getCardY(), 48, 48);
+                            g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                            g2.setColor(Color.BLACK);
+                            g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
                         }
                         case PINK -> {
                             g2.setColor(Color.PINK);
-                            g2.fillRect(528 + p.getCardX(), 768 - p.getCardY(), 48, 48);
+                            g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                            g2.setColor(Color.BLACK);
+                            g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
                         }
                         case BLUE -> {
                             g2.setColor(Color.BLUE);
-                            g2.fillRect(528 + p.getCardX(), 768 - p.getCardY(), 48, 48);
+                            g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                            g2.setColor(Color.BLACK);
+                            g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
                         }
                         case CYAN -> {
                             g2.setColor(Color.CYAN);
-                            g2.fillRect(528 + p.getCardX(), 768 - p.getCardY(), 48, 48);
+                            g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                            g2.setColor(Color.BLACK);
+                            g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
                         }
                         case GREEN -> {
                             g2.setColor(Color.GREEN);
-                            g2.fillRect(528 + p.getCardX(), 768 - p.getCardY(), 48, 48);
+                            g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                            g2.setColor(Color.BLACK);
+                            g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
                         }
                         case YELLOW -> {
                             g2.setColor(Color.YELLOW);
-                            g2.fillRect(528 + p.getCardX(), 768 - p.getCardY(), 48, 48);
+                            g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                            g2.setColor(Color.BLACK);
+                            g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
                         }
-
                     }
                 }
                 g2.setColor(Color.BLACK);
-                g2.drawRect(528 + col * 48, 528 + row * 48, 48, 48);
+                g2.drawRect(576 + col * 48, 48 + row * 48, 48, 48);
 
             }
         }
+        
     }
 
     public void looptrougharray() {
