@@ -6,6 +6,7 @@ package main;
 
 import board.Board;
 import entity.Bag;
+import entity.PersonalGoalsCards;
 import entity.Player;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -42,14 +43,15 @@ public class GamePanel extends JPanel implements Runnable {
     Shelf s = new Shelf();
     Board board = new Board(playerCount, this, bag, s);
     Player player = new Player(this, keyH,board,s);
+    PersonalGoalsCards pe = new PersonalGoalsCards(playerCount, this);
     
     public GamePanel() {
-        this.setPreferredSize(new Dimension(1280, 720));
+        this.setPreferredSize(new Dimension(1024, 640));
         this.setDoubleBuffered(true);
         this.setBackground(new Color(249,226,182));
         this.addKeyListener(keyH);
         this.setFocusable(true);
-        this.createAllShelfs(playerCount);
+        //this.createAllShelfs(playerCount);
         Board board = new Board(playerCount, this, bag, s);
         Player player = new Player(this, keyH,board,s);
         this.startGameThread();
@@ -126,11 +128,12 @@ public class GamePanel extends JPanel implements Runnable {
         return -1;
     }
     
-    public void createAllShelfs(int playerNumber){
-        for(int i = 0;i>playerNumber;i++){
+ /*   public void createAllShelfs(int playerNumber){
+        for(int i = 0; i < playerNumber; i++){
             Shelf shelf = new Shelf();
             allShelfs.add(shelf);
         }
-    }
+        
+    }*/
 
 }   

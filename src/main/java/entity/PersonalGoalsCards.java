@@ -11,7 +11,7 @@ public class PersonalGoalsCards {
 
     final int numberOfSpace = 6;
     int number;
-    final int NumberOfRow = 6;
+    final int numberOfRow = 6;
     final int numberOfCol = 5;
     int[] personalGoal;
     int[][] personalGoalCardsLayout;
@@ -19,12 +19,22 @@ public class PersonalGoalsCards {
     private int numberOfPlayers;
     ArrayList<Card> spaceIn;
     GamePanel gp;
-
+    
+    CardType[] types;
+    int c=0;
+    
     public PersonalGoalsCards(int numberOfPlayers, GamePanel gp) { // a seconda di quanti giocatori ci sono so quante
         // goalsCards generare
         this.spaceIn = new ArrayList<>();
         this.numberOfPlayers = numberOfPlayers;
         this.gp = gp;
+        
+        this.AddAllTiles();
+        this.randomizeSixSpace(); 
+
+        this.placeCardsOnSpaces();
+        System.out.println(currentGoalCardLayout);
+      
     }
 
     public int[][] getPersonalGoalCardsLayout() {
@@ -34,10 +44,12 @@ public class PersonalGoalsCards {
     public void randomizeSixSpace() { // genera il numero della casella dove andrà il goal
         personalGoal = new int[6];
         Random random = new Random();
-        for (int i = 0; i <= numberOfSpace; i++) {
+        for (int i = 0; i < numberOfSpace; i++) {
             number = random.nextInt(30);
             personalGoal[i] = number;
         }
+        
+
 
         personalGoalCardsLayout = new int[][]{{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
@@ -45,13 +57,17 @@ public class PersonalGoalsCards {
         for (int i = 0; i < numberOfSpace; i++) {
             personalGoalCardsLayout[personalGoal[i] / 5][(personalGoal[i] % 5)] = 1;
         }
+
     }
 
     public void placeCardsOnSpaces() {
-        for (int i = 0; i <= 6; i++) {
-            for (int j = 0; j <= 5; j++) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
                 if (personalGoalCardsLayout[i][j] == 1) {
-                    PlacedCard card = new PlacedCard(spaceIn.get(i).getCardType(), i, j, gp);
+
+                	
+                	PlacedCard card = new PlacedCard(types[c], i, j, gp);
+                	c++;
                     currentGoalCardLayout.add(card);
                 }
             }
@@ -59,12 +75,8 @@ public class PersonalGoalsCards {
     }
 
     public void AddAllTiles() {
-        for (int i = 0; i <= 6; i++) {
-            for (CardType s : CardType.values()) {
-                Card c = new Card(s);
-                spaceIn.add(c);
-            }
-        }
+    	//manca di fare in modo che i numeri che il cardtype sia generato casualmente
+    	types = CardType.values();
     }
 
     //questo metodo restituisce il puntegio in base a quante carte sono uguali tra carta obiettivo e shelf
@@ -95,6 +107,7 @@ public class PersonalGoalsCards {
         }
         return sc;
     }
+    
     
 
 
