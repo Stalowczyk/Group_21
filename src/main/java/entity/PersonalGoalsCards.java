@@ -2,6 +2,8 @@ package entity;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.awt.Color;
+import java.awt.Graphics2D;
 
 import main.GamePanel;
 
@@ -93,5 +95,7 @@ public class PersonalGoalsCards {
         }
         return sc;
     }
+    
+
 
 }

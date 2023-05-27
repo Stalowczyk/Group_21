@@ -156,7 +156,7 @@ public final class Board {
                 switch (this.boardLayout[row][col]) {
                     //MAGENTA = DIMENSIONS OF WHOLE ARRAY 
                     case 0 -> {
-                        g2.setColor(Color.MAGENTA);
+                        g2.setColor(Color.LIGHT_GRAY);
                         g2.fillRect(row * gp.tileSize, col * gp.tileSize, gp.tileSize, gp.tileSize);
                     }
 

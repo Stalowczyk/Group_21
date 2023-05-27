@@ -91,8 +91,11 @@ public class Player {
                         resetPlayerChoice();
                         b.removeChosenCardsFromBoard();
                         
-                    } else System.out.println("non c'è abbastanza spazio nella colonna");  
-                }else System.out.println("non hai scelto delle carte");		
+                    } else {
+                    	System.out.println("non c'è abbastanza spazio nella colonna");
+                    	resetPlayerChoice();
+                    }
+                }//else System.out.println("non hai scelto delle carte");		
                 
                 b.deleteChosenCards(); 		//cancella in automatico l'array
                 
