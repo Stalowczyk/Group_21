@@ -73,7 +73,7 @@ public class PersonalGoalsCards {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
 				if (personalGoalCardsLayout[i][j] == 1) {
-					PlacedCard card = new PlacedCard(types.get(c), i, j, gp); // types è un ArrayList contenente tutti i tipi di carte disposti casualmente
+					PlacedCard card = new PlacedCard(types.get(c), 12+j, 8+i, gp); // types è un ArrayList contenente tutti i tipi di carte disposti casualmente
 					c++;
 					currentGoalCardLayout.add(card);
 				}
@@ -136,5 +136,18 @@ public class PersonalGoalsCards {
 		}
 		return sc;
 	}
+        public void draw(Graphics2D g2){
+        for (int col = 0; col < this.personalGoalCardsLayout.length; col++) {
+            for (int row = 0; row < this.personalGoalCardsLayout[col].length; row++){
+                g2.setColor(Color.BLACK);
+                g2.drawRect(576 + row * 48, 384 + col * 48, 48, 48);                
+            }
+            for(int i = 0;i<currentGoalCardLayout.size();i++){
+                PlacedCard p = currentGoalCardLayout.get(i);
+                p.draw(g2);
+            }
+            
+    }
+    }
 
 }

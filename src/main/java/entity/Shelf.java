@@ -3,6 +3,7 @@ package entity;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.*;
+import javax.swing.JLabel;
 import main.GamePanel;
 
 public class Shelf {
@@ -16,7 +17,7 @@ public class Shelf {
     private int row;
     private int col;
     GamePanel gp;
-
+    
     public Shelf() {
         this.shelfLayout = new PlacedCard[6][5];
         this.points = 0;
@@ -435,6 +436,8 @@ public class Shelf {
     }
 
     public void draw(Graphics2D g2) {
+        JLabel Shelf = new JLabel();
+        
         for (int row = 0; row < this.shelfLayout.length; row++) {
             for (int col = 0; col < this.shelfLayout[row].length; col++) {
                 PlacedCard p = this.shelfLayout[row][col];

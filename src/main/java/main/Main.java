@@ -14,6 +14,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.util.Scanner;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  *
@@ -22,20 +23,21 @@ import javax.swing.JFrame;
 public class Main {
     public static void main(String[] args){
         //BUG SISTEMARE DIMENSIONI IN BASE ALLA RISOLUZIONE DEL PC 
+        JFrame window = new JFrame();
+        window.setLayout(new GridBagLayout());
         GamePanel gamePanel = new GamePanel();
         
-        JFrame window = new JFrame();
-        
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(true);
+        window.setResizable(false);
         window.setAlwaysOnTop(false);
 
-        window.setLayout(new GridBagLayout());
 
         window.add(gamePanel);
+        
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+        
         
     }
 }
