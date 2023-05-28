@@ -73,7 +73,7 @@ public class PersonalGoalsCards {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
 				if (personalGoalCardsLayout[i][j] == 1) {
-					PlacedCard card = new PlacedCard(types.get(c), 8+i, 12+j, gp); // types è un ArrayList contenente tutti i tipi di carte disposti casualmente
+					PlacedCard card = new PlacedCard(types.get(c), 12+j, 8+i, gp); // types è un ArrayList contenente tutti i tipi di carte disposti casualmente
 					c++;
 					currentGoalCardLayout.add(card);
 				}
