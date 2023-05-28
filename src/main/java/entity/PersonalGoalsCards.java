@@ -119,7 +119,7 @@ public class PersonalGoalsCards {
 		int cont = 0;
 		int sc = 0; // punteggio
 
-		for (int i = 0; i <= 6; i++) {
+		for (int i = 0; i < 6; i++) {
 			int c = this.currentGoalCardLayout.get(i).getCardCol(); // colonna da confrontare
 			int r = this.currentGoalCardLayout.get(i).getCardRow(); // riga da confrontare
 			if (s.getCard(r, c).getCardType() == this.currentGoalCardLayout.get(i).getCardType()) {
