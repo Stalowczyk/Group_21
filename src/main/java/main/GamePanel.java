@@ -14,6 +14,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
 import entity.Shelf;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -33,9 +34,17 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenHeight = tileSize * maxScreenRow;
     int FPS = 10;
     
+    
+    
+    
+    
+    
     private ArrayList<Shelf> allShelfs;
     
-    
+    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+    int width = (int) (dim.width * 0.80);
+    int height = (int) (dim.height * 0.80);   
+            
     int playerCount = getNumberOfPlayers();
     Thread gameThread = new Thread();
     KeyHandler keyH = new KeyHandler();
@@ -46,7 +55,8 @@ public class GamePanel extends JPanel implements Runnable {
     PersonalGoalsCards pe = new PersonalGoalsCards(playerCount, this);
     
     public GamePanel() {
-        this.setPreferredSize(new Dimension(1024, 640));
+        //this.setPreferredSize(new Dimension(1024, 640));
+        this.setPreferredSize(new Dimension(width,height));
         this.setDoubleBuffered(true);
         this.setBackground(new Color(249,226,182));
         this.addKeyListener(keyH);
@@ -105,8 +115,9 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
 
         board.draw(g2);
-        player.draw(g2);
         s.draw(g2);
+        pe.draw(g2);
+        player.draw(g2);
         g2.dispose();
     }
     

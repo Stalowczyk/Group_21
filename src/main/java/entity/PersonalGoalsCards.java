@@ -1,8 +1,8 @@
 package entity;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import main.GamePanel;
@@ -33,7 +33,6 @@ public class PersonalGoalsCards {
         this.randomizeSixSpace(); 
 
         this.placeCardsOnSpaces();
-        System.out.println(currentGoalCardLayout);
       
     }
 
@@ -66,7 +65,7 @@ public class PersonalGoalsCards {
                 if (personalGoalCardsLayout[i][j] == 1) {
 
                 	
-                	PlacedCard card = new PlacedCard(types[c], i, j, gp);
+                	PlacedCard card = new PlacedCard(types[c], 12+j, 8+i, gp);
                 	c++;
                     currentGoalCardLayout.add(card);
                 }
@@ -108,7 +107,37 @@ public class PersonalGoalsCards {
         return sc;
     }
     
+    public void draw(Graphics2D g2){
+        for (int col = 0; col < this.personalGoalCardsLayout.length; col++) {
+            for (int row = 0; row < this.personalGoalCardsLayout[col].length; row++){
+                g2.setColor(Color.BLACK);
+                g2.drawRect(576 + row * 48, 384 + col * 48, 48, 48);                
+            }
+            for(int i = 0;i<currentGoalCardLayout.size();i++){
+                PlacedCard p = currentGoalCardLayout.get(i);
+                p.draw(g2);
+            }
+            
+    }
+    }
     
+    
+    
+    public void printOutAll(){
+        for (int row = 0; row < this.personalGoalCardsLayout.length; row++) {
+            for (int col = 0; col < this.personalGoalCardsLayout[row].length; col++)
+            {
+                System.out.println(personalGoalCardsLayout[row][col]);
+            }
+    }
+    }
+    
+    public void printAllCards(){
+        for(int i = 0;i<currentGoalCardLayout.size();i++){
+            System.out.println(currentGoalCardLayout.get(i).getCardX());
+            System.out.println(currentGoalCardLayout.get(i).getCardY());
+        }
+    }
 
 
 }
