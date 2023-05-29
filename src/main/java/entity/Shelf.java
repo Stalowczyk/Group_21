@@ -54,10 +54,10 @@ public class Shelf {
                 chosenCards.get(i).setRow(chosenCol);
                 chosenCards.get(i).setCol(startPoint + i);
             }
-            for (int i = 0; i < 6; i++) {
+            /*for (int i = 0; i < 6; i++) {
                 System.out.println(this.shelfLayout[i][0]);
 
-            }
+            }*/
             
         }
     }
@@ -69,8 +69,8 @@ public class Shelf {
             while (c <= 5 && shelfLayout[c][chosenCol] != null) {
                 startPoint++;
                 c++;
-                System.out.println(c);
-                System.out.println(chosenCol);
+                //System.out.println(c);
+                //System.out.println(chosenCol);
             }
             if ((maxRow - startPoint) >= chosenCards.size()) {		//se hai abbastanza spazio nella shelf
                 return true;
@@ -99,7 +99,7 @@ public class Shelf {
         for (int i = 0; i <= 5; i = i + 5) {
             for (int j = 0; j <= 4; j = j + 4) {
                 corner.add(this.shelfLayout[i][j]);
-                System.out.println("prova");
+                //System.out.println("prova");
             }
         }
         return !corner.contains(null) && corner.stream().map(Card::getCardType).distinct().count() == 1;

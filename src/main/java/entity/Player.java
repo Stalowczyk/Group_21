@@ -36,6 +36,10 @@ public class Player {
     Shelf s;
     int chosenCol;
     int currentPlayer;
+    
+    
+    public ArrayList<Integer> order = new ArrayList<>(); 
+    public ArrayList<PlacedCard> chosenCardsInOrder = new ArrayList<>(); 
 
     /**
      *
@@ -89,7 +93,13 @@ public class Player {
                 if (chosenCards != null) {
                 	if(s.isColumnAvailable(chosenCards, this.chosenCol)) {
                 		
-                		s.placeOnShelf(chosenCards, chosenCol);
+                		this.setOrder();
+
+                		//qui ci va b.changeOrder()
+                		chosenCardsInOrder = b.changeOrder(order);
+                		order.clear();
+                		
+                		s.placeOnShelf(chosenCardsInOrder, chosenCol); //chosenCards
                         resetPlayerChoice();
                         b.removeChosenCardsFromBoard();
                         currentPlayer++;
@@ -99,7 +109,7 @@ public class Player {
                     	resetPlayerChoice();
                     }
                 }else {
-                	System.out.println("non hai scelto delle carte");
+                	//System.out.println("non hai scelto delle carte");
                 	resetPlayerChoice();
                 }
                 
@@ -142,6 +152,38 @@ public class Player {
 
     public void resetPlayerChoice() {
         this.chosenCol = -1;
+    }
+    
+    public void setOrder(){
+		//pop up dove si crea l'arrayList con l'ordine (1, 3, 2)
+		if(chosenCards.size() > 1) {
+			for(int i = 0; i < chosenCards.size(); i++) {
+    			String sid = JOptionPane.showInputDialog("set the "+(i+1)+"st "+"card to put in shelf");
+    	        int number = Integer.parseInt(sid);
+    	        
+    	        if(number >= 0 && number < (chosenCards.size())) {
+    	        	if(!this.sameNumbers(number)) {
+    	        		order.add(number);
+    	        	}else {
+    	        		System.out.println("hai inserito un numero uguale ad uno precedentemente inserito");
+    	        		i--;
+    	        	}
+    	        }else {
+    	        	System.out.println("inserisci un numero coerente");
+    	        	i--;
+    	        }
+    	        
+    		}
+		}else order.add(1);
+    }
+    
+    public boolean sameNumbers(int number) {
+    	for(int i = 0; i < order.size(); i++) {
+    		if(order.get(i) == number) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
 
 }

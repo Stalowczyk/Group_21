@@ -42,8 +42,8 @@ public class GamePanel extends JPanel implements Runnable {
     private ArrayList<Shelf> allShelfs;
     
     Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-    int width = (int) (dim.width * 0.80);
-    int height = (int) (dim.height * 0.80);   
+    int width = (int) (dim.width * 0.90);
+    int height = (int) (dim.height * 0.90);   
             
     int playerCount = getNumberOfPlayers();
     Thread gameThread = new Thread();

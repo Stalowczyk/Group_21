@@ -34,7 +34,7 @@ public final class Board {
     GamePanel gp;
     Bag b;
 
-    private int firstRaw;
+    private int firstRow;
     private int firstCol;
     private int oldRaw;
     private int oldCol;
@@ -239,12 +239,12 @@ public final class Board {
                 if (this.hasAFreeBorder(chosenRow * gp.tileSize, chosenCol * gp.tileSize)) {
                     if (first) {
                         chosenCards.add(this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize));
-                        firstRaw = chosenRow;
+                        firstRow = chosenRow;
                         firstCol = chosenCol;
                         oldRaw = chosenRow;
                         oldCol = chosenCol;
                     } else {
-                        if (chosenRow == firstRaw && chosenRow == oldRaw) {
+                        if (chosenRow == firstRow && chosenRow == oldRaw) {
                             if (chosenCol == oldCol + 1 || chosenCol == oldCol - 1) {
                                 chosenCards.add(this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize));
                                 oldRaw = chosenRow;
@@ -264,6 +264,9 @@ public final class Board {
         }
         System.out.println(chosenCards);
     }
+    
+
+    
 
     public void deleteChosenCards() {
         if (!this.chosenCards.isEmpty()) {
@@ -305,44 +308,30 @@ public final class Board {
     }
 
     //questo metodo crea l'arrayList chosenCardsInOrder
-    /*public void changeOrder(ArrayList<Integer> order) {		//passo l'array contenente l'ordine (1, 3, 2)
+    public ArrayList<PlacedCard> changeOrder(ArrayList<Integer> order) {		//passo l'array contenente l'ordine (1, 3, 2)
+    	//chosenCardsInOrder.clear();
  		for(int i = 0; i < order.size(); i++) {
  			int c = order.get(i);
- 			PlacedCard pc = this.chosenCards.get(c-1);
+ 			PlacedCard pc = this.chosenCards.get(c);
  			chosenCardsInOrder.add(pc);
  		}
+ 		return chosenCardsInOrder;
  		
- 		System.out.println("carte in ordine: "+chosenCardsInOrder);
  		//questo andrebbe messo dopo che metti le carte nella shelf
- 			chosenCardsInOrder.clear();
- 			System.out.println("array pulito: "+chosenCardsInOrder);
+ 			//chosenCardsInOrder.clear();
  		//*******************
  	}
  	
- 	public void setOrder() {
- 		 ArrayList<Integer> order = new ArrayList<>();
- 		 order.clear();
- 		 System.out.println("Ordine iniziale: "+order);
- 		 Scanner sc = new Scanner(System.in);
- 		 System.out.println("inserire ordine:");
- 		 for(int i = 0; i < this.chosenCards.size(); i++) {
- 			if(sc.hasNextInt()) {
- 				int ordine = sc.nextInt();
- 	 	 		 order.add(ordine); 
- 	 		 	
- 			}
- 		}
- 		 sc.close();
- 		 System.out.println("ordine finale: "+order);
- 		 this.changeOrder(order);
- 	}
+
  	
+ 	/*
  	public void sendCardsToShelf() {
  		//Scanner sc = new Scanner(System.in);	
  		//int chosenCol = sc.nextInt();
  		//s.placeOnShelf(chosenCardsInOrder, chosenCol);
  		//sc.close();
  	}*/
+    
     public ArrayList<PlacedCard> sendChosenCards() {
         if (!this.chosenCards.isEmpty()) {
             return this.chosenCards;
