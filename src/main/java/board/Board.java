@@ -41,7 +41,7 @@ public final class Board {
     private int oldCol;
     private boolean first;
     Shelf s;
-    ArrayList<PlacedCard> chosenCards;
+    public ArrayList<PlacedCard> chosenCards;
     public ArrayList<PlacedCard> chosenCardsInOrder;		//******************
 
     public Board(int numberOfPlayers, GamePanel gp, Bag b, Shelf s) {

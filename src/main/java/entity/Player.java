@@ -99,10 +99,12 @@ public class Player {
                 		chosenCardsInOrder = b.changeOrder(order);
                 		order.clear();
                 		
+                		System.out.println(chosenCol);
                 		s.placeOnShelf(chosenCardsInOrder, chosenCol); //chosenCards
                         resetPlayerChoice();
                         b.removeChosenCardsFromBoard();
                         currentPlayer++;
+                        b.chosenCardsInOrder.clear();
                         
                     } else {
                     	//System.out.println("non c'è abbastanza spazio nella colonna");
@@ -112,7 +114,7 @@ public class Player {
                 	//System.out.println("non hai scelto delle carte");
                 	resetPlayerChoice();
                 }
-                System.out.println(chosenCards);
+                //System.out.println(chosenCards);
                 b.deleteChosenCards(); 		//cancella in automatico l'array
                 
                 }
@@ -174,7 +176,7 @@ public class Player {
     	        }
     	        
     		}
-		}else order.add(1);
+		}else order.add(0);
     }
     
     public boolean sameNumbers(int number) {
