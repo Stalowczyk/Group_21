@@ -105,14 +105,14 @@ public class Player {
                         currentPlayer++;
                         
                     } else {
-                    	System.out.println("non c'è abbastanza spazio nella colonna");
+                    	//System.out.println("non c'è abbastanza spazio nella colonna");
                     	resetPlayerChoice();
                     }
                 }else {
                 	//System.out.println("non hai scelto delle carte");
                 	resetPlayerChoice();
                 }
-                
+                System.out.println(chosenCards);
                 b.deleteChosenCards(); 		//cancella in automatico l'array
                 
                 }
