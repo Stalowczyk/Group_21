@@ -14,6 +14,7 @@ import entity.PlacedCard;
 import entity.Shelf;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -174,6 +175,12 @@ public final class Board {
         //MOVED DRAWING TO PlacedCard class 
         for (int i = 0; i < currentBoardLayout.size(); i++) {
             currentBoardLayout.get(i).draw(g2);
+        }
+        Font currentFont = g2.getFont();
+        currentFont = currentFont.deriveFont(currentFont.getSize()*1.4F);
+        g2.setFont(currentFont);
+        for(int i = 0; i < chosenCards.size();i++){
+            g2.drawString(String.valueOf(i), chosenCards.get(i).getCardX(), chosenCards.get(i).getCardY()+48);
         }
     }
 
