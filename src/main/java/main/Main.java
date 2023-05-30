@@ -15,6 +15,7 @@ import java.awt.GridBagLayout;
 import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,8 +31,6 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setAlwaysOnTop(false);
-
-
         window.add(gamePanel);
         
         window.pack();

@@ -9,7 +9,7 @@ import main.GamePanel;
 public class Shelf {
     //forse bisogna cambiare card con placed card*****************
 
-    private PlacedCard[][] shelfLayout;
+    public PlacedCard[][] shelfLayout;
     private int maxRow = 6;
    // private int chosenColumn;	
     private int points;
@@ -17,18 +17,30 @@ public class Shelf {
     private int row;
     private int col;
     GamePanel gp;
+    PersonalGoalsCards pe;
+    private boolean playerTurn;
     
-    public Shelf() {
+    public Shelf(GamePanel gp) {
         this.shelfLayout = new PlacedCard[6][5];
         this.points = 0;
         this.gp = gp;
-        printOutShelf();
+        this.pe = new PersonalGoalsCards(gp.playerCount, this.gp);
+        this.playerTurn = false;
     }
 
     public int getPoints() {
         return points;
     }
-
+    
+    public boolean getPlayerTurn(){
+        return this.playerTurn;
+    }
+    
+    public void setPlayerTurn(boolean b){
+        this.playerTurn = b;
+    }
+    
+    
     public void addPoints(int amount) {
         points += amount;
     }
@@ -55,7 +67,7 @@ public class Shelf {
                 chosenCards.get(i).setCol(startPoint + i);
             }
             for (int i = 0; i < 6; i++) {
-                System.out.println(this.shelfLayout[i][0]);
+                //System.out.println(this.shelfLayout[i][0]);
 
             }
             
@@ -69,8 +81,8 @@ public class Shelf {
             while (c <= 5 && shelfLayout[c][chosenCol] != null) {
                 startPoint++;
                 c++;
-                System.out.println(c);
-                System.out.println(chosenCol);
+                //System.out.println(c);
+                //System.out.println(chosenCol);
             }
             if ((maxRow - startPoint) >= chosenCards.size()) {		//se hai abbastanza spazio nella shelf
                 return true;
@@ -433,11 +445,11 @@ public class Shelf {
         } else {
             return false;
         }
+        
     }
 
     public void draw(Graphics2D g2) {
-        JLabel Shelf = new JLabel();
-        
+        if(this.playerTurn==true){       
         for (int row = 0; row < this.shelfLayout.length; row++) {
             for (int col = 0; col < this.shelfLayout[row].length; col++) {
                 PlacedCard p = this.shelfLayout[row][col];
@@ -485,8 +497,9 @@ public class Shelf {
                 g2.drawRect(576 + col * 48, 48 + row * 48, 48, 48);
 
             }
+            pe.draw(g2);
         }
-        
+        } 
     }
 
     public void looptrougharray() {

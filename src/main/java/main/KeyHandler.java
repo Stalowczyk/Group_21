@@ -13,7 +13,7 @@ import java.awt.event.KeyListener;
  */
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed, rPressed, enterPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed, rPressed, enterPressed, pPressed;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -44,7 +44,12 @@ public class KeyHandler implements KeyListener {
 
             case (KeyEvent.VK_ENTER):
                 enterPressed = true;
+                
+            case (KeyEvent.VK_P):
+                pPressed = true;
+             
         }
+            
     }
 
     @Override
@@ -71,6 +76,10 @@ public class KeyHandler implements KeyListener {
 
             case (KeyEvent.VK_ENTER):
                 enterPressed = false;
+                
+            case (KeyEvent.VK_P):
+                pPressed = false;
+             
         }
     }
 

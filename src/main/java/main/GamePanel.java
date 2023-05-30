@@ -14,6 +14,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
 import entity.Shelf;
+import java.awt.Dialog;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -45,14 +46,13 @@ public class GamePanel extends JPanel implements Runnable {
     int width = (int) (dim.width * 0.80);
     int height = (int) (dim.height * 0.80);   
             
-    int playerCount = getNumberOfPlayers();
+    public int playerCount = getNumberOfPlayers();
+    
     Thread gameThread = new Thread();
     KeyHandler keyH = new KeyHandler();
     Bag bag = new Bag();
-    Shelf s = new Shelf();
-    Board board = new Board(playerCount, this, bag, s);
-    Player player = new Player(this, keyH,board,s);
-    PersonalGoalsCards pe = new PersonalGoalsCards(playerCount, this);
+    Board board = new Board(playerCount, this, bag);
+    Player player;
     
     public GamePanel() {
         //this.setPreferredSize(new Dimension(1024, 640));
@@ -61,9 +61,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setBackground(new Color(249,226,182));
         this.addKeyListener(keyH);
         this.setFocusable(true);
-        //this.createAllShelfs(playerCount);
-        Board board = new Board(playerCount, this, bag, s);
-        Player player = new Player(this, keyH,board,s);
+        this.allShelfs = new ArrayList<>(); 
+        createAllShelfs(playerCount);
+        this.player = new Player(this, keyH,board,allShelfs);
         this.startGameThread();
 
     }
@@ -101,12 +101,11 @@ public class GamePanel extends JPanel implements Runnable {
                 timer = 0;
             }
         }
-
     }
 
     public void update() {
-        player.update();
         board.update();
+        player.update();
     }
 
     @Override
@@ -115,8 +114,8 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
 
         board.draw(g2);
-        s.draw(g2);
-        pe.draw(g2);
+        for(int i = 0; i < allShelfs.size();i++)
+            allShelfs.get(i).draw(g2);
         player.draw(g2);
         g2.dispose();
     }
@@ -127,24 +126,26 @@ public class GamePanel extends JPanel implements Runnable {
         String s = JOptionPane.showInputDialog("Choose Number of Players");
         int playerCount = Integer.parseInt(s);
         switch (playerCount) {
-            case 2:
+            case 2 -> {
                 return playerCount;
-            case 3:
+            }
+            case 3 -> {
                 return playerCount;
-            case 4:
+            }
+            case 4 -> {
                 return playerCount;
-            default:
-                getNumberOfPlayers();     
+            }
+            default -> getNumberOfPlayers();     
         }
         return -1;
     }
     
- /*   public void createAllShelfs(int playerNumber){
+    public void createAllShelfs(int playerNumber){
         for(int i = 0; i < playerNumber; i++){
-            Shelf shelf = new Shelf();
+            Shelf shelf = new Shelf(this);
             allShelfs.add(shelf);
         }
-        
-    }*/
+    }
+       
 
 }   

@@ -40,11 +40,10 @@ public final class Board {
     private int oldRaw;
     private int oldCol;
     private boolean first;
-    Shelf s;
-    ArrayList<PlacedCard> chosenCards;
+    public ArrayList<PlacedCard> chosenCards;
     public ArrayList<PlacedCard> chosenCardsInOrder;		//******************
 
-    public Board(int numberOfPlayers, GamePanel gp, Bag b, Shelf s) {
+    public Board(int numberOfPlayers, GamePanel gp, Bag b) {
         this.numberOfPlayers = numberOfPlayers;
         this.gp = gp;
         this.b = b;
@@ -53,7 +52,7 @@ public final class Board {
         setBoardSize();
         placeCardsOnBoard(b);
         chosenCards = new ArrayList<PlacedCard>();
-        chosenCardsInOrder = new ArrayList<PlacedCard>();		//******************
+        chosenCardsInOrder = new ArrayList<PlacedCard>();//******************
     }
 
     public void setDefaultBoardLayout() {
@@ -176,6 +175,7 @@ public final class Board {
         for (int i = 0; i < currentBoardLayout.size(); i++) {
             currentBoardLayout.get(i).draw(g2);
         }
+        
         Font currentFont = g2.getFont();
         currentFont = currentFont.deriveFont(currentFont.getSize()*1.4F);
         g2.setFont(currentFont);
@@ -186,7 +186,7 @@ public final class Board {
 
     public void removePlacedCard(int x, int y) {
         for (int i = 0; i < currentBoardLayout.size(); i++) {
-            if (x == (currentBoardLayout.get(i).getCardX()) && y == (currentBoardLayout.get(i).getCardY())) {
+            if (x == (currentBoardLayout.get(i).getCardX()) && y == (currentBoardLayout.get(i).getCardY())) {              
                 currentBoardLayout.remove(i);
 
             }
@@ -269,7 +269,7 @@ public final class Board {
                 }
             }
         }
-        System.out.println(chosenCards);
+        //System.out.println(chosenCards);
     }
 
     public void deleteChosenCards() {
@@ -305,9 +305,12 @@ public final class Board {
 
     //questo metodo scorre l'arraylist e rimuove le carte selezionate dall board
     public void removeChosenCardsFromBoard() {
+        //System.out.println("Chosen cards in : "+ chosenCards);
         for (int i = 0; i < this.chosenCards.size(); i++) {
-            this.removePlacedCard(this.chosenCards.get(i).getCardX(), this.chosenCards.get(i).getCardY());
+            //System.out.println("REMOVED CARD "+ chosenCards.get(i));
+            removePlacedCard(this.chosenCards.get(i).getCardX(), this.chosenCards.get(i).getCardY());
         }
+        //System.out.println("PULIZIONE ARRAY ");
         chosenCards.clear();
     }
 
