@@ -2,6 +2,10 @@ package entity;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -38,7 +42,8 @@ public class PersonalGoalsCards {
 		this.randomizeSixSpace();
 		this.placeCardsOnSpaces();
 		System.out.println(currentGoalCardLayout);
-
+		
+		
 	}
 
 	public int[][] getPersonalGoalCardsLayout() {

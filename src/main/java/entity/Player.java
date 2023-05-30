@@ -75,36 +75,38 @@ public class Player {
                 x += speed;
             } else if (keyH.spacePressed) {
                 b.chosenFromBoard(this.getPlayerX() / gp.tileSize, this.getPlayerY() / gp.tileSize);
-                System.out.println(b.hasAFreeBorder(getPlayerX(), getPlayerY()));
+                //System.out.println(b.hasAFreeBorder(getPlayerX(), getPlayerY()));
             } //r canccella tutte le scelte nell'arraylist chosecards
             else if (keyH.rPressed) {
                 b.deleteChosenCards();
                 
                 
                 
-            } else if (keyH.enterPressed) {
+            } 
+            else if (keyH.enterPressed) {
                 chosenCards = b.sendChosenCards();
+                
                 
                 if(chosenCards != null && chosenCol == -1) {		
                 	resetPlayerChoice();
                 	this.chosenCol = getInputFromUser();
                 }
                 
-                if (chosenCards != null) {
+                if (b.chosenCards != null) {
                 	if(s.isColumnAvailable(chosenCards, this.chosenCol)) {
-                		
+                		b.removeChosenCardsFromBoard();
                 		this.setOrder();
 
                 		//qui ci va b.changeOrder()
                 		chosenCardsInOrder = b.changeOrder(order);
                 		order.clear();
                 		
-                		System.out.println(chosenCol);
+                		//System.out.println(chosenCol);
                 		s.placeOnShelf(chosenCardsInOrder, chosenCol); //chosenCards
                         resetPlayerChoice();
-                        b.removeChosenCardsFromBoard();
+                        //
                         currentPlayer++;
-                        b.chosenCardsInOrder.clear();
+                        b.chosenCardsInOrder.clear(); 
                         
                     } else {
                     	//System.out.println("non c'è abbastanza spazio nella colonna");
@@ -148,7 +150,7 @@ public class Player {
     public int getInputFromUser() {
         String s = JOptionPane.showInputDialog("Choose shelf column");
         this.chosenCol = Integer.parseInt(s);
-        System.out.println("Entrato getinput");
+        //System.out.println("Entrato getinput");
         return this.chosenCol;
     }
 
@@ -168,6 +170,7 @@ public class Player {
     	        		order.add(number);
     	        	}else {
     	        		System.out.println("hai inserito un numero uguale ad uno precedentemente inserito");
+    	        		//String er = JOptionPane.showInputDialog( "hai inserito un numero uguale ad uno precedentemente inserito");
     	        		i--;
     	        	}
     	        }else {

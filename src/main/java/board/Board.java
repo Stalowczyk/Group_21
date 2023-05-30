@@ -83,7 +83,7 @@ public final class Board {
         this.boardLayout[row][col] = number;
     }
 
-    public void randomizeBoard() {
+   public void randomizeBoard() {
         for (int col = 0; col < this.boardLayout.length; col++) {
             for (int row = 0; row < this.boardLayout[col].length; row++) {
                 if (this.boardLayout[row][col] == 1) {
@@ -114,11 +114,8 @@ public final class Board {
                     PlacedCard p = new PlacedCard(b.pullRandom().getCardType(), row, col, gp);
                     currentBoardLayout.add(p);
                 }
-
             }
-
         }
-
     }
 
     //distribuisce le carte sulla board anche se alcune sono già piazzate
@@ -126,10 +123,10 @@ public final class Board {
     public void repeatPlaceCardsOnBoard(Bag b) {
         for (int col = 0; col < this.boardLayout.length; col++) {
             for (int row = 0; row < this.boardLayout[col].length; row++) {
-                if (this.boardLayout[row][col] == 1 && this.getCardAtCords(row * gp.tileSize, col * gp.tileSize) == null) {
+                if (this.boardLayout[row][col] == 1 && this.getCardAtCords(row * gp.tileSize, col * gp.tileSize) == null) {		
                     PlacedCard p = new PlacedCard(b.pullRandom().getCardType(), row, col, gp);
                     currentBoardLayout.add(p);
-                }
+               }
 
             }
 
@@ -146,6 +143,10 @@ public final class Board {
         if (this.refreshBoard()) {
             //System.out.println("è entrato nell'update");
             this.repeatPlaceCardsOnBoard(b);
+            
+            this.chosenCardsInOrder.clear();
+            this.chosenCards.clear();
+            
 
         }
         //System.out.println("refresh");
@@ -185,14 +186,25 @@ public final class Board {
     }
 
     public void removePlacedCard(int x, int y) {
+    	System.out.println("rimuovi");
         for (int i = 0; i < currentBoardLayout.size(); i++) {
-            if (x == (currentBoardLayout.get(i).getCardX()) && y == (currentBoardLayout.get(i).getCardY())) {
+            if (x == (currentBoardLayout.get(i).getCardX()) && y == (currentBoardLayout.get(i).getCardY())) {            	           	
                 currentBoardLayout.remove(i);
-
             }
         }
 
     }
+    
+    
+    //questo metodo scorre l'arraylist e rimuove le carte selezionate dall board
+    public void removeChosenCardsFromBoard() {
+        for (int i = 0; i < this.chosenCards.size(); i++) {
+            this.removePlacedCard(this.chosenCards.get(i).getCardX(), this.chosenCards.get(i).getCardY());
+        }
+        //chosenCards.clear();
+    }
+    
+    
 
     public boolean isCardPlaced(int x, int y) {
         for (int i = 0; i < currentBoardLayout.size(); i++) {
@@ -269,7 +281,7 @@ public final class Board {
                 }
             }
         }
-        System.out.println(chosenCards);
+        //System.out.println(chosenCards);
     }
     
 
@@ -306,13 +318,7 @@ public final class Board {
         return true;
     }
 
-    //questo metodo scorre l'arraylist e rimuove le carte selezionate dall board
-    public void removeChosenCardsFromBoard() {
-        for (int i = 0; i < this.chosenCards.size(); i++) {
-            this.removePlacedCard(this.chosenCards.get(i).getCardX(), this.chosenCards.get(i).getCardY());
-        }
-        chosenCards.clear();
-    }
+  
 
     //questo metodo crea l'arrayList chosenCardsInOrder
     public ArrayList<PlacedCard> changeOrder(ArrayList<Integer> order) {		//passo l'array contenente l'ordine (1, 3, 2)
