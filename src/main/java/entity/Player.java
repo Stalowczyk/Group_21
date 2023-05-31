@@ -270,22 +270,38 @@ public class Player {
     
     public void setOrder(){
 		//pop up dove si crea l'arrayList con l'ordine (1, 3, 2)
+    	  boolean isValidInput = false;
+    	
 		if(chosenCards.size() > 1) {
 			for(int i = 0; i < chosenCards.size(); i++) {
     			String sid = JOptionPane.showInputDialog("set the "+(i+1)+"st "+"card to put in shelf");
     	        int number = Integer.parseInt(sid);
+    	        
+    	        try {
+                    number = Integer.parseInt(sid);
+                    if (number >= 0 && number < chosenCards.size()) {
+                        isValidInput = true;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Invalid input! Please enter a number between 0 and "+(chosenCards.size()-1));
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Invalid input! Please enter a whole number.");
+                }
+    	        
+
     	        
 
     	        if(number >= 0 && number < (chosenCards.size())) {
     	        	if(!this.sameNumbers(number)) {
     	        		order.add(number);
     	        	}else {
-    	        		System.out.println("hai inserito un numero uguale ad uno precedentemente inserito");
+    	        		//System.out.println("hai inserito un numero uguale ad uno precedentemente inserito");
+    	        		JOptionPane.showMessageDialog(null, "Invalid input! you put the same number twice");
     	        		//String er = JOptionPane.showInputDialog( "hai inserito un numero uguale ad uno precedentemente inserito");
     	        		i--;
     	        	}
     	        }else {
-    	        	System.out.println("inserisci un numero coerente");
+    	        	//System.out.println("inserisci un numero coerente");
     	        	i--;
     	        }
     	        

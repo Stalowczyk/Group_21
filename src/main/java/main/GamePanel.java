@@ -162,7 +162,8 @@ public class GamePanel extends JPanel implements Runnable {
         for (int i = 0; i < playerCount; i++) {
             String input = JOptionPane.showInputDialog(null, "Enter username for Player " + (i + 1));
             if (input == null || input.isEmpty()) {
-                return new String[0]; // User pressed cancel or closed the dialog
+            	
+                return new String[0]; // User pressed cancel or closed the dialog               
             }
             usernames[i] = input;
         }
