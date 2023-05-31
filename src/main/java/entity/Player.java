@@ -149,8 +149,9 @@ public class Player {
                             resetPlayerChoice();
                             b.removeChosenCardsFromBoard();
                             this.turnDone = true;
-                            //System.out.println(shelf.getPersonalGoalCardPoints());
-                            shelf.printOutArray();
+                            System.out.println(this.shelf.hashCode());
+                            System.out.println("PUNTI DEL GIOCATORE "+" "+this.shelf.playerName+" "+this.shelf.getPersonalGoalCardPoints()+" FINE SYSTEMOUT");
+                          
                            
 
                         } else {

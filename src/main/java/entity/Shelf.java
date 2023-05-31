@@ -54,7 +54,10 @@ public class Shelf {
     }
 
     public PlacedCard getCard(int row, int column) {
-        return shelfLayout[row][column];
+        if(shelfLayout[row][column]==null)
+            return null;
+        else
+            return shelfLayout[row][column];
     }
 
     public void placeOnShelf(ArrayList<PlacedCard> chosenCards, int chosenCol) {
@@ -71,7 +74,7 @@ public class Shelf {
                 PlacedCard p = chosenCards.get(i);
                 PlacedCard test = new PlacedCard(p.getCardType(), p.getCardRow(), p.getCardCol(), gp);
                 test.setRow(chosenCol);
-                test.setCol(startPoint + i);
+                test.setCol(5-startPoint - i);
                 shelfLayout[startPoint + i][chosenCol] = test;
 
             }
@@ -462,39 +465,39 @@ public class Shelf {
                         switch (p.getCardType()) {
                             case WHITE -> {
                                 g2.setColor(Color.white);
-                                g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                                g2.fillRect(576 + p.getCardX(), 48+p.getCardY(), 48, 48);
                                 g2.setColor(Color.BLACK);
-                                g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                                g2.drawRect(576 + p.getCardX(), 48+p.getCardY(), 48, 48);
                             }
                             case PINK -> {
                                 g2.setColor(Color.PINK);
-                                g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                                g2.fillRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
                                 g2.setColor(Color.BLACK);
-                                g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                                g2.drawRect(576 + p.getCardX(), 48+p.getCardY(), 48, 48);
                             }
                             case BLUE -> {
                                 g2.setColor(Color.BLUE);
-                                g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                                g2.fillRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
                                 g2.setColor(Color.BLACK);
-                                g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                                g2.drawRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
                             }
                             case CYAN -> {
                                 g2.setColor(Color.CYAN);
-                                g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                                g2.fillRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
                                 g2.setColor(Color.BLACK);
-                                g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                                g2.drawRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
                             }
                             case GREEN -> {
                                 g2.setColor(Color.GREEN);
-                                g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                                g2.fillRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
                                 g2.setColor(Color.BLACK);
-                                g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                                g2.drawRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
                             }
                             case YELLOW -> {
                                 g2.setColor(Color.YELLOW);
-                                g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                                g2.fillRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
                                 g2.setColor(Color.BLACK);
-                                g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+                                g2.drawRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
                             }
                         }
                     }
@@ -516,9 +519,17 @@ public class Shelf {
          for (int row = 0; row < this.shelfLayout.length; row++) {
                 for (int col = 0; col < this.shelfLayout[row].length; col++) {
                     PlacedCard p = this.shelfLayout[row][col];
-                    System.out.println("ROW AND COL "+p.getCardRow()+" "+ p.getCardCol());
+                    if(p!=null){
+                        
+                    System.out.println("SHELF LAYOUT ROW AND COL "+p.getCardRow()+" "+ p.getCardCol());
+                    }
                 }
          }
+         printAllPersonalGoal();
+    }
+    
+    public void printAllPersonalGoal(){
+        pe.printOutAll();
     }
 
 }
