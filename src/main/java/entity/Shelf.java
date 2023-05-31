@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.*;
 import javax.swing.JLabel;
@@ -9,24 +10,44 @@ import main.GamePanel;
 public class Shelf {
     //forse bisogna cambiare card con placed card*****************
 
-    private PlacedCard[][] shelfLayout;
+    public PlacedCard[][] shelfLayout;
     private int maxRow = 6;
-   // private int chosenColumn;	
+    // private int chosenColumn;	
     private int points;
     public static int boardsFilled = 0;
     private int row;
     private int col;
     GamePanel gp;
-    
-    public Shelf() {
+    PersonalGoalsCards pe;
+    private boolean playerTurn;
+    ArrayList<PlacedCard> copiedCards;
+    String playerName;
+
+    public Shelf(GamePanel gp, String playerName) {
         this.shelfLayout = new PlacedCard[6][5];
+        this.playerName = "Current players turn: " + playerName;
         this.points = 0;
         this.gp = gp;
-        printOutShelf();
-    }
+        this.pe = new PersonalGoalsCards(gp.playerCount, this.gp);
+        this.playerTurn = false;
+        
 
+    }
+    
+  //  public int getPersonalGoalCardPoints(){
+       // return this.pe.score(this);
+    //}
+    
     public int getPoints() {
         return points;
+    }
+
+    public boolean getPlayerTurn() {
+        return this.playerTurn;
+    }
+
+    public void setPlayerTurn(boolean b) {
+        this.playerTurn = b;
     }
 
     public void addPoints(int amount) {
@@ -34,32 +55,31 @@ public class Shelf {
     }
 
     public PlacedCard getCard(int row, int column) {
-        return shelfLayout[row][column];
+        if(shelfLayout[row][column]==null)
+            return null;
+        else
+            return shelfLayout[row][column];
     }
 
-    //passi l'array delle carte gia in ordine giusto, BISOGNA PASSARE ANCHE LA COLONNA SCELTA
     public void placeOnShelf(ArrayList<PlacedCard> chosenCards, int chosenCol) {
         int startPoint = 0;
         int c = 0;
-
-        int cardNumber = chosenCards.size();			//il numero di carte da inserire nella shelf
-        while (c <= 5 && shelfLayout[c][chosenCol] != null) {		//trovo il punto da cui si inizia a mettere le card	
+        int cardNumber = chosenCards.size();            //il numero di carte da inserire nella shelf
+        while (c <= 5 && shelfLayout[c][chosenCol] != null) {        //trovo il punto da cui si inizia a mettere le card
             startPoint++;
             c++;
         }
 
-        if ((maxRow - startPoint) >= cardNumber) {		//se hai abbastanza spazio nella shelf
+        if ((maxRow - startPoint) >= cardNumber) {        //se hai abbastanza spazio nella shelf
             for (int i = 0; i < cardNumber; i++) {
-                shelfLayout[startPoint + i][chosenCol] = (PlacedCard) chosenCards.get(i);
-                chosenCards.get(i).setRow(chosenCol);
-                chosenCards.get(i).setCol(startPoint + i);
-                
-            }
-            /*for (int i = 0; i < 6; i++) {
-                System.out.println(this.shelfLayout[i][0]);
+                PlacedCard p = chosenCards.get(i);
+                PlacedCard test = new PlacedCard(p.getCardType(), p.getCardRow(), p.getCardCol(), gp);
+                test.setRow(chosenCol);
+                test.setCol(5-startPoint - i);
+                shelfLayout[startPoint + i][chosenCol] = test;
 
-            }*/
-            
+            }
+
         }
     }
 
@@ -100,7 +120,7 @@ public class Shelf {
         for (int i = 0; i <= 5; i = i + 5) {
             for (int j = 0; j <= 4; j = j + 4) {
                 corner.add(this.shelfLayout[i][j]);
-                //System.out.println("prova");
+                System.out.println("prova");
             }
         }
         return !corner.contains(null) && corner.stream().map(Card::getCardType).distinct().count() == 1;
@@ -240,6 +260,7 @@ public class Shelf {
                 }
             }
         }
+        
         for (int row = 5; row >= 1; row--) {
             for (int col = 5 - row; col <= 4; col++) {
                 Card card = this.shelfLayout[row][col];
@@ -408,7 +429,7 @@ public class Shelf {
         return groupSize;
     }
 
-    public static boolean containsAny(List<Card> list1, List<Card> list2) {             // Metodo che serve a alcuni obiettivi per controllare le carte già utilizzate
+    public static boolean containsAny(List<Card> list1, List<Card> list2) {             // Metodo che serve a alcuni obiettivi per controllare le carte giÃ  utilizzate
         for (Card card : list1) {                                                       // Confronta 2 arraylist e ritorna true se la prima contiene almeno un elemento della seconda
             if (list2.contains(card)) {                                                 // Utilizzato per vedere se una possibile forma di carte contiene delle carte gia usate in altre forme (checkCube,checkCoppie)
                 return true;
@@ -434,77 +455,83 @@ public class Shelf {
         } else {
             return false;
         }
+
     }
 
     public void draw(Graphics2D g2) {
-        JLabel Shelf = new JLabel();
-        
-        for (int row = 0; row < this.shelfLayout.length; row++) {
-            for (int col = 0; col < this.shelfLayout[row].length; col++) {
-                PlacedCard p = this.shelfLayout[row][col];
-                if (p != null) {
-                    switch (p.getCardType()) {
-                        case WHITE -> {
-                            g2.setColor(Color.white);
-                            g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
-                            g2.setColor(Color.BLACK);
-                            g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
-                        }
-                        case PINK -> {
-                            g2.setColor(Color.PINK);
-                            g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
-                            g2.setColor(Color.BLACK);
-                            g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
-                        }
-                        case BLUE -> {
-                            g2.setColor(Color.BLUE);
-                            g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
-                            g2.setColor(Color.BLACK);
-                            g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
-                        }
-                        case CYAN -> {
-                            g2.setColor(Color.CYAN);
-                            g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
-                            g2.setColor(Color.BLACK);
-                            g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
-                        }
-                        case GREEN -> {
-                            g2.setColor(Color.GREEN);
-                            g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
-                            g2.setColor(Color.BLACK);
-                            g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
-                        }
-                        case YELLOW -> {
-                            g2.setColor(Color.YELLOW);
-                            g2.fillRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
-                            g2.setColor(Color.BLACK);
-                            g2.drawRect(576 + p.getCardX(), 288 - p.getCardY(), 48, 48);
+        if (this.playerTurn == true) {
+            for (int row = 0; row < this.shelfLayout.length; row++) {
+                for (int col = 0; col < this.shelfLayout[row].length; col++) {
+                    PlacedCard p = this.shelfLayout[row][col];
+                    if (p != null) {
+                        switch (p.getCardType()) {
+                            case WHITE -> {
+                                g2.setColor(Color.white);
+                                g2.fillRect(576 + p.getCardX(), 48+p.getCardY(), 48, 48);
+                                g2.setColor(Color.BLACK);
+                                g2.drawRect(576 + p.getCardX(), 48+p.getCardY(), 48, 48);
+                            }
+                            case PINK -> {
+                                g2.setColor(Color.PINK);
+                                g2.fillRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
+                                g2.setColor(Color.BLACK);
+                                g2.drawRect(576 + p.getCardX(), 48+p.getCardY(), 48, 48);
+                            }
+                            case BLUE -> {
+                                g2.setColor(Color.BLUE);
+                                g2.fillRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
+                                g2.setColor(Color.BLACK);
+                                g2.drawRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
+                            }
+                            case CYAN -> {
+                                g2.setColor(Color.CYAN);
+                                g2.fillRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
+                                g2.setColor(Color.BLACK);
+                                g2.drawRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
+                            }
+                            case GREEN -> {
+                                g2.setColor(Color.GREEN);
+                                g2.fillRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
+                                g2.setColor(Color.BLACK);
+                                g2.drawRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
+                            }
+                            case YELLOW -> {
+                                g2.setColor(Color.YELLOW);
+                                g2.fillRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
+                                g2.setColor(Color.BLACK);
+                                g2.drawRect(576 + p.getCardX(), 48+ p.getCardY(), 48, 48);
+                            }
                         }
                     }
+                    g2.setColor(Color.BLACK);
+                    g2.drawRect(576 + col * 48, 48 + row * 48, 48, 48);
+
                 }
-                g2.setColor(Color.BLACK);
-                g2.drawRect(576 + col * 48, 48 + row * 48, 48, 48);
-
             }
+            Font currentFont = new Font("Times New Roman", Font.BOLD, 28);
+            g2.setFont(currentFont);
+
+            g2.drawString(this.playerName, 576, 384);
+            pe.draw(g2);
         }
-        
+    }
+    
+    
+    public void printOutArray(){
+         for (int row = 0; row < this.shelfLayout.length; row++) {
+                for (int col = 0; col < this.shelfLayout[row].length; col++) {
+                    PlacedCard p = this.shelfLayout[row][col];
+                    if(p!=null){
+                        
+                    System.out.println("SHELF LAYOUT ROW AND COL "+p.getCardRow()+" "+ p.getCardCol());
+                    }
+                }
+         }
+         printAllPersonalGoal();
+    }
+    
+    public void printAllPersonalGoal(){
+        pe.printOutAll();
     }
 
-    public void looptrougharray() {
-        int i = 0;
-        for (int row = 0; row < this.shelfLayout.length; row++) {
-
-            for (int col = 0; col < this.shelfLayout[row].length; col++) {
-                System.out.println(row + " " + col);
-                i++;
-            }
-        }
-        System.out.println(row * col);
-        System.out.println(i);
-    }
-
-    public void printOutShelf() {
-        System.out.println(shelfLayout.length);
-
-    }
 }

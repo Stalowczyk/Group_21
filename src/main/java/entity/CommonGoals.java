@@ -1,6 +1,10 @@
 package entity;
 
+import java.awt.Font;
+import java.awt.Graphics2D;
 import java.util.Random;
+
+import main.GamePanel;
 
 public class CommonGoals {
 
@@ -9,8 +13,10 @@ public class CommonGoals {
     private Shelf shelf;
     private static final Random random = new Random();
     Goals[] choosenGoals;
+    
+    GamePanel gp;
 
-    CommonGoals() {
+    public CommonGoals() {
         Goals[] allGoals = Goals.values();
         choosenGoals = new Goals[2];
         int index1 = random.nextInt(allGoals.length);
@@ -20,6 +26,22 @@ public class CommonGoals {
         }
         choosenGoals[0] = allGoals[index1];
         choosenGoals[1] = allGoals[index2];
+        
+        
+        
+        
+    }
+    
+    public void draw(Graphics2D g2) {
+    	
+    	Font titleFont = new Font("Times New Roman", Font.BOLD, 17);
+        g2.setFont(titleFont);
+        g2.drawString("COMMON GOALS: ", 20, 560);
+        
+    	Font currentFont = new Font("Times New Roman", Font.BOLD, 14);
+        g2.setFont(currentFont);
+        g2.drawString("1st Goal: "+this.getFirstDescription(), 20, 580);
+        g2.drawString("2nd Goal: : "+this.getSecondDescription(), 20, 600);
     }
 
     public String getFirstName() {

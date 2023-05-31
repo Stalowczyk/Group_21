@@ -6,6 +6,7 @@ package main;
 
 import board.Board;
 import entity.Bag;
+import entity.CommonGoals;
 import entity.PersonalGoalsCards;
 
 import java.awt.Color;
@@ -17,17 +18,21 @@ import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author pawel
  */
 public class Main {
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         //BUG SISTEMARE DIMENSIONI IN BASE ALLA RISOLUZIONE DEL PC 
+        
         JFrame window = new JFrame();
         window.setLayout(new GridBagLayout());
         GamePanel gamePanel = new GamePanel();
+
         
         ImageIcon image = new ImageIcon("logo-cranio.png");
         window.setIconImage(image.getImage());
@@ -36,14 +41,12 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setAlwaysOnTop(false);
-
-
         window.add(gamePanel);
-        
+
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
-        
+
         
     }
 }

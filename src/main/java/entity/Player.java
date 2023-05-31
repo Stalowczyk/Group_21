@@ -6,6 +6,7 @@ package entity;
 
 import board.Board;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,28 +34,34 @@ public class Player {
     KeyHandler keyH;
     Board b;
     ArrayList<PlacedCard> chosenCards;
-    Shelf s;
-    int chosenCol;
-    int currentPlayer;
-    
-    
+    Integer chosenCol;
+    private ArrayList<Shelf> allShelfs;
+    Shelf shelf;
+    private boolean turnDone;
+
     public ArrayList<Integer> order = new ArrayList<>(); 
     public ArrayList<PlacedCard> chosenCardsInOrder = new ArrayList<>(); 
+    
+    int currentTurn;
 
+    CommonGoals commonGoals = new CommonGoals();
+    
     /**
      *
      * @param gp
      * @param keyH
      */
-    public Player(GamePanel gp, KeyHandler keyH, Board b, Shelf s) {
+    public Player(GamePanel gp, KeyHandler keyH, Board b, ArrayList allShelfs) {
         this.gp = gp;
         this.keyH = keyH;
         this.b = b;
         setDefaultValues();
-        chosenCards = new ArrayList<PlacedCard>();
-        this.s = s;
-        this.chosenCol = -1;
-        this.currentPlayer = 0;
+        this.currentTurn = 1;
+        this.allShelfs = allShelfs;
+        this.chosenCards = b.chosenCards;
+        this.chosenCol = null;
+        this.shelf = setStartingTurn();
+        this.turnDone = false;
     }
 
     public void setDefaultValues() {
@@ -63,7 +70,59 @@ public class Player {
         speed = 48;
     }
 
+    public void setCurrentTurn() {
+        for (int i = 0; i < this.allShelfs.size(); i++) {
+            this.shelf = this.allShelfs.get(i);
+            shelf.setPlayerTurn(true);
+        }
+    }
+
+    public Shelf setStartingTurn() {
+        shelf = allShelfs.get(0);
+        this.shelf.setPlayerTurn(true);
+        return shelf;
+    }
+
+    /*
+    public void nextTurn(){
+        for(int i = 0; i < this.allShelfs.size();i++){ 
+            Shelf s = this.allShelfs.get(i);
+            if(s.getPlayerTurn()==true){
+                s.setPlayerTurn(false);
+                if(i==this.allShelfs.size()-1){
+                    s = this.allShelfs.get(0);
+                    i=0;
+            }
+                else
+                    s = this.allShelfs.get(i+1);
+                s.setPlayerTurn(true);
+                this.shelf = s;
+            }
+        }
+    }
+     */
+    public void nextTurn() {
+        for (int i = 0; i < allShelfs.size(); i++) {
+            System.out.println(i);///  4          
+            Shelf s = this.allShelfs.get(i);   //0 
+            if (s.getPlayerTurn() == true) {
+                s.setPlayerTurn(false);
+            }
+            s = allShelfs.get(currentTurn);
+            s.setPlayerTurn(true);
+            this.shelf = s;
+        }
+    }
+
+    public void printAllShelfState() {
+        for (int i = 0; i < allShelfs.size(); i++) {
+            Shelf s = this.allShelfs.get(i);
+            System.out.println("SHELF : " + s + " SHELFS STATE " + s.getPlayerTurn());
+        }
+    }
+
     public void update() {
+        //MOVEMENT
         if (moving == false) {
             if (keyH.upPressed) {
                 y -= speed;
@@ -72,57 +131,76 @@ public class Player {
             } else if (keyH.leftPressed) {
                 x -= speed;
             } else if (keyH.rightPressed) {
-                x += speed;
+                x += speed;                          
+            //INTERACTION    
             } else if (keyH.spacePressed) {
-                b.chosenFromBoard(this.getPlayerX() / gp.tileSize, this.getPlayerY() / gp.tileSize);
-                //System.out.println(b.hasAFreeBorder(getPlayerX(), getPlayerY()));
+                if(this.turnDone == false) {
+                    b.chosenFromBoard(this.getPlayerX() / gp.tileSize, this.getPlayerY() / gp.tileSize);
+                }
             } //r canccella tutte le scelte nell'arraylist chosecards
             else if (keyH.rPressed) {
                 b.deleteChosenCards();
                 
-                
-                
-            } 
-            else if (keyH.enterPressed) {
-                chosenCards = b.sendChosenCards();
-                
-                
-                if(chosenCards != null && chosenCol == -1) {		
-                	resetPlayerChoice();
-                	this.chosenCol = getInputFromUser();
-                }
-                
-                if (b.chosenCards != null) {
-                	if(s.isColumnAvailable(chosenCards, this.chosenCol)) {
-                		b.removeChosenCardsFromBoard();
-                		this.setOrder();
-
-                		//qui ci va b.changeOrder()
-                		chosenCardsInOrder = b.changeOrder(order);
-                		order.clear();
-                		
-                		//System.out.println(chosenCol);
-                		s.placeOnShelf(chosenCardsInOrder, chosenCol); //chosenCards
-                        resetPlayerChoice();
-                        //
-                        currentPlayer++;
-                        b.chosenCardsInOrder.clear(); 
-                        
-                    } else {
-                    	//System.out.println("non c'è abbastanza spazio nella colonna");
-                    	resetPlayerChoice();
+            } else if (keyH.enterPressed) {
+                if (this.turnDone == false) {
+                    //b.sendChosenCards();//INUTILE 
+                    if (!b.chosenCards.isEmpty() ) {
+                        //resetPlayerChoice();
+                        this.chosenCol = getInputFromUser();
                     }
-                }else {
-                	//System.out.println("non hai scelto delle carte");
-                	resetPlayerChoice();
+                    if (!b.chosenCards.isEmpty() && chosenCol!=null) {
+                        if (shelf.isColumnAvailable(b.chosenCards, this.chosenCol)) {
+                            
+                        	 b.removeChosenCardsFromBoard();
+                            //
+                            this.setOrder();
+                    		chosenCardsInOrder = b.changeOrder(order);
+                    		order.clear();
+                            //
+                    		
+                        	
+                        	shelf.placeOnShelf(b.chosenCardsInOrder, this.chosenCol);
+                            resetPlayerChoice();
+                            b.chosenCardsInOrder.clear(); 
+                           
+
+                    		
+                            this.turnDone = true;
+                            System.out.println(this.shelf.hashCode());
+                        //    System.out.println("PUNTI DEL GIOCATORE "+" "+this.shelf.playerName+" "+this.shelf.getPersonalGoalCardPoints()+" FINE SYSTEMOUT");
+                          
+                            
+                            
+                //quando finisce la partita --> vedere quali obiettivi comuni e personali sono stati raggiunti e fare la somma dei punteggi, chiamare findCardGroups
+                            //il primo che ha finito la shelf (isShelfFilled).
+                            
+
+                        } else {
+                            System.out.println("non c'è abbastanza spazio nella colonna");
+                            resetPlayerChoice();
+                        }
+
+                    } else {
+                        System.out.println("non hai scelto delle carte");
+                        resetPlayerChoice();
+                    }
+                    //System.out.println(chosenCards);
+                    b.deleteChosenCards(); 		//cancella in automatico l'array               
                 }
-                //System.out.println(chosenCards);
-                b.deleteChosenCards(); 		//cancella in automatico l'array
-                
+            } else if (keyH.pPressed) {
+                if (this.turnDone == true) {
+                    nextTurn();
+                    if (this.currentTurn == allShelfs.size() - 1) {
+                        this.currentTurn = 0;
+                    } else {
+                        this.currentTurn++;
+                    }
+                    this.turnDone = false;
                 }
-                    
+            }
             moving = true;
         }
+
         if (moving == true) {
             pixelCounter += speed;
 
@@ -136,7 +214,11 @@ public class Player {
     public void draw(Graphics2D g2) {
         g2.setColor(Color.RED);
         g2.fillOval(x, y, gp.tileSize, gp.tileSize);
-
+        Font currentFont = new Font("Times New Roman", Font.BOLD, 28);
+        g2.setColor(Color.BLACK);
+        g2.setFont(currentFont);
+        String s1 = String.valueOf(turnDone);
+        g2.drawString("Turn finished - " + s1, 576, 420);
     }
 
     public int getPlayerX() {
@@ -147,15 +229,32 @@ public class Player {
         return this.y;
     }
 
-    public int getInputFromUser() {
-        String s = JOptionPane.showInputDialog("Choose shelf column");
-        this.chosenCol = Integer.parseInt(s);
-        //System.out.println("Entrato getinput");
+    public Integer getInputFromUser() {
+        boolean isValidInput = false;
+
+        while (!isValidInput) {
+            String input = JOptionPane.showInputDialog(null, "Choose a column between 0 and 4");
+            if (input == null) {
+                return null;
+            }
+
+            try {
+                this.chosenCol = Integer.parseInt(input);
+                if (this.chosenCol >= 0 && chosenCol <= 4) {
+                    isValidInput = true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid input! Please choose a column between 0 and 4.");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Invalid input! Please enter a whole number.");
+            }
+        }
+
         return this.chosenCol;
     }
 
     public void resetPlayerChoice() {
-        this.chosenCol = -1;
+        this.chosenCol = null;
     }
     
     public void setOrder(){
@@ -193,3 +292,6 @@ public class Player {
     }
 
 }
+
+
+
