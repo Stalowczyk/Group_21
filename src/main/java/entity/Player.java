@@ -150,8 +150,11 @@ public class Player {
                                 resetPlayerChoice();
                                 b.removeChosenCardsFromBoard();
                                 this.turnDone = true;
-                                if (this.shelf.isShelfFilled()) {
+                                if (this.shelf.isShelfFilled()) {               
                                     this.shelf.setFinalTurn(true);
+                                    //for shelf in allShelfs
+                                    //if shelf.getFirstShelfFilled == false
+                                    //this.shelf.setFirstShelfFilled
 
                                 }
 
@@ -190,6 +193,8 @@ public class Player {
                 }
             }
         } else {
+            //PER OGNI SHELF fristFilled 
+            //CALCOLA TUTTO PUNTEGGIO 
             JOptionPane.showMessageDialog(null, "GIOCO FINITO");
         }
     }
