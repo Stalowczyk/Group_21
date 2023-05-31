@@ -68,7 +68,7 @@ public class PersonalGoalsCards {
 				{ 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } };
 
 		for (int i = 0; i < numberOfSpace; i++) {
-			personalGoalCardsLayout[(personalGoal.get(i) / 5)][(personalGoal.get(i) % 5)] = 1; // mette a 1 nei punti in cui va messa la placedCard fittizia
+			personalGoalCardsLayout[5-(personalGoal.get(i) / 5)][(personalGoal.get(i) % 5)] = 1; // mette a 1 nei punti in cui va messa la placedCard fittizia
 		}
 
 	}
@@ -135,6 +135,7 @@ public class PersonalGoalsCards {
 		switch (cont) {
 		case 0 -> sc = 0;
 		case 1 -> sc = 1;
+		case 2 -> sc = 2;
 		case 3 -> sc = 4;
 		case 4 -> sc = 6;
 		case 5 -> sc = 9;
