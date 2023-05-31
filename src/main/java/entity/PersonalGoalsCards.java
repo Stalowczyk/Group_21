@@ -47,14 +47,14 @@ public class PersonalGoalsCards {
         return this.personalGoalCardsLayout;
     }
 
-    // genera il numero della casella dove andrà il goal
+    // genera il numero della casella dove andrÃ  il goal
     public void randomizeSixSpace() {
         // personalGoal contiene 6 numeri casuali da 0 a 30 i quali servono per posizionare le tessere fittizzie in quelle coordinate
         personalGoal.clear();
         Random random = new Random();
         for (int i = 0; i < numberOfSpace; i++) {
             number = random.nextInt(30);
-            if (this.isSingleNumber(number, personalGoal)) { // controllo affinchè non si abbiano due numeri uguali
+            if (this.isSingleNumber(number, personalGoal)) { // controllo affinchÃ¨ non si abbiano due numeri uguali
                 personalGoal.add(number);
             } else {
                 i--;
@@ -75,7 +75,7 @@ public class PersonalGoalsCards {
         for (int col = 0; col < this.personalGoalCardsLayout.length; col++) {
             for (int row = 0; row < this.personalGoalCardsLayout[col].length; row++) {
                 if (personalGoalCardsLayout[col][row] == 1) {
-                    PlacedCard card = new PlacedCard(types.get(c),  row, col, gp); // types è un ArrayList contenente tutti i tipi di carte disposti casualmente
+                    PlacedCard card = new PlacedCard(types.get(c),  row, col, gp); // types Ã¨ un ArrayList contenente tutti i tipi di carte disposti casualmente
                     c++;
                     currentGoalCardLayout.add(card);
                 }

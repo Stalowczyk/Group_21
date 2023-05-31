@@ -155,7 +155,7 @@ public class Player {
                            
 
                         } else {
-                            System.out.println("non c'è abbastanza spazio nella colonna");
+                            System.out.println("non c'Ã¨ abbastanza spazio nella colonna");
                             resetPlayerChoice();
                         }
 

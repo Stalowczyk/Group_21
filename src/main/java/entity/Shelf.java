@@ -427,7 +427,7 @@ public class Shelf {
         return groupSize;
     }
 
-    public static boolean containsAny(List<Card> list1, List<Card> list2) {             // Metodo che serve a alcuni obiettivi per controllare le carte già utilizzate
+    public static boolean containsAny(List<Card> list1, List<Card> list2) {             // Metodo che serve a alcuni obiettivi per controllare le carte giÃ  utilizzate
         for (Card card : list1) {                                                       // Confronta 2 arraylist e ritorna true se la prima contiene almeno un elemento della seconda
             if (list2.contains(card)) {                                                 // Utilizzato per vedere se una possibile forma di carte contiene delle carte gia usate in altre forme (checkCube,checkCoppie)
                 return true;
