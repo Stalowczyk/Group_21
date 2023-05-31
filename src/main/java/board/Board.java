@@ -190,7 +190,7 @@ public final class Board {
         for (int i = 0; i < this.currentBoardLayout.size(); i++) {
             if (x == (this.currentBoardLayout.get(i).getCardX()) && y == (this.currentBoardLayout.get(i).getCardY())) {
                 this.currentBoardLayout.remove(i);
-                System.out.println("REMOVED CARD AT " + x + y);
+                
             }
         }
 

@@ -98,7 +98,7 @@ public class Player {
      */
     public void nextTurn() {
         for (int i = 0; i < allShelfs.size(); i++) {
-            System.out.println(i);///  4          
+            ///  4          
             Shelf s = this.allShelfs.get(i);   //0 
             if (s.getPlayerTurn() == true) {
                 s.setPlayerTurn(false);
@@ -118,75 +118,79 @@ public class Player {
 
     public void update() {
         //MOVEMENT
-        if (moving == false) {
-            if (keyH.upPressed) {
-                y -= speed;
-            } else if (keyH.downPressed) {
-                y += speed;
-            } else if (keyH.leftPressed) {
-                x -= speed;
-            } else if (keyH.rightPressed) {
-                x += speed;                          
-            //INTERACTION    
-            } else if (keyH.spacePressed) {
-                if(this.turnDone == false) {
-                    b.chosenFromBoard(this.getPlayerX() / gp.tileSize, this.getPlayerY() / gp.tileSize);
-                }
-            } //r canccella tutte le scelte nell'arraylist chosecards
-            else if (keyH.rPressed) {
-                b.deleteChosenCards();
-                
-            } else if (keyH.enterPressed) {
-                if (this.turnDone == false) {
-                    //b.sendChosenCards();//INUTILE 
-                    if (!b.chosenCards.isEmpty() ) {
-                        //resetPlayerChoice();
-                        this.chosenCol = getInputFromUser();
+        if (!checkAllShelfs()) {
+            if (moving == false) {
+                if (keyH.upPressed) {
+                    y -= speed;
+                } else if (keyH.downPressed) {
+                    y += speed;
+                } else if (keyH.leftPressed) {
+                    x -= speed;
+                } else if (keyH.rightPressed) {
+                    x += speed;
+                    //INTERACTION    
+                } else if (keyH.spacePressed) {
+                    if (this.turnDone == false) {
+                        b.chosenFromBoard(this.getPlayerX() / gp.tileSize, this.getPlayerY() / gp.tileSize);
                     }
-                    if (!b.chosenCards.isEmpty() && chosenCol!=null) {
-                        if (shelf.isColumnAvailable(b.chosenCards, this.chosenCol)) {
-                            shelf.placeOnShelf(b.chosenCards, this.chosenCol);
-                            resetPlayerChoice();
-                            b.removeChosenCardsFromBoard();
-                            this.turnDone = true;
-                            System.out.println(this.shelf.hashCode());
-                            System.out.println("PUNTI DEL GIOCATORE "+" "+this.shelf.playerName+" "+this.shelf.getPersonalGoalCardPoints()+" FINE SYSTEMOUT");
-                          
-                           
+                } //r canccella tutte le scelte nell'arraylist chosecards
+                else if (keyH.rPressed) {
+                    b.deleteChosenCards();
+
+                } else if (keyH.enterPressed) {
+                    if (this.turnDone == false) {
+                        //b.sendChosenCards();//INUTILE 
+                        if (!b.chosenCards.isEmpty()) {
+                            //resetPlayerChoice();
+                            this.chosenCol = getInputFromUser();
+                        }
+                        if (!b.chosenCards.isEmpty() && chosenCol != null) {
+                            if (shelf.isColumnAvailable(b.chosenCards, this.chosenCol)) {
+                                shelf.placeOnShelf(b.chosenCards, this.chosenCol);
+                                resetPlayerChoice();
+                                b.removeChosenCardsFromBoard();
+                                this.turnDone = true;
+                                if (this.shelf.isShelfFilled()) {
+                                    this.shelf.setFinalTurn(true);
+
+                                }
+
+                            } else {
+                                System.out.println("non c'Ã¨ abbastanza spazio nella colonna");
+                                resetPlayerChoice();
+                            }
 
                         } else {
-                            System.out.println("non c'Ã¨ abbastanza spazio nella colonna");
+                            System.out.println("non hai scelto delle carte");
                             resetPlayerChoice();
                         }
-
-                    } else {
-                        System.out.println("non hai scelto delle carte");
-                        resetPlayerChoice();
+                        //System.out.println(chosenCards);
+                        b.deleteChosenCards(); 		//cancella in automatico l'array               
                     }
-                    //System.out.println(chosenCards);
-                    b.deleteChosenCards(); 		//cancella in automatico l'array               
+                } else if (keyH.pPressed) {
+                    if (this.turnDone == true) {
+                        nextTurn();
+                        if (this.currentTurn == allShelfs.size() - 1) {
+                            this.currentTurn = 0;
+                        } else {
+                            this.currentTurn++;
+                        }
+                        this.turnDone = false;
+                    }
                 }
-            } else if (keyH.pPressed) {
-                if (this.turnDone == true) {
-                    nextTurn();
-                    if (this.currentTurn == allShelfs.size() - 1) {
-                        this.currentTurn = 0;
-                    } else {
-                        this.currentTurn++;
-                    }
-                    this.turnDone = false;
+                moving = true;
+            }
+
+            if (moving == true) {
+                pixelCounter += speed;
+
+                if (pixelCounter == 48) {
+                    moving = false;
+                    pixelCounter = 0;
                 }
             }
-            moving = true;
-        }
-
-        if (moving == true) {
-            pixelCounter += speed;
-
-            if (pixelCounter == 48) {
-                moving = false;
-                pixelCounter = 0;
-            }
+        } else {
+            JOptionPane.showMessageDialog(null, "GIOCO FINITO");
         }
     }
 
@@ -234,6 +238,15 @@ public class Player {
 
     public void resetPlayerChoice() {
         this.chosenCol = null;
+    }
+    
+    public boolean checkAllShelfs(){
+        for(Shelf shelf : this.allShelfs){
+            if(!shelf.getFinalTurn()){
+                return false;
+            }
+        }
+        return true;
     }
 
 }

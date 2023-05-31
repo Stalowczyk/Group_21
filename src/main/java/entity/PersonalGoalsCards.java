@@ -119,24 +119,26 @@ public class PersonalGoalsCards {
     // questo metodo restituisce il puntegio in base a quante carte sono uguali tra carta obiettivo e shelf
     public int score(Shelf s) {  // punteggio
 
-        for (int i = 0; i < 5; i++) {
-            PlacedCard personalCard = currentGoalCardLayout.get(i);
-            System.out.println("BEFORE PERSONALGOALCARD CORDS "+ personalCard.getCardRow()+" "+personalCard.getCardCol());//0 3
-            PlacedCard shelfCard = s.getCard(personalCard.getCardRow(), personalCard.getCardCol());                                 //0 
+        for (int i = 0; i < 6; i++) {
+            PlacedCard personalCard = this.currentGoalCardLayout.get(i);
+            //System.out.println("BEFORE PERSONALGOALCARD CORDS "+ personalCard.getCardRow()+" "+personalCard.getCardCol());//0 3
+            PlacedCard shelfCard = s.getCard(personalCard.getCardRow(), personalCard.getCardCol());
+            //0 
             if(shelfCard!=null){
-                System.out.println("PERSONALGOALCARD CORDS "+ personalCard.getCardRow()+" "+personalCard.getCardCol());
-                System.out.println("SHELF CORDS "+ shelfCard.getCardRow()+" "+shelfCard.getCardCol());
+               
             if(personalCard.getCardType() == shelfCard.getCardType()) {
                 System.out.println("FOUND MATCH AT PERSONALGOALCARD CORDS "+ personalCard.getCardRow()+" "+personalCard.getCardCol());
                 System.out.println("FOUND MATCH AT SHELF CORDS "+ shelfCard.getCardRow()+" "+shelfCard.getCardCol());
                 System.out.println("CONTATORE BEFORE "+this.cont);
                 this.cont++;
-                System.out.println("CONTATORE AFTER "+this.cont);
+          
             }
             }
-            else
-                System.out.println("DID NOT FIND MATCH");
+            
+                
         }
+        
+        
         switch (cont) {
             case 0 ->
                 this.sc = 0;
@@ -153,7 +155,9 @@ public class PersonalGoalsCards {
             case 6 ->
                 this.sc = 12;
         }
+        System.out.println("Final Score "+this.sc);
         return this.sc;
+
     }
 
     public void draw(Graphics2D g2) {
