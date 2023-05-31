@@ -22,8 +22,10 @@ public class Shelf {
     private boolean playerTurn;
     ArrayList<PlacedCard> copiedCards;
     String playerName;
+    private boolean finalTurn;
 
     public Shelf(GamePanel gp, String playerName) {
+        this.finalTurn = false;
         this.shelfLayout = new PlacedCard[6][5];
         this.playerName = "Current players turn: " + playerName;
         this.points = 0;
@@ -34,9 +36,15 @@ public class Shelf {
 
     }
     
-  //  public int getPersonalGoalCardPoints(){
-       // return this.pe.score(this);
-    //}
+
+    public void setFinalTurn(boolean choice){
+        this.finalTurn=choice;
+    }
+    
+    public int getPersonalGoalCardPoints(){
+        return this.pe.score(this);
+    }
+
     
     public int getPoints() {
         return points;
@@ -54,11 +62,20 @@ public class Shelf {
         points += amount;
     }
 
-    public PlacedCard getCard(int row, int column) {
-        if(shelfLayout[row][column]==null)
-            return null;
-        else
-            return shelfLayout[row][column];
+    public PlacedCard getCard(int peRow, int peCloumn) {
+        for (int row = 0; row < this.shelfLayout.length; row++) {
+                for (int col = 0; col < this.shelfLayout[row].length; col++) {
+                    PlacedCard p = this.shelfLayout[row][col];
+                    if(p!=null){
+                        if(p.getCardRow()==peRow && p.getCardCol() == peCloumn){
+                            System.out.println("GETTING CARD AT CORDS "+p.getCardRow()+" "+p.getCardCol());
+                            return p;
+                    }
+                    }
+                    
+                }
+        }
+        return null;
     }
 
     public void placeOnShelf(ArrayList<PlacedCard> chosenCards, int chosenCol) {
@@ -247,7 +264,10 @@ public class Shelf {
         }
         return Diagonal1 || Diagonal2;
     }
-
+    public boolean getFinalTurn(){
+        return this.finalTurn;
+    }
+    
     public boolean checkTower() {
         boolean Tower1 = true;
         boolean Tower2 = true;
@@ -439,23 +459,15 @@ public class Shelf {
     }
 
     public boolean isShelfFilled() {
-        boolean board = true;
-        for (int i = 0; i < this.shelfLayout.length; i++) {
-            for (int j = 0; j < this.shelfLayout[i].length; j++) {
-                if (this.shelfLayout[i][j] == null) {
-                    board = false;
-                    break;
+        for (int row = 0; row < this.shelfLayout.length; row++) {
+                for (int col = 0; col < this.shelfLayout[row].length; col++) {
+                    PlacedCard p = this.shelfLayout[row][col];
+                    if(p==null){
+                        return false;
+                    }
                 }
-            }
         }
-        if (boardsFilled == 0 && board) {
-            this.addPoints(1);
-            boardsFilled++;
-            return true;
-        } else {
-            return false;
-        }
-
+        return true;
     }
 
     public void draw(Graphics2D g2) {
