@@ -165,6 +165,7 @@ public class Player {
     			String sid = JOptionPane.showInputDialog("set the "+(i+1)+"st "+"card to put in shelf");
     	        int number = Integer.parseInt(sid);
     	        
+
     	        if(number >= 0 && number < (chosenCards.size())) {
     	        	if(!this.sameNumbers(number)) {
     	        		order.add(number);

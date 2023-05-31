@@ -42,8 +42,8 @@ public class Shelf {
         int startPoint = 0;
         int c = 0;
 
-        int cardNumber = chosenCards.size();
-        while (c <= 5 && shelfLayout[c][chosenCol] != null) {
+        int cardNumber = chosenCards.size();			//il numero di carte da inserire nella shelf
+        while (c <= 5 && shelfLayout[c][chosenCol] != null) {		//trovo il punto da cui si inizia a mettere le card	
             startPoint++;
             c++;
         }
@@ -53,6 +53,7 @@ public class Shelf {
                 shelfLayout[startPoint + i][chosenCol] = (PlacedCard) chosenCards.get(i);
                 chosenCards.get(i).setRow(chosenCol);
                 chosenCards.get(i).setCol(startPoint + i);
+                
             }
             /*for (int i = 0; i < 6; i++) {
                 System.out.println(this.shelfLayout[i][0]);

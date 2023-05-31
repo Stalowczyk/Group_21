@@ -68,7 +68,7 @@ public class PersonalGoalsCards {
 				{ 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } };
 
 		for (int i = 0; i < numberOfSpace; i++) {
-			personalGoalCardsLayout[personalGoal.get(i) / 5][(personalGoal.get(i) % 5)] = 1; // mette a 1 nei punti in cui va messa la placedCard fittizia
+			personalGoalCardsLayout[(personalGoal.get(i) / 5)][(personalGoal.get(i) % 5)] = 1; // mette a 1 nei punti in cui va messa la placedCard fittizia
 		}
 
 	}
@@ -79,6 +79,7 @@ public class PersonalGoalsCards {
 			for (int j = 0; j < 5; j++) {
 				if (personalGoalCardsLayout[i][j] == 1) {
 					PlacedCard card = new PlacedCard(types.get(c), 18+j, 1+i, gp); // types è un ArrayList contenente tutti i tipi di carte disposti casualmente
+					System.out.println(i+" "+j);
 					c++;
 					currentGoalCardLayout.add(card);
 				}
@@ -124,7 +125,7 @@ public class PersonalGoalsCards {
 		int cont = 0;
 		int sc = 0; // punteggio
 
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 6; i++) {			
 			int c = this.currentGoalCardLayout.get(i).getCardCol(); // colonna da confrontare
 			int r = this.currentGoalCardLayout.get(i).getCardRow(); // riga da confrontare
 			if (s.getCard(r, c).getCardType() == this.currentGoalCardLayout.get(i).getCardType()) {
