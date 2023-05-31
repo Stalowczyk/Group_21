@@ -34,36 +34,35 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
     int FPS = 10;
-    
-    
-    
-    
-    
-    
+
     private ArrayList<Shelf> allShelfs;
-    
+
     Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
     int width = (int) (dim.width * 0.80);
-    int height = (int) (dim.height * 0.80);   
-            
-    public int playerCount = getNumberOfPlayers();
-    
+    int height = (int) (dim.height * 0.80);
+    public Integer playerCount;
     Thread gameThread = new Thread();
     KeyHandler keyH = new KeyHandler();
     Bag bag = new Bag();
-    Board board = new Board(playerCount, this, bag);
+    Board board;
     Player player;
-    
+
     public GamePanel() {
+        this.playerCount = getPlayerCount();
+        if (playerCount == null) {
+            System.out.println("main.GamePanel.<init>()");
+            System.exit(1);
+        }
         //this.setPreferredSize(new Dimension(1024, 640));
-        this.setPreferredSize(new Dimension(width,height));
+        this.setPreferredSize(new Dimension(width, height));
         this.setDoubleBuffered(true);
-        this.setBackground(new Color(249,226,182));
+        this.setBackground(new Color(249, 226, 182));
         this.addKeyListener(keyH);
         this.setFocusable(true);
-        this.allShelfs = new ArrayList<>(); 
-        createAllShelfs(playerCount);
-        this.player = new Player(this, keyH,board,allShelfs);
+        this.allShelfs = new ArrayList<>();
+        createAllShelfs(this.playerCount);
+        this.board = new Board(this.playerCount, this, bag);
+        this.player = new Player(this, keyH, board, allShelfs);
         this.startGameThread();
 
     }
@@ -104,8 +103,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        board.update();
         player.update();
+        board.update();
     }
 
     @Override
@@ -114,38 +113,56 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
 
         board.draw(g2);
-        for(int i = 0; i < allShelfs.size();i++)
+        for (int i = 0; i < allShelfs.size(); i++) {
             allShelfs.get(i).draw(g2);
+        }
         player.draw(g2);
         g2.dispose();
     }
-    
-    
+
     // DA RIFARE
-    public int getNumberOfPlayers(){
-        String s = JOptionPane.showInputDialog("Choose Number of Players");
-        int playerCount = Integer.parseInt(s);
-        switch (playerCount) {
-            case 2 -> {
-                return playerCount;
+    private Integer getPlayerCount() {
+        this.playerCount = 0;
+        boolean isValidInput = false;
+
+        while (!isValidInput) {
+            String input = JOptionPane.showInputDialog(null, "How many players will be playing the game?");
+            if (input == null) {
+                return null;
             }
-            case 3 -> {
-                return playerCount;
+            try {
+                playerCount = Integer.parseInt(input);
+                if (playerCount >= 2 && playerCount <= 4) {
+                    isValidInput = true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid input! Please enter a number between 2 and 4.");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Invalid input! Please enter a whole number.");
             }
-            case 4 -> {
-                return playerCount;
-            }
-            default -> getNumberOfPlayers();     
         }
-        return -1;
+
+        return this.playerCount;
     }
-    
-    public void createAllShelfs(int playerNumber){
-        for(int i = 0; i < playerNumber; i++){
-            Shelf shelf = new Shelf(this);
+
+    private static String[] getPlayerUsernames(int playerCount) {
+        String[] usernames = new String[playerCount];
+        for (int i = 0; i < playerCount; i++) {
+            String input = JOptionPane.showInputDialog(null, "Enter username for Player " + (i + 1));
+            if (input == null || input.isEmpty()) {
+                return new String[0]; // User pressed cancel or closed the dialog
+            }
+            usernames[i] = input;
+        }
+        return usernames;
+    }
+
+    public void createAllShelfs(int playerNumber) {
+        for (int i = 0; i < playerNumber; i++) {
+            String s = JOptionPane.showInputDialog("Choose Player " + i + " Name");
+            Shelf shelf = new Shelf(this, s);
             allShelfs.add(shelf);
         }
     }
-       
 
-}   
+}

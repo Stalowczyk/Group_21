@@ -44,12 +44,12 @@ public class KeyHandler implements KeyListener {
 
             case (KeyEvent.VK_ENTER):
                 enterPressed = true;
-                
+
             case (KeyEvent.VK_P):
                 pPressed = true;
-             
+
         }
-            
+
     }
 
     @Override
@@ -76,10 +76,10 @@ public class KeyHandler implements KeyListener {
 
             case (KeyEvent.VK_ENTER):
                 enterPressed = false;
-                
+
             case (KeyEvent.VK_P):
                 pPressed = false;
-             
+
         }
     }
 

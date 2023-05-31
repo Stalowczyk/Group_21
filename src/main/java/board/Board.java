@@ -51,8 +51,9 @@ public final class Board {
         setDefaultBoardLayout();
         setBoardSize();
         placeCardsOnBoard(b);
-        chosenCards = new ArrayList<PlacedCard>();
+        this.chosenCards = new ArrayList<PlacedCard>();
         chosenCardsInOrder = new ArrayList<PlacedCard>();//******************
+        System.out.println(System.identityHashCode(chosenCards));
     }
 
     public void setDefaultBoardLayout() {
@@ -111,11 +112,10 @@ public final class Board {
             for (int row = 0; row < this.boardLayout[col].length; row++) {
                 if (this.boardLayout[row][col] == 1) {
                     PlacedCard p = new PlacedCard(b.pullRandom().getCardType(), row, col, gp);
-                    currentBoardLayout.add(p);
+                    this.currentBoardLayout.add(p);
                 }
 
             }
-
         }
 
     }
@@ -127,7 +127,7 @@ public final class Board {
             for (int row = 0; row < this.boardLayout[col].length; row++) {
                 if (this.boardLayout[row][col] == 1 && this.getCardAtCords(row * gp.tileSize, col * gp.tileSize) == null) {
                     PlacedCard p = new PlacedCard(b.pullRandom().getCardType(), row, col, gp);
-                    currentBoardLayout.add(p);
+                    this.currentBoardLayout.add(p);
                 }
 
             }
@@ -159,7 +159,7 @@ public final class Board {
                         g2.setColor(Color.LIGHT_GRAY);
                         g2.fillRect(row * gp.tileSize, col * gp.tileSize, gp.tileSize, gp.tileSize);
                     }
-                    */
+                     */
 
                     case 1 -> {
                         g2.setColor(Color.GRAY);
@@ -167,7 +167,7 @@ public final class Board {
                     }
                 }
                 g2.setColor(Color.BLACK);
-                g2.drawRect(1,1, 528, 528);
+                g2.drawRect(1, 1, 528, 528);
             }
         }
 
@@ -175,20 +175,20 @@ public final class Board {
         for (int i = 0; i < currentBoardLayout.size(); i++) {
             currentBoardLayout.get(i).draw(g2);
         }
-        
+
         Font currentFont = g2.getFont();
-        currentFont = currentFont.deriveFont(currentFont.getSize()*1.4F);
+        currentFont = currentFont.deriveFont(currentFont.getSize() * 1.8F);
         g2.setFont(currentFont);
-        for(int i = 0; i < chosenCards.size();i++){
-            g2.drawString(String.valueOf(i), chosenCards.get(i).getCardX(), chosenCards.get(i).getCardY()+48);
+        for (int i = 0; i < chosenCards.size(); i++) {
+            g2.drawString(String.valueOf(i), chosenCards.get(i).getCardX(), chosenCards.get(i).getCardY() + 48);
         }
     }
 
     public void removePlacedCard(int x, int y) {
-        for (int i = 0; i < currentBoardLayout.size(); i++) {
-            if (x == (currentBoardLayout.get(i).getCardX()) && y == (currentBoardLayout.get(i).getCardY())) {              
-                currentBoardLayout.remove(i);
-
+        for (int i = 0; i < this.currentBoardLayout.size(); i++) {
+            if (x == (this.currentBoardLayout.get(i).getCardX()) && y == (this.currentBoardLayout.get(i).getCardY())) {
+                this.currentBoardLayout.remove(i);
+                System.out.println("REMOVED CARD AT " + x + y);
             }
         }
 
@@ -236,40 +236,50 @@ public final class Board {
     }
 
     public void chosenFromBoard(int chosenRow, int chosenCol) {
-        first = chosenCards.isEmpty();
+        first = this.chosenCards.isEmpty();
         PlacedCard t = this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize);
         if (t == null) {
             System.out.println("non c'è la carta");
         } else {
-            if (chosenCards.size() < 3) {
+            if (this.chosenCards.size() < 3) {
 
                 if (this.hasAFreeBorder(chosenRow * gp.tileSize, chosenCol * gp.tileSize)) {
                     if (first) {
-                        chosenCards.add(this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize));
-                        firstRaw = chosenRow;
+                           t = this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize);
+                        if(!this.chosenCards.contains(t)){
+                            chosenCards.add(t);
+                            firstRaw = chosenRow;
                         firstCol = chosenCol;
                         oldRaw = chosenRow;
                         oldCol = chosenCol;
+                        }
+                     
+                     
                     } else {
                         if (chosenRow == firstRaw && chosenRow == oldRaw) {
                             if (chosenCol == oldCol + 1 || chosenCol == oldCol - 1) {
-                                chosenCards.add(this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize));
+                                t = (this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize));
+                                if(!this.chosenCards.contains(t)){
+                                    chosenCards.add(t);
                                 oldRaw = chosenRow;
                                 oldCol = chosenCol;
+                                }
                             }
                         }
                         if (chosenCol == firstCol && chosenCol == oldCol) {
                             if (chosenRow == oldRaw + 1 || chosenRow == oldRaw - 1) {
-                                chosenCards.add(this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize));
+                                t = this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize);
+                                if(!this.chosenCards.contains(t)){
+                                         chosenCards.add(t);
                                 oldRaw = chosenRow;
                                 oldCol = chosenCol;
+                                }
                             }
                         }
                     }
                 }
             }
         }
-        //System.out.println(chosenCards);
     }
 
     public void deleteChosenCards() {
@@ -307,11 +317,11 @@ public final class Board {
     public void removeChosenCardsFromBoard() {
         //System.out.println("Chosen cards in : "+ chosenCards);
         for (int i = 0; i < this.chosenCards.size(); i++) {
-            //System.out.println("REMOVED CARD "+ chosenCards.get(i));
-            removePlacedCard(this.chosenCards.get(i).getCardX(), this.chosenCards.get(i).getCardY());
+            PlacedCard p = chosenCards.get(i);
+            removePlacedCard(p.getCardX(), p.getCardY());
         }
         //System.out.println("PULIZIONE ARRAY ");
-        chosenCards.clear();
+        this.chosenCards.clear();
     }
 
     //questo metodo crea l'arrayList chosenCardsInOrder
