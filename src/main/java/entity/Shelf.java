@@ -386,6 +386,7 @@ public class Shelf {
                 }
             }
         }
+        
         for (int i = 0; i < groupSizes.size(); i++) {
             switch (groupSizes.get(i)) {
                 case 3 ->

@@ -33,6 +33,7 @@ public class Main {
         window.setLayout(new GridBagLayout());
         GamePanel gamePanel = new GamePanel();
 
+
         ImageIcon image = new ImageIcon("src/main/resources/logo-cranio.png");
         window.setIconImage(image.getImage());
         window.setTitle("  My Shelfie - Group 21");

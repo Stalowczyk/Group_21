@@ -155,7 +155,6 @@ public class Player {
 
                 } else if (keyH.enterPressed) {
                     if (this.turnDone == false) {
-                        //b.sendChosenCards();//INUTILE 
                         if (!b.chosenCards.isEmpty()) {
                             //resetPlayerChoice();
                             this.chosenCol = getInputFromUser();
@@ -165,15 +164,22 @@ public class Player {
                             	
                             	this.setOrder();
                         		chosenCardsInOrder = b.changeOrder(order);
-                        		// order.clear();
+
                             	
                                 shelf.placeOnShelf(b.chosenCardsInOrder, this.chosenCol);
                                 b.chosenCardsInOrder.clear();
                                 
                                 resetPlayerChoice();
+
                                 b.removeChosenCardsFromBoard();
-                                if(order.size() > 0){this.turnDone = true;}
-                                order.clear();
+
+                                
+                                if(order.size() > 0) {
+                                this.turnDone = true;
+                                }
+                                order.clear();//
+                                
+
                                 if (this.shelf.isShelfFilled()) {
                                     this.shelf.isFirstShelfFilled();
                                     this.firstShelfFilled=true;
@@ -348,31 +354,37 @@ public class Player {
     }
 
     public void setOrder(){
-        if (chosenCards.size() >= 1) {
-            for (int i = 0; i < chosenCards.size(); i++) {
-                Integer number = this.getNumberForOrder(i);
-                if (number == null) {
-                    i = chosenCards.size() - 1;
-                    b.deleteChosenCards();         //cancella in automatico l'array
-                    order.clear();
-                } else {
-                    if (!this.sameNumbers(number)) {
-                        order.add(number);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Invalid input! you put the same number twice");
-                        i--;
-                    }
-                }
-            }
-        }
+    	Integer number = null;
+			if (chosenCards.size() >= 1) {
+				for (int i = 0; i < chosenCards.size(); i++) {
+					if(chosenCards.size() > 1) {
+						number = this.getNumberForOrder(i);
+					}else if(chosenCards.size() == 1) {
+						number = 0;
+					}
+					if (number == null) {
+						i = chosenCards.size() - 1;
+						 b.deleteChosenCards();         //cancella in automatico l'array
+						 order.clear();
+					} else {
+						if (!this.sameNumbers(number)) {
+							order.add(number);
+						} else {
+							JOptionPane.showMessageDialog(null, "Invalid input! you put the same number twice");
+							i--;
+						}
+					}
+				}
+			}    	
+
     }
 
     
 
     public Integer getNumberForOrder(int i) {
-        Integer number = null;
-        boolean isValidInput = false;
-        while (!isValidInput) {
+    	Integer number = null;
+    	 boolean isValidInput = false;
+    	while (!isValidInput) {
             String sid = JOptionPane.showInputDialog(null, "set the "+(i+1)+"st card to put in shelf");
             if (sid == null) {
                 return null;
@@ -389,10 +401,15 @@ public class Player {
                 JOptionPane.showMessageDialog(null, "Invalid input! Please enter a whole number.");
             }
         }
-        return number;
-
+    	return number;
+        
     }
+    	
+
+   
 }
+
+
 
 
 
