@@ -144,7 +144,6 @@ public class Player {
 
                 } else if (keyH.enterPressed) {
                     if (this.turnDone == false) {
-                        //b.sendChosenCards();//INUTILE 
                         if (!b.chosenCards.isEmpty()) {
                             //resetPlayerChoice();
                             this.chosenCol = getInputFromUser();
@@ -153,16 +152,22 @@ public class Player {
                             if (shelf.isColumnAvailable(b.chosenCards, this.chosenCol)) {
                             	
                             	this.setOrder();
-                        		//qui ci va b.changeOrder()
                         		chosenCardsInOrder = b.changeOrder(order);
-                        		order.clear();
+                        		//order.clear();
                             	
                                 shelf.placeOnShelf(b.chosenCardsInOrder, this.chosenCol);
                                 b.chosenCardsInOrder.clear();
                                 
                                 resetPlayerChoice();
+
                                 b.removeChosenCardsFromBoard();
+
+                                
+                                if(order.size() > 0) {
                                 this.turnDone = true;
+                                }
+                                order.clear();//
+                                
                                 if (this.shelf.isShelfFilled()) {
                                     this.shelf.setFinalTurn(true);
                                     //for shelf in allShelfs
@@ -269,44 +274,28 @@ public class Player {
     }
     
     public void setOrder(){
-		//pop up dove si crea l'arrayList con l'ordine (1, 3, 2)
-    	  boolean isValidInput = false;
-    	
-		if(chosenCards.size() > 1) {
-			for(int i = 0; i < chosenCards.size(); i++) {
-    			String sid = JOptionPane.showInputDialog("set the "+(i+1)+"st "+"card to put in shelf");
-    	        int number = Integer.parseInt(sid);
-    	        
-    	        try {
-                    number = Integer.parseInt(sid);
-                    if (number >= 0 && number < chosenCards.size()) {
-                        isValidInput = true;
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Invalid input! Please enter a number between 0 and "+(chosenCards.size()-1));
-                    }
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Invalid input! Please enter a whole number.");
-                }
-    	        
-
-    	        
-
-    	        if(number >= 0 && number < (chosenCards.size())) {
-    	        	if(!this.sameNumbers(number)) {
-    	        		order.add(number);
-    	        	}else {
-    	        		//System.out.println("hai inserito un numero uguale ad uno precedentemente inserito");
-    	        		JOptionPane.showMessageDialog(null, "Invalid input! you put the same number twice");
-    	        		//String er = JOptionPane.showInputDialog( "hai inserito un numero uguale ad uno precedentemente inserito");
-    	        		i--;
-    	        	}
-    	        }else {
-    	        	//System.out.println("inserisci un numero coerente");
-    	        	i--;
-    	        }
-    	        
-    		}
-		}else order.add(0);
+    	Integer number = null;
+			if (chosenCards.size() >= 1) {
+				for (int i = 0; i < chosenCards.size(); i++) {
+					if(chosenCards.size() > 1) {
+						number = this.getNumberForOrder(i);
+					}else if(chosenCards.size() == 1) {
+						number = 0;
+					}
+					if (number == null) {
+						i = chosenCards.size() - 1;
+						 b.deleteChosenCards();         //cancella in automatico l'array
+						 order.clear();
+					} else {
+						if (!this.sameNumbers(number)) {
+							order.add(number);
+						} else {
+							JOptionPane.showMessageDialog(null, "Invalid input! you put the same number twice");
+							i--;
+						}
+					}
+				}
+			}    	
     }
     
     public boolean sameNumbers(int number) {
@@ -317,8 +306,37 @@ public class Player {
     	}
     	return false;
     }
+    
+    
+    
+    public Integer getNumberForOrder(int i) {
+    	Integer number = null;
+    	 boolean isValidInput = false;
+    	while (!isValidInput) {
+            String sid = JOptionPane.showInputDialog(null, "set the "+(i+1)+"st card to put in shelf");
+            if (sid == null) {
+                return null;
+            }
+
+            try {
+                number = Integer.parseInt(sid);
+                if (number >= 0 && number < chosenCards.size()) {
+                    isValidInput = true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid input! Please enter a number between 0 and "+(chosenCards.size()-1));
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Invalid input! Please enter a whole number.");
+            }
+        }
+    	return number;
+        
+    }
+    	
 
 }
+
+
 
 
 

@@ -34,7 +34,7 @@ public class Main {
         GamePanel gamePanel = new GamePanel();
 
         
-        ImageIcon image = new ImageIcon("logo-cranio.png");
+        ImageIcon image = new ImageIcon("src/main/resources/logo-cranio.png");
         window.setIconImage(image.getImage());
         window.setTitle("  My Shelfie - Group 21");
         

@@ -184,6 +184,11 @@ public final class Board {
         for (int i = 0; i < chosenCards.size(); i++) {
             g2.drawString(String.valueOf(i), chosenCards.get(i).getCardX(), chosenCards.get(i).getCardY() + 48);
         }
+        
+        Font cf = new Font("Times New Roman", Font.BOLD, 16);
+        g2.setFont(cf);
+        g2.drawString("Shelf:", 576, 30);
+        g2.drawString("Personal goal card:", 864, 30);
     }
 
     public void removePlacedCard(int x, int y) {
