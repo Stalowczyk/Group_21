@@ -33,15 +33,8 @@ public class Main {
         window.setLayout(new GridBagLayout());
         GamePanel gamePanel = new GamePanel();
 
-
-        ClassLoader classLoader = Main.class.getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream("logo-cranio.png");
-        assert inputStream != null;
-        Image image = ImageIO.read(inputStream);
-        ImageIcon imageIcon = new ImageIcon(image);
-        Image frameIcon = imageIcon.getImage();
-        window.setIconImage(frameIcon);
-        
+        ImageIcon image = new ImageIcon("src/main/resources/logo-cranio.png");
+        window.setIconImage(image.getImage());
         window.setTitle("  My Shelfie - Group 21");
         
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
