@@ -1,16 +1,20 @@
 package entity;
 
+import java.awt.Font;
+import java.awt.Graphics2D;
 import java.util.Random;
 
-public class CommonGoals {
+import main.GamePanel;
 
-    private static int completedTimes0 = 0;
-    private static int completedTimes1 = 0;
+public class CommonGoals {
+    
     private Shelf shelf;
     private static final Random random = new Random();
     Goals[] choosenGoals;
+    
+    GamePanel gp;
 
-    CommonGoals() {
+    public CommonGoals() {
         Goals[] allGoals = Goals.values();
         choosenGoals = new Goals[2];
         int index1 = random.nextInt(allGoals.length);
@@ -20,6 +24,18 @@ public class CommonGoals {
         }
         choosenGoals[0] = allGoals[index1];
         choosenGoals[1] = allGoals[index2];
+    }
+    
+    public void draw(Graphics2D g2) {
+    	
+    	Font titleFont = new Font("Times New Roman", Font.BOLD, 17);
+        g2.setFont(titleFont);
+        g2.drawString("COMMON GOALS: ", 20, 560);
+        
+    	Font currentFont = new Font("Times New Roman", Font.BOLD, 14);
+        g2.setFont(currentFont);
+        g2.drawString("1st Goal: "+this.getFirstDescription(), 20, 580);
+        g2.drawString("2nd Goal: : "+this.getSecondDescription(), 20, 600);
     }
 
     public String getFirstName() {
@@ -95,7 +111,7 @@ public class CommonGoals {
     }                 // Dodicesimo obiettivo
 
     public boolean isFirstGoalAchieved(Shelf shelf) {
-        boolean Result = switch (getFirstIndex()) {
+        return switch (getFirstIndex()) {
             case 1 ->
                 this.checkGoal1(shelf);
             case 2 ->
@@ -123,26 +139,10 @@ public class CommonGoals {
             default ->
                 throw new IllegalArgumentException("Goal Index invalido");
         };
-        if (Result) {
-            switch (completedTimes0) {
-                case 0 ->
-                    shelf.addPoints(8);
-                case 1 ->
-                    shelf.addPoints(6);
-                case 2 ->
-                    shelf.addPoints(4);
-                case 3 ->
-                    shelf.addPoints(2);
-                default ->
-                    throw new IllegalArgumentException("Index invalido");
-            }
-            completedTimes0++;
-        }
-        return Result;
     }
 
     public boolean isSecondGoalAchieved(Shelf shelf) {
-        boolean Result = switch (getSecondIndex()) {
+        return switch (getSecondIndex()) {
             case 1 ->
                 this.checkGoal1(shelf);
             case 2 ->
@@ -170,21 +170,5 @@ public class CommonGoals {
             default ->
                 throw new IllegalArgumentException("Goal Index invalido");
         };
-        if (Result) {
-            switch (completedTimes1) {
-                case 0 ->
-                    shelf.addPoints(8);
-                case 1 ->
-                    shelf.addPoints(6);
-                case 2 ->
-                    shelf.addPoints(4);
-                case 3 ->
-                    shelf.addPoints(2);
-                default ->
-                    throw new IllegalArgumentException("Index invalido");
-            }
-            completedTimes1++;
-        }
-        return Result;
     }
 }

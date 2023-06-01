@@ -23,6 +23,8 @@ public class Shelf {
     ArrayList<PlacedCard> copiedCards;
     String playerName;
     private boolean finalTurn;
+    public boolean firstime1;
+    public boolean firstime2;
 
     public Shelf(GamePanel gp, String playerName) {
         this.finalTurn = false;
@@ -32,9 +34,11 @@ public class Shelf {
         this.gp = gp;
         this.pe = new PersonalGoalsCards(gp.playerCount, this.gp);
         this.playerTurn = false;
-
+        this.firstime1 = false;
+        this.firstime2 = false;
     }
     
+
     public void setFinalTurn(boolean choice){
         this.finalTurn=choice;
     }
@@ -42,9 +46,13 @@ public class Shelf {
     public int getPersonalGoalCardPoints(){
         return this.pe.score(this);
     }
+
     
     public int getPoints() {
         return points;
+    }
+    public String getPlayerName() {
+        return playerName;
     }
 
     public boolean getPlayerTurn() {
@@ -134,13 +142,12 @@ public class Shelf {
         for (int i = 0; i <= 5; i = i + 5) {
             for (int j = 0; j <= 4; j = j + 4) {
                 corner.add(this.shelfLayout[i][j]);
-                System.out.println("prova");
             }
         }
         return !corner.contains(null) && corner.stream().map(Card::getCardType).distinct().count() == 1;
     }
 
-    public boolean checkCardCount() {                                         // Controlla tutti gli elementi della shelf
+    public boolean checkCardCount() {               // Controlla tutti gli elementi della shelf
         Map<CardType, Integer> cardCounts = new HashMap<>();
         for (int i = 0; i < this.shelfLayout.length; i++) {
             for (int j = 0; j < this.shelfLayout[i].length; j++) {
@@ -277,6 +284,7 @@ public class Shelf {
                 }
             }
         }
+        
         for (int row = 5; row >= 1; row--) {
             for (int col = 5 - row; col <= 4; col++) {
                 Card card = this.shelfLayout[row][col];
@@ -290,7 +298,6 @@ public class Shelf {
     }
 
     public boolean checkCube() {
-
         List<Card> blacklistedCards = new ArrayList<Card>();
         int Cubi = 0;
         for (int i = 1; i < this.shelfLayout.length; i++) {
@@ -445,7 +452,7 @@ public class Shelf {
         return groupSize;
     }
 
-    public static boolean containsAny(List<Card> list1, List<Card> list2) {             // Metodo che serve a alcuni obiettivi per controllare le carte giÃ  utilizzate
+    public static boolean containsAny(List<Card> list1, List<Card> list2) {             // Metodo che serve a alcuni obiettivi per controllare le carte giÃ  utilizzate
         for (Card card : list1) {                                                       // Confronta 2 arraylist e ritorna true se la prima contiene almeno un elemento della seconda
             if (list2.contains(card)) {                                                 // Utilizzato per vedere se una possibile forma di carte contiene delle carte gia usate in altre forme (checkCube,checkCoppie)
                 return true;
@@ -541,5 +548,21 @@ public class Shelf {
     public void printAllPersonalGoal(){
         pe.printOutAll();
     }
-
+    public boolean isFirstShelfFilled() {
+        boolean filled = true;
+        for (int i = 0; i < this.shelfLayout.length; i++) {
+            for (int j = 0; j < this.shelfLayout[i].length; j++) {
+                if (this.shelfLayout[i][j] == null) {
+                    filled = false;
+                }
+            }
+        }
+        if (boardsFilled == 0 && filled) {
+            this.addPoints(1);
+            boardsFilled++;
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

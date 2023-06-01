@@ -6,6 +6,7 @@ package main;
 
 import board.Board;
 import entity.Bag;
+import entity.CommonGoals;
 import entity.PersonalGoalsCards;
 import entity.Player;
 import java.awt.Color;
@@ -38,15 +39,16 @@ public class GamePanel extends JPanel implements Runnable {
     private ArrayList<Shelf> allShelfs;
 
     Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-    int width = (int) (dim.width * 0.80);
-    int height = (int) (dim.height * 0.80);
+    int width = (int) (dim.width * 0.90);
+    int height = (int) (dim.height * 0.90);
     public Integer playerCount;
     Thread gameThread = new Thread();
     KeyHandler keyH = new KeyHandler();
     Bag bag = new Bag();
     Board board;
     Player player;
-
+    CommonGoals commongoals;
+    
     public GamePanel() {
         this.playerCount = getPlayerCount();
         if (playerCount == null) {
@@ -62,9 +64,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.allShelfs = new ArrayList<>();
         createAllShelfs(this.playerCount);
         this.board = new Board(this.playerCount, this, bag);
-        this.player = new Player(this, keyH, board, allShelfs);
+        this.commongoals = new CommonGoals();
+        this.player = new Player(this, keyH, board, allShelfs,commongoals);
         this.startGameThread();
-
     }
 
     public void startGameThread() {
@@ -117,7 +119,13 @@ public class GamePanel extends JPanel implements Runnable {
             allShelfs.get(i).draw(g2);
         }
         player.draw(g2);
+        
+        commongoals.draw(g2);
+        
         g2.dispose();
+        
+
+        
     }
 
     // DA RIFARE
@@ -150,7 +158,8 @@ public class GamePanel extends JPanel implements Runnable {
         for (int i = 0; i < playerCount; i++) {
             String input = JOptionPane.showInputDialog(null, "Enter username for Player " + (i + 1));
             if (input == null || input.isEmpty()) {
-                return new String[0]; // User pressed cancel or closed the dialog
+            	
+                return new String[0]; // User pressed cancel or closed the dialog               
             }
             usernames[i] = input;
         }

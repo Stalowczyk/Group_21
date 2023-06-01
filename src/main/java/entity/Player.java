@@ -33,23 +33,31 @@ public class Player {
     GamePanel gp;
     KeyHandler keyH;
     Board b;
+    CommonGoals c;
+    private static int completedTimes0 = 0;
+    private static int completedTimes1 = 0;
     ArrayList<PlacedCard> chosenCards;
     Integer chosenCol;
     private ArrayList<Shelf> allShelfs;
     Shelf shelf;
     private boolean turnDone;
 
+    public ArrayList<Integer> order = new ArrayList<>(); 
+    public ArrayList<PlacedCard> chosenCardsInOrder = new ArrayList<>(); 
+    
     int currentTurn;
+
 
     /**
      *
      * @param gp
      * @param keyH
      */
-    public Player(GamePanel gp, KeyHandler keyH, Board b, ArrayList allShelfs) {
+    public Player(GamePanel gp, KeyHandler keyH, Board b, ArrayList allShelfs, CommonGoals c) {
         this.gp = gp;
         this.keyH = keyH;
         this.b = b;
+        this.c = c;
         setDefaultValues();
         this.currentTurn = 1;
         this.allShelfs = allShelfs;
@@ -128,7 +136,7 @@ public class Player {
                     x -= speed;
                 } else if (keyH.rightPressed) {
                     x += speed;
-                    //INTERACTION    
+                    //INTERACTION
                 } else if (keyH.spacePressed) {
                     if (this.turnDone == false) {
                         b.chosenFromBoard(this.getPlayerX() / gp.tileSize, this.getPlayerY() / gp.tileSize);
@@ -146,11 +154,20 @@ public class Player {
                         }
                         if (!b.chosenCards.isEmpty() && chosenCol != null) {
                             if (shelf.isColumnAvailable(b.chosenCards, this.chosenCol)) {
-                                shelf.placeOnShelf(b.chosenCards, this.chosenCol);
+                            	
+                            	this.setOrder();
+                        		//qui ci va b.changeOrder()
+                        		chosenCardsInOrder = b.changeOrder(order);
+                        		order.clear();
+                            	
+                                shelf.placeOnShelf(b.chosenCardsInOrder, this.chosenCol);
+                                b.chosenCardsInOrder.clear();
+                                
                                 resetPlayerChoice();
                                 b.removeChosenCardsFromBoard();
                                 this.turnDone = true;
-                                if (this.shelf.isShelfFilled()) {               
+                                if (this.shelf.isShelfFilled()) {
+                                    this.shelf.isFirstShelfFilled();
                                     this.shelf.setFinalTurn(true);
                                     //for shelf in allShelfs
                                     //if shelf.getFirstShelfFilled == false
@@ -159,7 +176,7 @@ public class Player {
                                 }
 
                             } else {
-                                System.out.println("non c'Ã¨ abbastanza spazio nella colonna");
+                                System.out.println("non c'è abbastanza spazio nella colonna");
                                 resetPlayerChoice();
                             }
 
@@ -168,10 +185,42 @@ public class Player {
                             resetPlayerChoice();
                         }
                         //System.out.println(chosenCards);
-                        b.deleteChosenCards(); 		//cancella in automatico l'array               
+                        b.deleteChosenCards();         //cancella in automatico l'array
                     }
                 } else if (keyH.pPressed) {
                     if (this.turnDone == true) {
+                        if(this.c.isFirstGoalAchieved(this.shelf) && !this.shelf.firstime1){
+                            switch (completedTimes0) {
+                                case 0 ->
+                                        this.shelf.addPoints(8);
+                                case 1 ->
+                                        this.shelf.addPoints(6);
+                                case 2 ->
+                                        this.shelf.addPoints(4);
+                                case 3 ->
+                                        this.shelf.addPoints(2);
+                                default ->
+                                        throw new IllegalArgumentException("Index invalido");
+                            }
+                            completedTimes0++;
+                            this.shelf.firstime1 = true;
+                        }
+                        if(this.c.isSecondGoalAchieved(this.shelf) && !this.shelf.firstime2){
+                            switch (completedTimes1) {
+                                case 0 ->
+                                        this.shelf.addPoints(8);
+                                case 1 ->
+                                        this.shelf.addPoints(6);
+                                case 2 ->
+                                        this.shelf.addPoints(4);
+                                case 3 ->
+                                        this.shelf.addPoints(2);
+                                default ->
+                                        throw new IllegalArgumentException("Index invalido");
+                            }
+                            completedTimes1++;
+                            this.shelf.firstime2 = true;
+                        }
                         nextTurn();
                         if (this.currentTurn == allShelfs.size() - 1) {
                             this.currentTurn = 0;
@@ -245,6 +294,7 @@ public class Player {
         this.chosenCol = null;
     }
     
+
     public boolean checkAllShelfs(){
         for(Shelf shelf : this.allShelfs){
             if(!shelf.getFinalTurn()){
@@ -253,5 +303,59 @@ public class Player {
         }
         return true;
     }
+    
+    public void setOrder(){
+		//pop up dove si crea l'arrayList con l'ordine (1, 3, 2)
+    	  boolean isValidInput = false;
+    	
+		if(chosenCards.size() > 1) {
+			for(int i = 0; i < chosenCards.size(); i++) {
+    			String sid = JOptionPane.showInputDialog("set the "+(i+1)+"st "+"card to put in shelf");
+    	        int number = Integer.parseInt(sid);
+    	        
+    	        try {
+                    number = Integer.parseInt(sid);
+                    if (number >= 0 && number < chosenCards.size()) {
+                        isValidInput = true;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Invalid input! Please enter a number between 0 and "+(chosenCards.size()-1));
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Invalid input! Please enter a whole number.");
+                }
+    	        
+
+    	        
+
+    	        if(number >= 0 && number < (chosenCards.size())) {
+    	        	if(!this.sameNumbers(number)) {
+    	        		order.add(number);
+    	        	}else {
+    	        		//System.out.println("hai inserito un numero uguale ad uno precedentemente inserito");
+    	        		JOptionPane.showMessageDialog(null, "Invalid input! you put the same number twice");
+    	        		//String er = JOptionPane.showInputDialog( "hai inserito un numero uguale ad uno precedentemente inserito");
+    	        		i--;
+    	        	}
+    	        }else {
+    	        	//System.out.println("inserisci un numero coerente");
+    	        	i--;
+    	        }
+    	        
+    		}
+		}else order.add(0);
+    }
+    
+    public boolean sameNumbers(int number) {
+    	for(int i = 0; i < order.size(); i++) {
+    		if(order.get(i) == number) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 
 }
+
+
+
+

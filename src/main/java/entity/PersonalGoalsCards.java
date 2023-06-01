@@ -47,7 +47,7 @@ public class PersonalGoalsCards {
         return this.personalGoalCardsLayout;
     }
 
-    // genera il numero della casella dove andrÃ  il goal
+    // genera il numero della casella dove andrÃ  il goal
     public void randomizeSixSpace() {
         // personalGoal contiene 6 numeri casuali da 0 a 30 i quali servono per posizionare le tessere fittizzie in quelle coordinate
         personalGoal.clear();
@@ -117,9 +117,10 @@ public class PersonalGoalsCards {
     }
 
     // questo metodo restituisce il puntegio in base a quante carte sono uguali tra carta obiettivo e shelf
-    public int score(Shelf s) {  // punteggio
+     public int score(Shelf s) {  // punteggio
 
         for (int i = 0; i < 6; i++) {
+
             PlacedCard personalCard = this.currentGoalCardLayout.get(i);
             //System.out.println("BEFORE PERSONALGOALCARD CORDS "+ personalCard.getCardRow()+" "+personalCard.getCardCol());//0 3
             PlacedCard shelfCard = s.getCard(personalCard.getCardRow(), personalCard.getCardCol());
@@ -159,6 +160,9 @@ public class PersonalGoalsCards {
         return this.sc;
 
     }
+
+
+
 
     public void draw(Graphics2D g2) {
             for (int i = 0; i < currentGoalCardLayout.size(); i++) {

@@ -367,6 +367,8 @@ public final class Board {
     public void sendChosenCol() {
 
     }
+    
+    
 }
 
 /*
