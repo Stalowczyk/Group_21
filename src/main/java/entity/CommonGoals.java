@@ -35,7 +35,7 @@ public class CommonGoals {
     	Font currentFont = new Font("Times New Roman", Font.BOLD, 14);
         g2.setFont(currentFont);
         g2.drawString("1st Goal: "+this.getFirstDescription(), 20, 580);
-        g2.drawString("2nd Goal: : "+this.getSecondDescription(), 20, 600);
+        g2.drawString("2nd Goal: "+this.getSecondDescription(), 20, 600);
     }
 
     public String getFirstName() {
