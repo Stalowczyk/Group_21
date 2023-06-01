@@ -23,6 +23,8 @@ public class Shelf {
     ArrayList<PlacedCard> copiedCards;
     String playerName;
     private boolean finalTurn;
+    public boolean firstime1;
+    public boolean firstime2;
 
     public Shelf(GamePanel gp, String playerName) {
         this.finalTurn = false;
@@ -32,8 +34,8 @@ public class Shelf {
         this.gp = gp;
         this.pe = new PersonalGoalsCards(gp.playerCount, this.gp);
         this.playerTurn = false;
-        
-
+        this.firstime1 = false;
+        this.firstime2 = false;
     }
     
 
@@ -48,6 +50,9 @@ public class Shelf {
     
     public int getPoints() {
         return points;
+    }
+    public String getPlayerName() {
+        return playerName;
     }
 
     public boolean getPlayerTurn() {
@@ -137,13 +142,12 @@ public class Shelf {
         for (int i = 0; i <= 5; i = i + 5) {
             for (int j = 0; j <= 4; j = j + 4) {
                 corner.add(this.shelfLayout[i][j]);
-                System.out.println("prova");
             }
         }
         return !corner.contains(null) && corner.stream().map(Card::getCardType).distinct().count() == 1;
     }
 
-    public boolean checkCardCount() {                                         // Controlla tutti gli elementi della shelf
+    public boolean checkCardCount() {               // Controlla tutti gli elementi della shelf
         Map<CardType, Integer> cardCounts = new HashMap<>();
         for (int i = 0; i < this.shelfLayout.length; i++) {
             for (int j = 0; j < this.shelfLayout[i].length; j++) {
@@ -294,7 +298,6 @@ public class Shelf {
     }
 
     public boolean checkCube() {
-
         List<Card> blacklistedCards = new ArrayList<Card>();
         int Cubi = 0;
         for (int i = 1; i < this.shelfLayout.length; i++) {
@@ -545,5 +548,21 @@ public class Shelf {
     public void printAllPersonalGoal(){
         pe.printOutAll();
     }
-
+    public boolean isFirstShelfFilled() {
+        boolean filled = true;
+        for (int i = 0; i < this.shelfLayout.length; i++) {
+            for (int j = 0; j < this.shelfLayout[i].length; j++) {
+                if (this.shelfLayout[i][j] == null) {
+                    filled = false;
+                }
+            }
+        }
+        if (boardsFilled == 0 && filled) {
+            this.addPoints(1);
+            boardsFilled++;
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

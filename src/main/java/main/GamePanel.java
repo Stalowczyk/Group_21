@@ -47,8 +47,7 @@ public class GamePanel extends JPanel implements Runnable {
     Bag bag = new Bag();
     Board board;
     Player player;
-    
-    CommonGoals commonGoals;
+    CommonGoals commongoals;
     
     public GamePanel() {
         this.playerCount = getPlayerCount();
@@ -65,12 +64,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.allShelfs = new ArrayList<>();
         createAllShelfs(this.playerCount);
         this.board = new Board(this.playerCount, this, bag);
-        this.player = new Player(this, keyH, board, allShelfs);
+        this.commongoals = new CommonGoals();
+        this.player = new Player(this, keyH, board, allShelfs,commongoals);
         this.startGameThread();
-        
-        this.commonGoals = new CommonGoals();
-
-
     }
 
     public void startGameThread() {
@@ -124,7 +120,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
         player.draw(g2);
         
-        commonGoals.draw(g2);
+        commongoals.draw(g2);
         
         g2.dispose();
         

@@ -33,6 +33,9 @@ public class Player {
     GamePanel gp;
     KeyHandler keyH;
     Board b;
+    CommonGoals c;
+    private static int completedTimes0 = 0;
+    private static int completedTimes1 = 0;
     ArrayList<PlacedCard> chosenCards;
     Integer chosenCol;
     private ArrayList<Shelf> allShelfs;
@@ -44,17 +47,17 @@ public class Player {
     
     int currentTurn;
 
-    CommonGoals commonGoals = new CommonGoals();
-    
+
     /**
      *
      * @param gp
      * @param keyH
      */
-    public Player(GamePanel gp, KeyHandler keyH, Board b, ArrayList allShelfs) {
+    public Player(GamePanel gp, KeyHandler keyH, Board b, ArrayList allShelfs, CommonGoals c) {
         this.gp = gp;
         this.keyH = keyH;
         this.b = b;
+        this.c = c;
         setDefaultValues();
         this.currentTurn = 1;
         this.allShelfs = allShelfs;
@@ -164,6 +167,7 @@ public class Player {
                                 b.removeChosenCardsFromBoard();
                                 this.turnDone = true;
                                 if (this.shelf.isShelfFilled()) {
+                                    this.shelf.isFirstShelfFilled();
                                     this.shelf.setFinalTurn(true);
                                     //for shelf in allShelfs
                                     //if shelf.getFirstShelfFilled == false
@@ -185,6 +189,38 @@ public class Player {
                     }
                 } else if (keyH.pPressed) {
                     if (this.turnDone == true) {
+                        if(this.c.isFirstGoalAchieved(this.shelf) && !this.shelf.firstime1){
+                            switch (completedTimes0) {
+                                case 0 ->
+                                        this.shelf.addPoints(8);
+                                case 1 ->
+                                        this.shelf.addPoints(6);
+                                case 2 ->
+                                        this.shelf.addPoints(4);
+                                case 3 ->
+                                        this.shelf.addPoints(2);
+                                default ->
+                                        throw new IllegalArgumentException("Index invalido");
+                            }
+                            completedTimes0++;
+                            this.shelf.firstime1 = true;
+                        }
+                        if(this.c.isSecondGoalAchieved(this.shelf) && !this.shelf.firstime2){
+                            switch (completedTimes1) {
+                                case 0 ->
+                                        this.shelf.addPoints(8);
+                                case 1 ->
+                                        this.shelf.addPoints(6);
+                                case 2 ->
+                                        this.shelf.addPoints(4);
+                                case 3 ->
+                                        this.shelf.addPoints(2);
+                                default ->
+                                        throw new IllegalArgumentException("Index invalido");
+                            }
+                            completedTimes1++;
+                            this.shelf.firstime2 = true;
+                        }
                         nextTurn();
                         if (this.currentTurn == allShelfs.size() - 1) {
                             this.currentTurn = 0;

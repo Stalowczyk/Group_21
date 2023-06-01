@@ -7,9 +7,7 @@ import java.util.Random;
 import main.GamePanel;
 
 public class CommonGoals {
-
-    private static int completedTimes0 = 0;
-    private static int completedTimes1 = 0;
+    
     private Shelf shelf;
     private static final Random random = new Random();
     Goals[] choosenGoals;
@@ -26,10 +24,6 @@ public class CommonGoals {
         }
         choosenGoals[0] = allGoals[index1];
         choosenGoals[1] = allGoals[index2];
-        
-        
-        
-        
     }
     
     public void draw(Graphics2D g2) {
@@ -117,7 +111,7 @@ public class CommonGoals {
     }                 // Dodicesimo obiettivo
 
     public boolean isFirstGoalAchieved(Shelf shelf) {
-        boolean Result = switch (getFirstIndex()) {
+        return switch (getFirstIndex()) {
             case 1 ->
                 this.checkGoal1(shelf);
             case 2 ->
@@ -145,26 +139,10 @@ public class CommonGoals {
             default ->
                 throw new IllegalArgumentException("Goal Index invalido");
         };
-        if (Result) {
-            switch (completedTimes0) {
-                case 0 ->
-                    shelf.addPoints(8);
-                case 1 ->
-                    shelf.addPoints(6);
-                case 2 ->
-                    shelf.addPoints(4);
-                case 3 ->
-                    shelf.addPoints(2);
-                default ->
-                    throw new IllegalArgumentException("Index invalido");
-            }
-            completedTimes0++;
-        }
-        return Result;
     }
 
     public boolean isSecondGoalAchieved(Shelf shelf) {
-        boolean Result = switch (getSecondIndex()) {
+        return switch (getSecondIndex()) {
             case 1 ->
                 this.checkGoal1(shelf);
             case 2 ->
@@ -192,21 +170,5 @@ public class CommonGoals {
             default ->
                 throw new IllegalArgumentException("Goal Index invalido");
         };
-        if (Result) {
-            switch (completedTimes1) {
-                case 0 ->
-                    shelf.addPoints(8);
-                case 1 ->
-                    shelf.addPoints(6);
-                case 2 ->
-                    shelf.addPoints(4);
-                case 3 ->
-                    shelf.addPoints(2);
-                default ->
-                    throw new IllegalArgumentException("Index invalido");
-            }
-            completedTimes1++;
-        }
-        return Result;
     }
 }
