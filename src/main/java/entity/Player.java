@@ -189,7 +189,7 @@ public class Player {
                                     //this.shelf.setFirstShelfFilled
 
                                 }
-                                if(this.firstShelfFilled){
+                                if(this.firstShelfFilled==true){
                                     this.shelf.setFinalTurn(true);
                                 }
 
@@ -272,17 +272,22 @@ public class Player {
         g2.setColor(Color.BLACK);
         g2.setFont(currentFont);
         String s1 = String.valueOf(turnDone);
-        if(this.test==true && this.gameDone == false){
+        if(this.test==true && this.gameDone==false){
+            System.out.println("CALCOLO PUNTEGGIO");
             calculateAllShelfPoints();
+            this.gameDone=true;
+        }
+        if(this.test==true){
         for(int i = 0 ; i < this.allShelfs.size();i++ ){
+            System.out.println("STARTED DRAWING");
             Shelf s = this.allShelfs.get(i);
                 g2.drawString(s.getPlayerName(), 875, 36*i+384);
                 g2.drawString(String.valueOf(s.getPoints()), 1100 , 36*i+384);
                
                 
             }
-        this.gameDone = true;
         }
+        
     }
     
     public void calculateAllShelfPoints(){
@@ -334,7 +339,7 @@ public class Player {
     public boolean checkAllShelfs(){
         for(int i = 0;i<this.allShelfs.size();i++){
             Shelf s = this.allShelfs.get(i);
-            System.out.println(s.getFinalTurn());
+            System.out.println(s.hashCode()+" "+s.getFinalTurn());
             if(s.getFinalTurn() == false){
                 return false;
             }
