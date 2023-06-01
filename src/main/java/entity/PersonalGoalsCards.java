@@ -128,9 +128,9 @@ public class PersonalGoalsCards {
             if(shelfCard!=null){
                
             if(personalCard.getCardType() == shelfCard.getCardType()) {
-                System.out.println("FOUND MATCH AT PERSONALGOALCARD CORDS "+ personalCard.getCardRow()+" "+personalCard.getCardCol());
-                System.out.println("FOUND MATCH AT SHELF CORDS "+ shelfCard.getCardRow()+" "+shelfCard.getCardCol());
-                System.out.println("CONTATORE BEFORE "+this.cont);
+              //  System.out.println("FOUND MATCH AT PERSONALGOALCARD CORDS "+ personalCard.getCardRow()+" "+personalCard.getCardCol());
+              //  System.out.println("FOUND MATCH AT SHELF CORDS "+ shelfCard.getCardRow()+" "+shelfCard.getCardCol());
+               // System.out.println("CONTATORE BEFORE "+this.cont);
                 this.cont++;
           
             }
