@@ -156,7 +156,6 @@ public class PersonalGoalsCards {
             case 6 ->
                 this.sc = 12;
         }
-        System.out.println("Final Score "+this.sc);
         return this.sc;
 
     }

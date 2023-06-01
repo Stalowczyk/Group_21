@@ -46,6 +46,10 @@ public class Player {
     public ArrayList<PlacedCard> chosenCardsInOrder = new ArrayList<>(); 
     
     int currentTurn;
+    
+    private boolean gameDone;
+    private boolean test;
+    private boolean firstShelfFilled;
 
 
     /**
@@ -58,7 +62,10 @@ public class Player {
         this.keyH = keyH;
         this.b = b;
         this.c = c;
+        this.firstShelfFilled=false;
         setDefaultValues();
+        this.test = false;
+        this.gameDone = false;
         this.currentTurn = 1;
         this.allShelfs = allShelfs;
         this.chosenCards = b.chosenCards;
@@ -126,7 +133,8 @@ public class Player {
 
     public void update() {
         //MOVEMENT
-        if (!checkAllShelfs()) {
+        this.test = checkAllShelfs();
+        if(this.test==false) {
             if (moving == false) {
                 if (keyH.upPressed) {
                     y -= speed;
@@ -168,11 +176,15 @@ public class Player {
                                 order.clear();
                                 if (this.shelf.isShelfFilled()) {
                                     this.shelf.isFirstShelfFilled();
+                                    this.firstShelfFilled=true;
                                     this.shelf.setFinalTurn(true);
                                     //for shelf in allShelfs
                                     //if shelf.getFirstShelfFilled == false
                                     //this.shelf.setFirstShelfFilled
 
+                                }
+                                if(this.firstShelfFilled){
+                                    this.shelf.setFinalTurn(true);
                                 }
 
                             } else {
@@ -241,29 +253,41 @@ public class Player {
                     pixelCounter = 0;
                 }
             }
-        } else {
-            for (Shelf shelf : allShelfs){
-                shelf.findCardGroups();
-                shelf.addPoints(shelf.getPersonalGoalCardPoints());
-                System.out.println(shelf.getPoints());
-                System.out.println(shelf.getPlayerName());
-                System.out.println();
-            }
+        } 
+            
 
-            JOptionPane.showMessageDialog(null, "/GIOCO FINITO");
-        }
+        
     }
 
     public void draw(Graphics2D g2) {
         g2.setColor(Color.RED);
         g2.fillOval(x, y, gp.tileSize, gp.tileSize);
-        Font currentFont = new Font("Times New Roman", Font.BOLD, 28);
+        Font currentFont = new Font("Times New Roman", Font.BOLD, 18);
         g2.setColor(Color.BLACK);
         g2.setFont(currentFont);
         String s1 = String.valueOf(turnDone);
-        g2.drawString("Turn finished - " + s1, 576, 420);
+        if(this.test==true && this.gameDone == false){
+            calculateAllShelfPoints();
+        for(int i = 0 ; i < this.allShelfs.size();i++ ){
+            Shelf s = this.allShelfs.get(i);
+                g2.drawString(s.getPlayerName(), 875, 36*i+384);
+                g2.drawString(String.valueOf(s.getPoints()), 1100 , 36*i+384);
+               
+                
+            }
+        this.gameDone = true;
+        }
     }
-
+    
+    public void calculateAllShelfPoints(){
+        for(int i = 0 ; i < this.allShelfs.size();i++ ){
+            Shelf s = this.allShelfs.get(i);
+            s.findCardGroups();
+            s.addPoints(s.getPersonalGoalCardPoints());
+        }
+    }
+    
+    
     public int getPlayerX() {
         return this.x;
     }

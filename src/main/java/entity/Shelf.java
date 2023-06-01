@@ -29,7 +29,7 @@ public class Shelf {
     public Shelf(GamePanel gp, String playerName) {
         this.finalTurn = false;
         this.shelfLayout = new PlacedCard[6][5];
-        this.playerName = "Current players turn: " + playerName;
+        this.playerName = playerName;
         this.points = 0;
         this.gp = gp;
         this.pe = new PersonalGoalsCards(gp.playerCount, this.gp);
@@ -49,10 +49,10 @@ public class Shelf {
 
     
     public int getPoints() {
-        return points;
+        return this.points;
     }
     public String getPlayerName() {
-        return playerName;
+        return this.playerName;
     }
 
     public boolean getPlayerTurn() {
@@ -64,7 +64,7 @@ public class Shelf {
     }
 
     public void addPoints(int amount) {
-        points += amount;
+        this.points += amount;
     }
 
     public PlacedCard getCard(int peRow, int peCloumn) {
@@ -523,10 +523,10 @@ public class Shelf {
 
                 }
             }
-            Font currentFont = new Font("Times New Roman", Font.BOLD, 28);
+            Font currentFont = new Font("Times New Roman", Font.BOLD, 18);
             g2.setFont(currentFont);
 
-            g2.drawString(this.playerName, 576, 384);
+            g2.drawString("Current Players turn " + this.playerName, 576, 384);
             pe.draw(g2);
         }
     }
