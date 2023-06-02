@@ -294,7 +294,7 @@ public class Player {
 	public boolean checkAllShelfs() {
 		for (int i = 0; i < this.allShelfs.size(); i++) {
 			Shelf s = this.allShelfs.get(i);
-			System.out.println(s.hashCode() + " " + s.getFinalTurn());
+			//System.out.println(s.hashCode() + " " + s.getFinalTurn());
 			if (s.getFinalTurn() == false) {
 				return false;
 			}
