@@ -1,10 +1,3 @@
-/*
-
-
- * 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package board;
 
 import entity.Bag;
@@ -22,373 +15,348 @@ import java.util.Random;
 import java.util.Scanner;
 import main.GamePanel;
 
-/**
- *
- * @author pawel
- */
 public final class Board {
 
-    private final int numberOfPlayers;
-    private int[][] boardLayout;
-    private int boardSize;
-    public ArrayList<PlacedCard> currentBoardLayout;
-    GamePanel gp;
-    Bag b;
+	private final int numberOfPlayers;
+	private int[][] boardLayout;
+	private int boardSize;
+	public ArrayList<PlacedCard> currentBoardLayout;
+	GamePanel gp;
+	Bag b;
 
-    private int firstRow;
-    private int firstCol;
-    private int oldRaw;
-    private int oldCol;
-    private boolean first;
-    public ArrayList<PlacedCard> chosenCards;
-    public ArrayList<PlacedCard> chosenCardsInOrder;		//******************
+	private int firstRow;
+	private int firstCol;
+	private int oldRaw;
+	private int oldCol;
+	private boolean first;
+	public ArrayList<PlacedCard> chosenCards;
+	public ArrayList<PlacedCard> chosenCardsInOrder;
 
-    public Board(int numberOfPlayers, GamePanel gp, Bag b) {
-        this.numberOfPlayers = numberOfPlayers;
-        this.gp = gp;
-        this.b = b;
-        this.currentBoardLayout = new ArrayList<>();
-        setDefaultBoardLayout();
-        setBoardSize();
-        placeCardsOnBoard(b);
-        this.chosenCards = new ArrayList<PlacedCard>();
-        chosenCardsInOrder = new ArrayList<PlacedCard>();//******************
-        System.out.println(System.identityHashCode(chosenCards));
-    }
+	public Board(int numberOfPlayers, GamePanel gp, Bag b) {
+		this.numberOfPlayers = numberOfPlayers;
+		this.gp = gp;
+		this.b = b;
+		this.currentBoardLayout = new ArrayList<>();
+		setDefaultBoardLayout();
+		setBoardSize();
+		placeCardsOnBoard(b);
+		this.chosenCards = new ArrayList<PlacedCard>();
+		chosenCardsInOrder = new ArrayList<PlacedCard>();
+		System.out.println(System.identityHashCode(chosenCards));
+	}
 
-    public void setDefaultBoardLayout() {
-        switch (this.numberOfPlayers) {
-            case 2 ->
-                this.boardLayout = new int[][]{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-            case 3 ->
-                this.boardLayout = new int[][]{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-            case 4 ->
-                this.boardLayout = new int[][]{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, {0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-        }
-    }
+	public void setDefaultBoardLayout() {
+		switch (this.numberOfPlayers) {
+		case 2 -> this.boardLayout = new int[][] { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0 }, { 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0 },
+				{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0 }, { 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0 },
+				{ 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+		case 3 -> this.boardLayout = new int[][] { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0 },
+				{ 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0 }, { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 },
+				{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0 }, { 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0 },
+				{ 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0 }, { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+		case 4 -> this.boardLayout = new int[][] { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0 },
+				{ 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0 }, { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
+				{ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 }, { 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 },
+				{ 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0 }, { 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+		}
+	}
 
-    public int[][] getBoardLayout() {
-        return this.boardLayout;
-    }
+	public int[][] getBoardLayout() {
+		return this.boardLayout;
+	}
 
-    public int getBoardRows() {
-        return this.boardLayout.length;
-    }
+	public int getBoardRows() {
+		return this.boardLayout.length;
+	}
 
-    public int getBoardColumns() {
-        return this.boardLayout[0].length;
-    }
+	public int getBoardColumns() {
+		return this.boardLayout[0].length;
+	}
 
-    public void modifyCell(int row, int col, int number) {
-        this.boardLayout[row][col] = number;
-    }
+	public void modifyCell(int row, int col, int number) {
+		this.boardLayout[row][col] = number;
+	}
 
-   public void randomizeBoard() {
-        for (int col = 0; col < this.boardLayout.length; col++) {
-            for (int row = 0; row < this.boardLayout[col].length; row++) {
-                if (this.boardLayout[row][col] == 1) {
-                    Random rand = new Random();
-                    int randomCard = rand.nextInt((6 - 1) + 1) + 1;
-                    modifyCell(row, col, randomCard);
-                }
-            }
-        }
-    }
+	public void randomizeBoard() {
+		for (int col = 0; col < this.boardLayout.length; col++) {
+			for (int row = 0; row < this.boardLayout[col].length; row++) {
+				if (this.boardLayout[row][col] == 1) {
+					Random rand = new Random();
+					int randomCard = rand.nextInt((6 - 1) + 1) + 1;
+					modifyCell(row, col, randomCard);
+				}
+			}
+		}
+	}
 
-    // MAYBE PUT THIS IN setDefaultBoardLayout method
-    public void setBoardSize() {
-        switch (this.numberOfPlayers) {
-            case 2:
-                this.boardSize = 29;
-            case 3:
-                this.boardSize = 36;
-            case 4:
-                this.boardSize = 44;
-        }
-    }
+	public void setBoardSize() {
+		switch (this.numberOfPlayers) {
+		case 2:
+			this.boardSize = 29;
+		case 3:
+			this.boardSize = 36;
+		case 4:
+			this.boardSize = 44;
+		}
+	}
 
-    public void placeCardsOnBoard(Bag b) {
-        for (int col = 0; col < this.boardLayout.length; col++) {
-            for (int row = 0; row < this.boardLayout[col].length; row++) {
-                if (this.boardLayout[row][col] == 1) {
-                    PlacedCard p = new PlacedCard(b.pullRandom().getCardType(), row, col, gp);
-                    this.currentBoardLayout.add(p);
-                }
-            }
-        }
-    }
+	public void placeCardsOnBoard(Bag b) {
+		for (int col = 0; col < this.boardLayout.length; col++) {
+			for (int row = 0; row < this.boardLayout[col].length; row++) {
+				if (this.boardLayout[row][col] == 1) {
+					PlacedCard p = new PlacedCard(b.pullRandom().getCardType(), row, col, gp);
+					this.currentBoardLayout.add(p);
+				}
+			}
+		}
+	}
 
-    //distribuisce le carte sulla board anche se alcune sono già piazzate
-    //per adesso lascio così poi si vedrà
-    public void repeatPlaceCardsOnBoard(Bag b) {
-        for (int col = 0; col < this.boardLayout.length; col++) {
-            for (int row = 0; row < this.boardLayout[col].length; row++) {
-                if (this.boardLayout[row][col] == 1 && this.getCardAtCords(row * gp.tileSize, col * gp.tileSize) == null) {		
-                    PlacedCard p = new PlacedCard(b.pullRandom().getCardType(), row, col, gp);
-                    this.currentBoardLayout.add(p);
-                }
+	public void repeatPlaceCardsOnBoard(Bag b) {
+		for (int col = 0; col < this.boardLayout.length; col++) {
+			for (int row = 0; row < this.boardLayout[col].length; row++) {
+				if (this.boardLayout[row][col] == 1
+						&& this.getCardAtCords(row * gp.tileSize, col * gp.tileSize) == null) {
+					PlacedCard p = new PlacedCard(b.pullRandom().getCardType(), row, col, gp);
+					this.currentBoardLayout.add(p);
+				}
 
-            }
+			}
 
-        }
+		}
 
-    }
+	}
 
-    public void printAllCardsOnBoard() {
+	public void printAllCardsOnBoard() {
 
-        currentBoardLayout.forEach(x -> System.out.println(x));
-    }
+		currentBoardLayout.forEach(x -> System.out.println(x));
+	}
 
-    public void update() {
-        if (this.refreshBoard()) {
-            //System.out.println("è entrato nell'update");
-            this.repeatPlaceCardsOnBoard(b);
-            
-            this.chosenCardsInOrder.clear();
-            this.chosenCards.clear();
-            
+	public void update() {
+		if (this.refreshBoard()) {
+			// System.out.println("è entrato nell'update");
+			this.repeatPlaceCardsOnBoard(b);
 
-        }
-        //System.out.println("refresh");
-    }
+			this.chosenCardsInOrder.clear();
+			this.chosenCards.clear();
 
-    public void draw(Graphics2D g2) {
-        for (int col = 0; col < this.boardLayout.length; col++) {
-            for (int row = 0; row < this.boardLayout[col].length; row++) {
-                switch (this.boardLayout[row][col]) {
-                    /*MAGENTA = DIMENSIONS OF WHOLE ARRAY 
-                    case 0 -> {
-                        g2.setColor(Color.LIGHT_GRAY);
-                        g2.fillRect(row * gp.tileSize, col * gp.tileSize, gp.tileSize, gp.tileSize);
-                    }
-                     */
+		}
+		// System.out.println("refresh");
+	}
 
-                    case 1 -> {
-                        g2.setColor(Color.GRAY);
-                        g2.drawRect(row * gp.tileSize, col * gp.tileSize, gp.tileSize, gp.tileSize);
-                    }
-                }
-                g2.setColor(Color.BLACK);
-                g2.drawRect(1, 1, 528, 528);
-            }
-        }
+	public void draw(Graphics2D g2) {
+		for (int col = 0; col < this.boardLayout.length; col++) {
+			for (int row = 0; row < this.boardLayout[col].length; row++) {
+				switch (this.boardLayout[row][col]) {
+				/*
+				 * MAGENTA = DIMENSIONS OF WHOLE ARRAY case 0 -> {
+				 * g2.setColor(Color.LIGHT_GRAY); g2.fillRect(row * gp.tileSize, col *
+				 * gp.tileSize, gp.tileSize, gp.tileSize); }
+				 */
 
-        //MOVED DRAWING TO PlacedCard class 
-        for (int i = 0; i < currentBoardLayout.size(); i++) {
-            currentBoardLayout.get(i).draw(g2);
-        }
+				case 1 -> {
+					g2.setColor(Color.GRAY);
+					g2.drawRect(row * gp.tileSize, col * gp.tileSize, gp.tileSize, gp.tileSize);
+				}
+				}
+				g2.setColor(Color.BLACK);
+				g2.drawRect(1, 1, 528, 528);
+			}
+		}
 
-        Font currentFont = g2.getFont();
-        currentFont = currentFont.deriveFont(currentFont.getSize() * 1.8F);
-        g2.setFont(currentFont);
-        for (int i = 0; i < chosenCards.size(); i++) {
-            g2.drawString(String.valueOf(i), chosenCards.get(i).getCardX(), chosenCards.get(i).getCardY() + 48);
-        }
-        Font cf = new Font("Times New Roman", Font.BOLD, 16);
-        g2.setFont(cf);
-        g2.drawString("Shelf:", 576, 30);
-        g2.drawString("Personal goal card:", 864, 30);
-    }
+		// MOVED DRAWING TO PlacedCard class
+		for (int i = 0; i < currentBoardLayout.size(); i++) {
+			currentBoardLayout.get(i).draw(g2);
+		}
 
-    public void removePlacedCard(int x, int y) {
-        for (int i = 0; i < this.currentBoardLayout.size(); i++) {
-            if (x == (this.currentBoardLayout.get(i).getCardX()) && y == (this.currentBoardLayout.get(i).getCardY())) {
-                this.currentBoardLayout.remove(i);
-                
-            }
-        }
+		Font currentFont = g2.getFont();
+		currentFont = currentFont.deriveFont(currentFont.getSize() * 1.8F);
+		g2.setFont(currentFont);
+		for (int i = 0; i < chosenCards.size(); i++) {
+			g2.drawString(String.valueOf(i), chosenCards.get(i).getCardX(), chosenCards.get(i).getCardY() + 48);
+		}
+		Font cf = new Font("Times New Roman", Font.BOLD, 16);
+		g2.setFont(cf);
+		g2.drawString("Shelf:", 576, 30);
+		g2.drawString("Personal goal card:", 864, 30);
+	}
 
-    }
-    
-    
-    //questo metodo scorre l'arraylist e rimuove le carte selezionate dall board
-    public void removeChosenCardsFromBoard() {
-        for (int i = 0; i < this.chosenCards.size(); i++) {
-            this.removePlacedCard(this.chosenCards.get(i).getCardX(), this.chosenCards.get(i).getCardY());
-        }
-        //chosenCards.clear();
-    }
-    
-    
+	public void removePlacedCard(int x, int y) {
+		for (int i = 0; i < this.currentBoardLayout.size(); i++) {
+			if (x == (this.currentBoardLayout.get(i).getCardX()) && y == (this.currentBoardLayout.get(i).getCardY())) {
+				this.currentBoardLayout.remove(i);
 
-    public boolean isCardPlaced(int x, int y) {
-        for (int i = 0; i < currentBoardLayout.size(); i++) {
-            if (x == (currentBoardLayout.get(i).getCardX()) && y == (currentBoardLayout.get(i).getCardY())) {
+			}
+		}
 
-                return true;
-            }
-        }
-        return false;
-    }
+	}
 
-    public void determinePossibility(int x, int y) {
-        if (isCardPlaced(x, y)) {
+	// questo metodo scorre l'arraylist e rimuove le carte selezionate dall board
+	public void removeChosenCardsFromBoard() {
+		for (int i = 0; i < this.chosenCards.size(); i++) {
+			this.removePlacedCard(this.chosenCards.get(i).getCardX(), this.chosenCards.get(i).getCardY());
+		}
+		// chosenCards.clear();
+	}
 
-        }
-    }
+	public boolean isCardPlaced(int x, int y) {
+		for (int i = 0; i < currentBoardLayout.size(); i++) {
+			if (x == (currentBoardLayout.get(i).getCardX()) && y == (currentBoardLayout.get(i).getCardY())) {
 
-    public boolean hasAFreeBorder(int x, int y) {
-        PlacedCard card = getCardAtCords(x, y);
-        if (card != null) {
-            if (isCardPlaced(card.getCardX() + 48, y)) {
-                if (isCardPlaced(card.getCardX() - 48, y)) {
-                    if (isCardPlaced(x, card.getCardY() + 48)) {
-                        if (isCardPlaced(x, card.getCardY() - 48)) {
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        return true;
-    }
+				return true;
+			}
+		}
+		return false;
+	}
 
-    public PlacedCard getCardAtCords(int x, int y) {
-        for (int i = 0; i < currentBoardLayout.size(); i++) {
-            if (x == (currentBoardLayout.get(i).getCardX()) && y == (currentBoardLayout.get(i).getCardY())) {
-                return currentBoardLayout.get(i);
-            }
-        }
-        return null;
-    }
+	public void determinePossibility(int x, int y) {
+		if (isCardPlaced(x, y)) {
 
-    public void chosenFromBoard(int chosenRow, int chosenCol) {
-        first = this.chosenCards.isEmpty();
-        PlacedCard t = this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize);
-        if (t == null) {
-            System.out.println("non c'è la carta");
-        } else {
-            if (this.chosenCards.size() < 3) {
+		}
+	}
 
-                if (this.hasAFreeBorder(chosenRow * gp.tileSize, chosenCol * gp.tileSize)) {
-                    if (first) {
-                           t = this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize);
-                        if(!this.chosenCards.contains(t)){
-                            chosenCards.add(t);
-                            firstRow = chosenRow;
-                        firstCol = chosenCol;
-                        oldRaw = chosenRow;
-                        oldCol = chosenCol;
-                        }
-                     
-                     
-                    } else {
-                        if (chosenRow == firstRow && chosenRow == oldRaw) {
-                            if (chosenCol == oldCol + 1 || chosenCol == oldCol - 1) {
-                                t = (this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize));
-                                if(!this.chosenCards.contains(t)){
-                                    chosenCards.add(t);
-                                oldRaw = chosenRow;
-                                oldCol = chosenCol;
-                                }
-                            }
-                        }
-                        if (chosenCol == firstCol && chosenCol == oldCol) {
-                            if (chosenRow == oldRaw + 1 || chosenRow == oldRaw - 1) {
-                                t = this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize);
-                                if(!this.chosenCards.contains(t)){
-                                         chosenCards.add(t);
-                                oldRaw = chosenRow;
-                                oldCol = chosenCol;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
+	public boolean hasAFreeBorder(int x, int y) {
+		PlacedCard card = getCardAtCords(x, y);
+		if (card != null) {
+			if (isCardPlaced(card.getCardX() + 48, y)) {
+				if (isCardPlaced(card.getCardX() - 48, y)) {
+					if (isCardPlaced(x, card.getCardY() + 48)) {
+						if (isCardPlaced(x, card.getCardY() - 48)) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
 
-    
+	public PlacedCard getCardAtCords(int x, int y) {
+		for (int i = 0; i < currentBoardLayout.size(); i++) {
+			if (x == (currentBoardLayout.get(i).getCardX()) && y == (currentBoardLayout.get(i).getCardY())) {
+				return currentBoardLayout.get(i);
+			}
+		}
+		return null;
+	}
 
-    public void deleteChosenCards() {
-        if (!this.chosenCards.isEmpty()) {
-            this.chosenCards.clear();
-        }
-    }
+	public void chosenFromBoard(int chosenRow, int chosenCol) {
+		first = this.chosenCards.isEmpty();
+		PlacedCard t = this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize);
+		if (t == null) {
+			System.out.println("non c'è la carta");
+		} else {
+			if (this.chosenCards.size() < 3) {
 
-    //questo metodo restituisce true se la card ha tutti e 4 i lati liberi
-    public Boolean hasAllFreeBorders(int x, int y) {
-        PlacedCard card = getCardAtCords(x, y);
-        if (card != null) {
-            if (!isCardPlaced(card.getCardX() + 48, y) && !isCardPlaced(card.getCardX() - 48, y) && !isCardPlaced(x, card.getCardY() + 48) && !isCardPlaced(x, card.getCardY() - 48)) {
-                //System.out.println("sono entrato nell'if");
-                return true;
-            }
-        }
-        //System.out.println("non entrato");
-        return false;
-    }
+				if (this.hasAFreeBorder(chosenRow * gp.tileSize, chosenCol * gp.tileSize)) {
+					if (first) {
+						t = this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize);
+						if (!this.chosenCards.contains(t)) {
+							chosenCards.add(t);
+							firstRow = chosenRow;
+							firstCol = chosenCol;
+							oldRaw = chosenRow;
+							oldCol = chosenCol;
+						}
 
-    //questo metodo restituisce true se la board va refreshata
-    public Boolean refreshBoard() {
-        for (int i = 0; i < this.currentBoardLayout.size(); i++) {
-            int x = this.currentBoardLayout.get(i).getCardX();
-            int y = this.currentBoardLayout.get(i).getCardY();
-            if (!this.hasAllFreeBorders(x, y)) {
-                return false;
-            }
-        }
-        return true;
-    }
+					} else {
+						if (chosenRow == firstRow && chosenRow == oldRaw) {
+							if (chosenCol == oldCol + 1 || chosenCol == oldCol - 1) {
+								t = (this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize));
+								if (!this.chosenCards.contains(t)) {
+									chosenCards.add(t);
+									oldRaw = chosenRow;
+									oldCol = chosenCol;
+								}
+							}
+						}
+						if (chosenCol == firstCol && chosenCol == oldCol) {
+							if (chosenRow == oldRaw + 1 || chosenRow == oldRaw - 1) {
+								t = this.getCardAtCords(chosenRow * gp.tileSize, chosenCol * gp.tileSize);
+								if (!this.chosenCards.contains(t)) {
+									chosenCards.add(t);
+									oldRaw = chosenRow;
+									oldCol = chosenCol;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
-    //questo metodo scorre l'arraylist e rimuove le carte selezionate dall board
-   
+	public void deleteChosenCards() {
+		if (!this.chosenCards.isEmpty()) {
+			this.chosenCards.clear();
+		}
+	}
 
-    //questo metodo crea l'arrayList chosenCardsInOrder
-    public ArrayList<PlacedCard> changeOrder(ArrayList<Integer> order) {		//passo l'array contenente l'ordine (1, 3, 2)
-    	//chosenCardsInOrder.clear();
- 		for(int i = 0; i < order.size(); i++) {
- 			int c = order.get(i);
- 			PlacedCard pc = this.chosenCards.get(c);
- 			chosenCardsInOrder.add(pc);
- 		}
- 		return chosenCardsInOrder;
- 		
- 		//questo andrebbe messo dopo che metti le carte nella shelf
- 			//chosenCardsInOrder.clear();
- 		//*******************
- 	}
- 	
+	// questo metodo restituisce true se la card ha tutti e 4 i lati liberi
+	public Boolean hasAllFreeBorders(int x, int y) {
+		PlacedCard card = getCardAtCords(x, y);
+		if (card != null) {
+			if (!isCardPlaced(card.getCardX() + 48, y) && !isCardPlaced(card.getCardX() - 48, y)
+					&& !isCardPlaced(x, card.getCardY() + 48) && !isCardPlaced(x, card.getCardY() - 48)) {
+				// System.out.println("sono entrato nell'if");
+				return true;
+			}
+		}
+		// System.out.println("non entrato");
+		return false;
+	}
 
- 	
- 	/*
- 	public void sendCardsToShelf() {
- 		//Scanner sc = new Scanner(System.in);	
- 		//int chosenCol = sc.nextInt();
- 		//s.placeOnShelf(chosenCardsInOrder, chosenCol);
- 		//sc.close();
- 	}*/
-    
-    public ArrayList<PlacedCard> sendChosenCards() {
-        if (!this.chosenCards.isEmpty()) {
-            return this.chosenCards;
-        }
-        return null;
-    }
+	// questo metodo restituisce true se la board va refreshata
+	public Boolean refreshBoard() {
+		for (int i = 0; i < this.currentBoardLayout.size(); i++) {
+			int x = this.currentBoardLayout.get(i).getCardX();
+			int y = this.currentBoardLayout.get(i).getCardY();
+			if (!this.hasAllFreeBorders(x, y)) {
+				return false;
+			}
+		}
+		return true;
+	}
 
-    public void sendChosenCol() {
+	// questo metodo crea l'arrayList chosenCardsInOrder
+	public ArrayList<PlacedCard> changeOrder(ArrayList<Integer> order) { // passo l'array contenente l'ordine (1, 3, 2)
+		// chosenCardsInOrder.clear();
+		for (int i = 0; i < order.size(); i++) {
+			int c = order.get(i);
+			PlacedCard pc = this.chosenCards.get(c);
+			chosenCardsInOrder.add(pc);
+		}
+		return chosenCardsInOrder;
 
-    }
-    
-    
+	}
+
+	public ArrayList<PlacedCard> sendChosenCards() {
+		if (!this.chosenCards.isEmpty()) {
+			return this.chosenCards;
+		}
+		return null;
+	}
+
+	public void sendChosenCol() {
+
+	}
+
 }
 
 /*
-    public void removeCard(int row,int col){
-        this.boardLayout[row][col] = 0;
-        /*
-        playerBoard.getCard(Card card) ?
+ * public void removeCard(int row,int col){ this.boardLayout[row][col] = 0; /*
+ * playerBoard.getCard(Card card) ?
  */
- /*
-    public void removeCard(Tile tile){
-        if(tile.isTileOccupied())
-            modifyCell(0, 0, 0)
-    }
+/*
+ * public void removeCard(Tile tile){ if(tile.isTileOccupied()) modifyCell(0, 0,
+ * 0) }
  */
- /*
-    public Tile getTile(final int tileCoordinate){
-        return null;
-    }
+/*
+ * public Tile getTile(final int tileCoordinate){ return null; }
  */
