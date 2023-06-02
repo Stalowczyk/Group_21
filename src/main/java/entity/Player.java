@@ -195,6 +195,7 @@ public class Player {
 
                             } else {
                                // System.out.println("non c'è abbastanza spazio nella colonna");
+                            	JOptionPane.showMessageDialog(null, "there isn't enough space in the chosen column");
                                 resetPlayerChoice();
                             }
 
